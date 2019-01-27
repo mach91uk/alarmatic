@@ -1,0 +1,73 @@
+<!--
+  ~ Copyright 2017 Phillip Hsu
+  ~
+  ~ This file is part of ClockPlus.
+  ~
+  ~ ClockPlus is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ClockPlus is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ClockPlus.  If not, see <http://www.gnu.org/licenses/>.
+  ~
+  ~ Copyright 2018 Chris Allenby - content updated for Auto Alarm
+  ~
+  -->
+
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="item_padding_top">8dp</dimen>
+    <dimen name="item_padding_start">16dp</dimen>
+    <dimen name="item_padding_end">16dp</dimen>
+    <dimen name="item_margin_between_elements">4dp</dimen>
+    <dimen name="fab_total_height">88dp</dimen>
+
+    <!-- NumpadTimePickerDialog -->
+    <!-- TODO: Deprecated -->
+    <!-- 4 * (numeric_keypad_cell_height) + 88dp pre-21 FAB height -->
+    <!-- Same as pre-21 FAB height -->
+    <!-- 88dp height already big enough -->
+
+    <!-- NumberGridTimePickerDialog -->
+    <!-- 5 * (number_grid_minute_cell_height) + half-FAB height bottom padding -->
+    <!-- 4 * 70 == 5 * (number_grid_minute_cell_height) -->
+
+    <!-- Bottom sheet specs -->
+    <!-- If the total height of the contents of a bottom sheet does not exceed this limit,
+    then the sheet will show fully expanded; the contents are not stretched to match this height.
+    This is large enough to accommodate most, if not all, of our layouts. -->
+    
+    <!-- AlarmViewHolder -->
+    <dimen name="text_compound_drawable_padding">10dp</dimen>
+
+    <!-- Material Button -->
+    <dimen name="button_text_right_padding">16dp</dimen>
+
+    <!-- CardView -->
+    <dimen name="cardview_margin">8dp</dimen>
+
+    <!-- StopwatchFragment -->
+
+    <!-- TimerViewHolder -->
+
+    <!--ExpandedAlarmViewHolder-->
+    <dimen name="expanded_alarm_elevation">2dp</dimen> <!--TODO: Increase for v21-->
+    <dimen name="label_height">48dp</dimen>
+    <dimen name="vibrate_toggle_size">48dp</dimen>
+
+    <!--EditTimerActivity-->
+
+    <dimen name="text_size_display_1">34sp</dimen>
+    <dimen name="text_size_display_2">45sp</dimen>
+    <dimen name="text_size_headline">24sp</dimen>
+    <dimen name="text_size_medium">18sp</dimen>
+    <dimen name="text_size_subhead">16sp</dimen>
+</resources>

@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright 2017 Phillip Hsu
+  ~
+  ~ This file is part of ClockPlus.
+  ~
+  ~ ClockPlus is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ClockPlus is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ClockPlus.  If not, see <http://www.gnu.org/licenses/>.
+  ~
+  ~ Copyright 2018 Chris Allenby - content updated for Auto Alarm
+  ~
+ -->
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+                  xmlns:app="http://schemas.android.com/apk/res-auto">
+    <!--<PreferenceCategory android:title="@string/title_category_world_clock">
+        <ListPreference
+            android:key="@string/key_show_time_offsets_from"
+            android:title="@string/title_show_time_offsets_from"
+            android:dialogTitle="@string/title_show_time_offsets_from"
+            android:entries="@array/array_show_time_offsets_from"
+            android:entryValues="@array/array_show_time_offsets_from"
+            android:defaultValue="@string/local_time"
+            android:summary="%s"/>
+    </PreferenceCategory>-->
+   <PreferenceCategory android:title="@string/title_category_holiday" android:key="@string/key_category_holiday">
+        <SwitchPreference
+            android:key="@string/key_cancel_alarm_holiday"
+            android:title="@string/title_cancel_alarm_holiday"
+            android:summary="@string/summary_cancel_alarm_holiday"
+            android:defaultValue="@bool/default_cancel_alarm_holiday"/>
+        <!--<EditTextPreference
+            android:key="@string/key_cancel_alarm_label"
+            android:title="@string/title_cancel_alarm_label"
+            android:defaultValue="@string/default_cancel_alarm_label"
+            android:enabled="false"
+            android:summary="%s"/>-->
+        <ListPreference
+                android:key="@string/key_cancel_alarm_bank_calendar"
+                android:title="@string/title_cancel_alarm_bank_calendar"
+                android:dialogTitle="@string/title_cancel_alarm_bank_calendar"
+                android:defaultValue="@string/default_cancel_alarm_bank_calendar"
+                android:enabled="false"
+                android:summary="%s"/>
+       <ListPreference
+           android:key="@string/key_cancel_alarm_calendar"
+           android:title="@string/title_cancel_alarm_calendar"
+           android:dialogTitle="@string/title_cancel_alarm_calendar"
+           android:defaultValue="@string/default_cancel_alarm_calendar"
+           android:enabled="false"
+           android:summary="%s"/>
+        <EditTextPreference
+            android:key="@string/key_cancel_alarm_title"
+            android:title="@string/title_cancel_alarm_title"
+            android:defaultValue="@string/default_cancel_alarm_title"
+            android:enabled="false"
+            android:summary="%s"/>
+
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/title_category_alarms_snooze" android:key="@string/key_category_alarms_snooze">
+        <ListPreference
+            android:key="@string/key_fade_volume"
+            android:title="@string/title_fade_volume"
+            android:dialogTitle="@string/title_fade_volume"
+            android:entries="@array/entries_fade_volume"
+            android:entryValues="@array/values_fade_volume"
+            android:defaultValue="1"
+            android:summary="%s"/>
+        <Preference
+            android:key="@string/key_alarm_volume"
+            android:summary="@string/summary_alarm_volume"
+            android:title="@string/title_alarm_volume"/>
+        <ListPreference
+            android:key="@string/key_flip_action"
+            android:title="@string/title_flip_action"
+            android:dialogTitle="@string/title_flip_action"
+            android:entries="@array/entries_flip_action"
+            android:entryValues="@array/values_flip_action"
+            android:defaultValue="1"
+            android:summary="%s"/>
+        <ListPreference
+            android:key="@string/key_long_click"
+            android:title="@string/title_long_click"
+            android:dialogTitle="@string/title_long_click"
+            android:entries="@array/entries_long_click"
+            android:entryValues="@array/values_long_click"
+            android:defaultValue="0"
+            android:summary="%s"/>
+        <ListPreference
+            android:key="@string/key_snooze_duration"
+            android:title="@string/title_snooze_duration"
+            android:dialogTitle="@string/title_snooze_duration"
+            android:entries="@array/entries_duration"
+            android:entryValues="@array/values_duration"
+            android:defaultValue="5"
+            android:summary="%s"/>
+        <ListPreference
+            android:key="@string/key_silence_after"
+            android:title="@string/title_silence_after"
+            android:dialogTitle="@string/title_silence_after"
+            android:entries="@array/entries_duration"
+            android:entryValues="@array/values_duration"
+            android:defaultValue="5"
+            android:summary="%s"/>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/title_category_alarms" android:key="@string/key_category_alarms">
+        <ListPreference
+            android:key="@string/key_notify_me_of_upcoming_alarms"
+            android:title="@string/title_notify_me_of_upcoming_alarms"
+            android:dialogTitle="@string/title_notify_me_of_upcoming_alarms"
+            android:entries="@array/entries_notify_me_of_upcoming_alarms"
+            android:entryValues="@array/values_notify_me_of_upcoming_alarms"
+            android:defaultValue="2"
+            android:summary="%s"/>
+        <ListPreference
+            android:key="@string/key_time_picker_style"
+            android:title="@string/title_time_picker_style"
+            android:dialogTitle="@string/title_time_picker_style"
+            android:entries="@array/array_time_picker_styles"
+            android:entryValues="@array/array_time_picker_styles"
+            android:defaultValue="@string/system_default"
+            android:summary="%s"/>
+        <ListPreference
+            android:key="@string/key_first_day_of_week"
+            android:title="@string/title_first_day_of_week"
+            android:dialogTitle="@string/title_first_day_of_week"
+            android:entries="@array/entries_first_day_of_week"
+            android:entryValues="@array/values_first_day_of_week"
+            android:defaultValue="@string/value_monday"
+            android:summary="%s"/>
+        <SwitchPreference
+            android:key="@string/key_notify_time_zone_change"
+            android:title="@string/title_notify_time_zone_change"
+            android:summary="@string/summary_notify_time_zone_change"
+            android:defaultValue="true"/>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/title_category_screensaver" android:key="@string/key_category_screensaver">
+        <SwitchPreference
+            android:key="@string/key_screensaver_dim"
+            android:title="@string/title_screensaver_dim"
+            android:summary="@string/sum_screensaver_dim"
+            android:defaultValue="true"/>
+        <SwitchPreference
+            android:key="@string/key_screensaver_date"
+            android:title="@string/title_screensaver_date"
+            android:summary="@string/sum_screensaver_date"
+            android:defaultValue="true"/>
+        <uk.mach91.autoalarm.settings.SeekBarPreference
+            android:defaultValue="10"
+            android:title="@string/title_screensaver_size"
+            android:key="@string/key_screensaver_size"  />
+        <com.rarepebble.colorpicker.ColorPreference
+            android:key="@string/key_screensaver_colour"
+            android:title="@string/title_screensaver_colour"
+            android:defaultValue="#5fff0000"
+            app:colorpicker_showHex="false"
+            />
+
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/title_category_general" android:key="@string/key_category_general">
+        <ListPreference
+            android:key="@string/key_theme"
+            android:title="@string/title_theme"
+            android:dialogTitle="@string/title_theme"
+            android:entries="@array/array_theme"
+            android:entryValues="@array/array_theme"
+            android:defaultValue="@string/theme_dark"
+            android:summary="%s">
+        </ListPreference>
+        <Preference
+            android:title="@string/title_system_date_time_settings"
+            android:summary="@string/summary_system_date_time_settings">
+            <!-- https://developer.android.com/reference/android/provider/Settings.html -->
+            <intent android:action="android.settings.DATE_SETTINGS"/>
+        </Preference>
+    </PreferenceCategory>
+
+    <!--<PreferenceCategory android:title="@string/title_category_timers">
+        <uk.mach91.autoalarm.settings.ThemedRingtonePreference
+            android:key="@string/key_timer_ringtone"
+            android:title="@string/title_timer_ringtone"
+            android:ringtoneType="alarm"
+            android:defaultValue="content://settings/system/alarm_alert"/>
+        <ListPreference
+            android:key="@string/key_timer_silence_after"
+            android:title="@string/title_timer_silence_after"
+            android:dialogTitle="@string/title_timer_silence_after"
+            android:entries="@array/entries_duration"
+            android:entryValues="@array/values_duration"
+            android:defaultValue="15"
+            android:summary="%s"/>
+        <SwitchPreference
+            android:key="@string/key_timer_vibrate"
+            android:title="@string/title_timer_vibrate"
+            android:defaultValue="false"/>
+    </PreferenceCategory>-->
+</PreferenceScreen>

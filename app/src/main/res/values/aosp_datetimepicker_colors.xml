@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2013 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<resources>
+
+    <!--12% black. Originally #cccccc-->
+
+    <!-- Colors for red theme -->
+    <!--800 < Grey < 900. Originally #404040-->
+    <!--Grey 900. Originally #363636-->
+    <!--12% white. Originally #808080-->
+
+    <!--My stuff-->
+    <!--50% white-->
+    <color name="text_color_primary_dark">#ffffffff</color> <!--100% white-->
+    <!--87% black-->
+    <!--70% white-->
+    <!--54% black-->
+    <color name="text_color_disabled_dark">#80ffffff</color> <!--50% white TODO: same as unselected_color-->
+    <!--38% black-->
+
+    <!-- Derived from Raised Button section of the guidelines. Make sure to set FAB elevation to 0dp! -->
+    <!--12% white-->
+    <!--12% black-->
+
+    <color name="icon_color_active_dark">#ffffffff</color> <!--100% white-->
+    <!--54% black-->
+    <!-- TODO: This value is from the Icons page. The Colors page lists 50% white for "Icons and other elements". -->
+    <color name="icon_color_inactive_dark">#4dffffff</color> <!--30% white-->
+    <!-- TODO: This value is from the Icons page. The Colors page lists 38% black for "Icons and other elements". -->
+    <!--26% black-->
+</resources>

@@ -1,0 +1,138 @@
+<!--
+  ~ Copyright 2017 Phillip Hsu
+  ~
+  ~ This file is part of ClockPlus.
+  ~
+  ~ ClockPlus is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ClockPlus is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ClockPlus.  If not, see <http://www.gnu.org/licenses/>.
+  ~
+  ~ Copyright 2018 Chris Allenby - content updated for Auto Alarm
+  ~
+  -->
+
+<resources>
+    <!--TODO: DayNight parent-->
+    <style name="BaseAppTheme" parent="Theme.AppCompat.NoActionBar">
+        <!--Don't need to use `@color/icon_color` ColorStateList resource because icons tinted by this
+          - attribute will only ever be in the active state.
+          - Secondly, using a ColorStateList resource via XML for the tint attribute of an ImageView
+          - is not supported below 21.
+        -->
+        <!--TODO: Remove all light variants of colors.-->
+        <item name="themedIconTint">@color/icon_color_active_dark</item>
+        <!--TODO: Copy this resource over, because it will be going to BottomSheetTimePickers.-->
+        <item name="android:textColorHint">@color/text_color_disabled_dark</item>
+        <item name="themedPopupOverlay">@style/ThemeOverlay.AppCompat.Dark</item>
+        <!--BottomSheetTimePickers-->
+        <item name="themeDark">true</item>
+    </style>
+
+    <style name="BaseAppTheme.Light">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="cardBackgroundColor">@color/card_background_color</item>
+        <item name="alertDialogTheme">@style/AppCompatAlertDialogStyle</item>
+        <item name="android:windowBackground">@color/colorPrimary</item>
+    </style>
+
+    <style name="BaseAppTheme.Dark">
+        <item name="colorPrimary">@color/colorPrimaryInverse</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkInverse</item>
+        <item name="colorAccent">@color/colorAccentInverse</item>
+        <item name="cardBackgroundColor">@color/card_background_color_inverse</item>
+        <item name="alertDialogTheme">@style/AppCompatAlertDialogStyle.Dark</item>
+        <item name="android:windowBackground">@color/colorPrimaryInverse</item>
+    </style>
+
+    <style name="BaseAppTheme.Black">
+        <item name="colorPrimary">@android:color/black</item>
+        <item name="colorPrimaryDark">@android:color/black</item>
+        <item name="colorAccent">@color/colorAccentBlack</item>
+        <item name="cardBackgroundColor">@color/card_background_color_black</item>
+        <item name="alertDialogTheme">@style/AppCompatAlertDialogStyle.Black</item>
+        <item name="android:windowBackground">@android:color/black</item>
+    </style>
+
+    <style name="AppTheme.Dark" parent="BaseAppTheme.Dark"></style>
+
+    <style name="AppTheme.Black" parent="BaseAppTheme.Black"></style>
+
+    <style name="AppTheme.Light" parent="BaseAppTheme.Light"></style>
+
+    <!-- TODO: Rename to GridLayoutElement -->
+
+    <!-- TODO: Rename to GridLayout[Text/Button/TextView]? -->
+
+    <!-- TODO: Replace and Delete -->
+
+    <style name="Divider">
+        <!-- This is robust against dark/light theme changes. -->
+        <!-- Normally not visible in bottom sheets; workaround is to manually change the background color of the divider-->
+        <item name="android:background">?android:attr/listDivider</item>
+    </style>
+
+    <style name="Divider.Horizontal">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+    </style>
+
+    <style name="AppCompatAlertDialogStyle" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:background">@color/alert_dialog_background_color</item>
+    </style>
+
+    <style name="AppCompatAlertDialogStyle.Dark">
+        <item name="colorAccent">@color/colorAccentInverse</item>
+        <item name="android:background">@color/alert_dialog_background_color_inverse</item>
+    </style>
+
+    <style name="AppCompatAlertDialogStyle.Black">
+        <item name="colorAccent">@color/colorAccentBlack</item>
+        <item name="android:background">@color/alert_dialog_background_color_black</item>
+    </style>
+
+    <!--Style for SeekBar that spans full width-->
+
+    <!--Style for a button that opens an AddLabelDialog-->
+    <style name="BaseLabel" parent="TextAppearance.AppCompat">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:hint">@string/label</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textSize">@dimen/text_size_subhead</item>
+    </style>
+
+    <style name="SelectableButton">
+        <item name="android:background">?selectableItemBackground</item>
+    </style>
+
+    <style name="CustomTextAppearanceTab" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">21sp</item>
+        <item name="textAllCaps">false</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="FullscreenTheme" parent="AppTheme.Dark">
+        <item name="windowActionBar">false</item>
+        <item name="android:windowBackground">@android:color/black</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <style name="FullscreenActionBarStyle" parent="Widget.AppCompat.ActionBar">
+        <item name="android:background">@color/black_overlay</item>
+    </style>
+
+</resources>

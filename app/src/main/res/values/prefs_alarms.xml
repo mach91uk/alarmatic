@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright 2017 Phillip Hsu
+  ~
+  ~ This file is part of ClockPlus.
+  ~
+  ~ ClockPlus is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ClockPlus is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ClockPlus.  If not, see <http://www.gnu.org/licenses/>.
+  ~
+  ~ Copyright 2018 Chris Allenby - content updated for Auto Alarm
+  ~
+  -->
+
+<resources>
+    <string name="title_category_alarms">Alarms: General</string>
+    <string name="key_category_alarms">key_category_alarms</string>
+    <string name="title_category_alarms_snooze">Alarms: Snooze and volume</string>
+    <string name="key_category_alarms_snooze">key_category_alarms_snooze</string>
+    <string name="title_category_holiday">Alarms: Skip selected alarms when on holiday</string>
+    <string name="key_category_holiday">key_category_holiday</string>
+
+    <!-- Time picker style -->
+    <string name="key_time_picker_style">key_time_picker_style</string>
+    <string name="title_time_picker_style">Time picker style</string>
+    <string name="system_default">System default</string>
+    <!-- Internally, we refer to this picker as a numpad because it's concise.
+    However, "numeric keypad" is more descriptive when describing the style to users. -->
+    <string name="number_pad">Numeric keypad</string>
+    <string name="grid_selector">Grid selector</string>
+    <string-array name="array_time_picker_styles">
+        <item>@string/system_default</item>
+        <item>@string/number_pad</item>
+        <item>@string/grid_selector</item>
+    </string-array>
+
+    <!-- Silence after -->
+    <string name="key_silence_after">key_silence_after</string>
+    <string name="title_silence_after">Silence unanswered alarm after</string>
+    <!-- Snooze duration -->
+    <string name="key_snooze_duration">key_snooze_duration</string>
+    <string name="title_snooze_duration">Snooze duration</string>
+    <!-- Durations for silence after & snooze duration -->
+    <string-array name="entries_duration">
+        <item>1 minute</item>
+        <item>5 minutes</item>
+        <item>10 minutes</item>
+        <item>15 minutes</item>
+        <item>20 minutes</item>
+        <item>25 minutes</item>
+        <item>30 minutes</item>
+    </string-array>
+    <string-array name="values_duration">
+        <item>1</item>
+        <item>5</item>
+        <item>10</item>
+        <item>15</item>
+        <item>20</item>
+        <item>25</item>
+        <item>30</item>
+    </string-array>
+
+    <!-- Alarm volume -->
+    <string name="key_alarm_volume">key_alarm_volume</string>
+    <string name="title_alarm_volume">System alarm volume</string>
+    <string name="summary_alarm_volume">Show and edit the system alarm volume</string>
+
+    <!-- Upcoming alarm threshold -->
+    <string name="key_notify_me_of_upcoming_alarms">key_notify_me_of_upcoming_alarms</string>
+    <string name="title_notify_me_of_upcoming_alarms">Notify me of upcoming alarms</string>
+    <string-array name="entries_notify_me_of_upcoming_alarms">
+        <item>Never</item>
+        <item>1 hour before</item>
+        <item>2 hours before</item>
+        <item>3 hours before</item>
+        <item>4 hours before</item>
+        <item>5 hours before</item>
+        <item>6 hours before</item>
+        <item>7 hours before</item>
+        <item>8 hours before</item>
+    </string-array>
+    <string-array name="values_notify_me_of_upcoming_alarms">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+    </string-array>
+
+    <!-- Flip  action -->
+    <string name="key_flip_action">key_flip_action</string>
+    <string name="title_flip_action">Flip over to</string>
+    <string-array name="entries_flip_action">
+        <item>Do nothing</item>
+        <item>Snooze</item>
+        <item>Dismiss</item>
+    </string-array>
+    <string-array name="values_flip_action">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    <!-- Fade in volume  -->
+    <string name="key_fade_volume">key_fade_volume</string>
+    <string name="title_fade_volume">Alarm volume</string>
+    <string-array name="entries_fade_volume">
+        <item>System default</item>
+        <item>Maximum volume</item>
+        <item>Fade in over 10 seconds</item>
+        <item>Fade in over 20 seconds</item>
+        <item>Fade in over 30 seconds</item>
+        <item>Fade in over 40 seconds</item>
+        <item>Fade in over 50 seconds</item>
+        <item>Fade in over 1 minute</item>
+        <item>Fade in over 2 minutes</item>
+    </string-array>
+    <string-array name="values_fade_volume">
+        <item>0</item>
+        <item>1</item>
+        <item>10</item>
+        <item>20</item>
+        <item>30</item>
+        <item>40</item>
+        <item>50</item>
+        <item>60</item>
+        <item>120</item>
+    </string-array>
+
+    <!-- Long click  -->
+    <string name="key_long_click">key_long_click</string>
+    <string name="title_long_click">Force long click</string>
+    <string-array name="entries_long_click">
+        <item>Disabled</item>
+        <item>To Snooze</item>
+        <item>To Dismiss</item>
+        <item>To Snooze and Dismiss</item>
+    </string-array>
+    <string-array name="values_long_click">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <!-- First day of week -->
+    <string name="key_first_day_of_week">key_first_day_of_week</string>
+    <string name="title_first_day_of_week">First day of week</string>
+    <string name="saturday">Saturday</string>
+    <string name="sunday">Sunday</string>
+    <string name="monday">Monday</string>
+    <string name="value_saturday">6</string>
+    <string name="value_sunday">0</string>
+    <string name="value_monday">1</string>
+    <string-array name="entries_first_day_of_week">
+        <item>@string/saturday</item>
+        <item>@string/sunday</item>
+        <item>@string/monday</item>
+    </string-array>
+    <string-array name="values_first_day_of_week">
+        <item>@string/value_saturday</item>
+        <item>@string/value_sunday</item>
+        <item>@string/value_monday</item>
+    </string-array>
+
+    <string name="key_notify_time_zone_change">key_notify_time_zone_change</string>
+    <string name="title_notify_time_zone_change">Notification when time zone changes</string>
+    <string name="summary_notify_time_zone_change">Show a notification so you can check your alarms are still relevant</string>
+    <bool name="default_notify_time_zone_change">true</bool>
+
+    <string name="key_cancel_alarm_holiday">key_cancel_alarm_holiday</string>
+    <string name="title_cancel_alarm_holiday">Check your calendar for holidays</string>
+    <string name="summary_cancel_alarm_holiday">Selected alarms are skipped for any bank holiday, or when a personal event with a specific title is found</string>
+    <bool name="default_cancel_alarm_holiday">false</bool>
+
+    <string name="key_cancel_alarm_label">key_cancel_alarm_label</string>
+    <string name="title_cancel_alarm_label">Skip alarms with label</string>
+    <string name="default_cancel_alarm_label"></string>
+
+    <string name="key_cancel_alarm_bank_calendar">cancel_alarm_bank_calendar</string>
+    <string name="title_cancel_alarm_bank_calendar">Selected Bank holiday calendar</string>
+    <string name="default_cancel_alarm_bank_calendar"></string>
+
+    <string name="key_cancel_alarm_calendar">cancel_alarm_calendar</string>
+    <string name="title_cancel_alarm_calendar">Selected personal holiday calendar</string>
+    <string name="default_cancel_alarm_calendar"></string>
+
+    <string name="key_cancel_alarm_title">cancel_alarm_title</string>
+    <string name="title_cancel_alarm_title">Skip if the title of a personal holiday contains</string>
+    <string name="default_cancel_alarm_title"></string>
+
+
+    <string name="title_category_screensaver">Screen saver: Displays time, date and the time to the next alarm</string>
+    <string name="key_category_screensaver">key_category_screensaver</string>
+    <string name="key_screensaver_dim">key_screensaver_dim</string>
+    <string name="title_screensaver_dim">Night Mode</string>
+    <string name="sum_screensaver_dim">Very dim display (for dark rooms)</string>
+    <string name="key_screensaver_date">key_screensaver_date</string>
+    <string name="title_screensaver_date">Show date</string>
+    <string name="sum_screensaver_date">Display the day and date</string>
+    <string name="key_screensaver_text_brightness">key_screensaver_text_brightness</string>
+    <string name="title_screensaver_brightness">Text brightness</string>
+    <string name="key_screensaver_colour">key_screensaver_colour</string>
+    <string name="title_screensaver_colour">Text colour and brightness</string>
+    <string name="key_screensaver_size">key_screensaver_size</string>
+    <string name="title_screensaver_size">Text size</string>
+
+
+</resources>
