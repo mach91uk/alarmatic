@@ -1,0 +1,28 @@
+Privacy policy
+
+General
+
+Auto Alarm is developed by one main developer, with a few people helping from time to time, mostly with translations.
+
+Privacy Policy ("Policy") describes how information obtained from users is collected, used and disclosed.
+
+By using Auto Alarm, you agree that your personal information will be handled as described in this Policy.
+
+Information being collected
+
+Auto Alarm does not collect any personal identifiable information.
+
+The `READ_EXTERNAL_STORAGE` permission is only used for selecting a custom alarm sound.
+
+The `READ_CALENDAR` permission is used only when we are checking if you are on holiday, so we can skip selected alarms.
+
+Changes to the Policy
+
+If the Policy changes, the modification date below will be updated. The Policy may change from time to time, so please be sure to check back periodically.
+
+Last modified: 27 January, 2019.
+
+Contact
+
+If you have any questions about the Policy, please contact support@mach91.uk
+
