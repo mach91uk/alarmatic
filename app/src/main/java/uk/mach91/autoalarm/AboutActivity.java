@@ -1,20 +1,20 @@
 /*
  * Copyright 2017 Chris Allenby
  *
- * This file is part of AutoAlarm.
+ * This file is part of Alarmation.
  *
- * AutoAlarm is free software: you can redistribute it and/or modify
+ * Alarmation is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * AutoAlarm is distributed in the hope that it will be useful,
+ * Alarmation is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with AutoAlarm.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Alarmation.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -93,10 +93,11 @@ public class AboutActivity extends AppCompatActivity {
                 .addItem(new Element().setTitle(getString(R.string.about_copyright)))
                 .addGroup(getString(R.string.about_connect))
                 .addEmail(getString(R.string.about_email))
-                .addWebsite(getString(R.string.about_url))
+                .addGitHub("mach91uk")
                 .addPlayStore(getString(R.string.about_playstore))
+                .addWebsite("https://github.com/mach91uk/autoalarm/blob/master/privacypolicy.txt")
                 .addGroup(getString(R.string.about_open_source_licenses))
-                .addItem(getLicensesElementAutoAlarm())
+                .addItem(getLicensesElementAlarmation())
                 .addItem(getLicensesElementClockPlus())
                 .addItem(getLicensesElementAboutPage())
                 .addItem(getLicensesElementLicensesDialog())
@@ -137,18 +138,18 @@ public class AboutActivity extends AppCompatActivity {
         return element;
     }
 
-    private Element getLicensesElementAutoAlarm() {
+    private Element getLicensesElementAlarmation() {
         final Notices notices = new Notices();
 
         //https://github.com/PSDev/LicensesDialog/tree/master/library/src/main/java/de/psdev/licensesdialog/licenses
 
-        notices.addNotice(new Notice("Auto Alarm",
+        notices.addNotice(new Notice(getString(R.string.app_name),
                 getString(R.string.about_url),
                 getString(R.string.about_copyright),
                 new  GnuGeneralPublicLicense30()));
 
         final LicensesDialog ld = new LicensesDialog.Builder(AboutActivity.this)
-                .setTitle("Auto Alarm")
+                .setTitle(getString(R.string.app_name))
                 .setNotices(notices)
                 .setIncludeOwnLicense(false)
                 .setShowFullLicenseText(true)
@@ -156,7 +157,7 @@ public class AboutActivity extends AppCompatActivity {
                 .build();
 
         Element element = new Element();
-        element.setTitle("Auto Alarm");
+        element.setTitle(getString(R.string.app_name));
         element.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

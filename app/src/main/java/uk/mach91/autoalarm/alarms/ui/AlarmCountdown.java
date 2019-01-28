@@ -37,7 +37,7 @@ import java.util.Locale;
 /**
  * Created by Phillip Hsu on 4/30/2016.
  *
- * Copyright 2018 Chris Allenby - content updated for Auto Alarm
+ * Copyright 2018 Chris Allenby - content updated for Alarmation
  * 
  * A modified version of the framework's Chronometer class that counts down toward the base time,
  * uses the {@link System#currentTimeMillis()} timebase, and only has minute precision.

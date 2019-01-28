@@ -31,7 +31,7 @@ import android.widget.Checkable;
 /**
  * Created by Phillip Hsu on 9/26/2016.
  *
- * Copyright 2018 Chris Allenby - content updated for Auto Alarm
+ * Copyright 2018 Chris Allenby - content updated for Alarmation
  *
  * Temporary fix for design support library's CheckableImageButton that toggles itself when clicked.
  *

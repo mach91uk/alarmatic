@@ -16,17 +16,17 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with ClockPlus.  If not, see <http://www.gnu.org/licenses/>.
   ~
-  ~ Copyright 2018 Chris Allenby - content updated for Auto Alarm
+  ~ Copyright 2018 Chris Allenby - content updated for Alarmation
   ~
   -->
 
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="app_name">Auto Alarm</string>
+    <string name="app_name">Alarmation</string>
     <string name="action_settings">Settings</string>
     <string name="action_about">About</string>
     <string name="action_screensaver">Screen saver</string>
 
-    <string name="title_activity_ringtone">>Auto Alarm</string>
+    <string name="title_activity_ringtone">>Alarmation</string>
 
     <!-- ================================= EDIT ALARM ACTIVITY ==================================-->
     <string name="delete">Delete</string>
@@ -132,13 +132,14 @@
     <string name="custom_ringtone">[custom: %s]</string>
 
     <string name="about_version">Version: %s</string>
-    <string name="about_description">Auto Alarm: a flexible, customisable alarm, which can even automatically skip specific alarms when you are on holiday.</string>
+    <string name="about_description">Alarmation: Alarm clock automation at its best, a flexible, customisable alarm, which can even automatically skip specific alarms when you are on holiday.</string>
     <string name="about_build_date">Build date: %s</string>
     <string name="about_build_time">Build time: %s</string>
     <string name="about_copyright">Copyright © 2019 MACH91</string>
     <string name="about_connect">Connect with us</string>
     <string name="about_email">support@mach91.uk</string>
     <string name="about_url">https://github.com/mach91uk/autoalarm</string>
+    <string name="about_website">Privacy Policy</string>
     <string name="about_playstore">uk.mach91.autoalarm</string>
     <string name="about_open_source_licenses">Open-source Licenses</string>
 
