@@ -37,7 +37,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Phillip Hsu on 5/31/2016.
  *
- * Copyright 2018 Chris Allenby - content updated for Alarmation
+ * Copyright 2018 Mach91 - content updated for Alarmatic
  *  *
  */
 public abstract class BaseActivity extends AppCompatActivity {

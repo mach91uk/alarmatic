@@ -16,24 +16,20 @@
  * You should have received a copy of the GNU General Public License
  * along with ClockPlus.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2018 Chris Allenby - content updated for Alarmation
+ * Copyright 2018 Mach91 - content updated for Alarmatic
  *
  */
 
 package uk.mach91.autoalarm.ringtone;
 
-import android.app.AlarmManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.os.SystemClock;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -46,17 +42,12 @@ import uk.mach91.autoalarm.util.LocalBroadcastHelper;
 import uk.mach91.autoalarm.util.ParcelableUtil;
 import uk.mach91.autoalarm.BaseActivity;
 import uk.mach91.autoalarm.R;
-import uk.mach91.autoalarm.ringtone.playback.RingtoneService;
-import uk.mach91.autoalarm.util.LocalBroadcastHelper;
-import uk.mach91.autoalarm.util.ParcelableUtil;
+
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnLongClick;
-import uk.mach91.autoalarm.ringtone.playback.RingtoneService;
-import uk.mach91.autoalarm.util.LocalBroadcastHelper;
-import uk.mach91.autoalarm.util.ParcelableUtil;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -134,6 +125,7 @@ public abstract class RingtoneActivity<T extends Parcelable> extends BaseActivit
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         ButterKnife.bind(this);
 
         final byte[] bytes = getIntent().getByteArrayExtra(EXTRA_RINGING_OBJECT);
@@ -167,7 +159,12 @@ public abstract class RingtoneActivity<T extends Parcelable> extends BaseActivit
 
         Intent intent = new Intent(this, getRingtoneServiceClass())
                 .putExtra(EXTRA_RINGING_OBJECT, ParcelableUtil.marshall(mRingingObject));
-        startService(intent);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(intent);
+        } else {
+            startService(intent);
+        }
     }
 
     @Override

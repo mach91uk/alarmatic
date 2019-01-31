@@ -1,20 +1,20 @@
 /*
- * Copyright 2017 Chris Allenby
+ * Copyright 2017 Mach91
  *
- * This file is part of Alarmation.
+ * This file is part of Alarmatic.
  *
- * Alarmation is free software: you can redistribute it and/or modify
+ * Alarmatic is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Alarmation is distributed in the hope that it will be useful,
+ * Alarmatic is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Alarmation.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Alarmatic.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -33,7 +33,7 @@ import uk.mach91.autoalarm.util.ScreenSaverUtils;
 
 
 /**
- * Created by Chris Allenby on 23/09/2018.
+ * Created by Mach91 on 23/09/2018.
  */
 
 public class ScreenSaverActivity extends AppCompatActivity {

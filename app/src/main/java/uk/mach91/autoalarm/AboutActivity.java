@@ -1,20 +1,20 @@
 /*
- * Copyright 2017 Chris Allenby
+ * Copyright 2017 Mach91
  *
- * This file is part of Alarmation.
+ * This file is part of Alarmatic.
  *
- * Alarmation is free software: you can redistribute it and/or modify
+ * Alarmatic is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Alarmation is distributed in the hope that it will be useful,
+ * Alarmatic is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Alarmation.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Alarmatic.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -44,7 +44,7 @@ import de.psdev.licensesdialog.model.Notice;
 import de.psdev.licensesdialog.model.Notices;
 
 /**
- * Created by Chris Allenby on 22/09/2018.
+ * Created by Mach91 on 22/09/2018.
  */
 public class AboutActivity extends AppCompatActivity {
 
@@ -97,7 +97,7 @@ public class AboutActivity extends AppCompatActivity {
                 .addPlayStore(getString(R.string.about_playstore))
                 .addWebsite("https://github.com/mach91uk/autoalarm/blob/master/privacypolicy.txt")
                 .addGroup(getString(R.string.about_open_source_licenses))
-                .addItem(getLicensesElementAlarmation())
+                .addItem(getLicensesElementAlarmatic())
                 .addItem(getLicensesElementClockPlus())
                 .addItem(getLicensesElementAboutPage())
                 .addItem(getLicensesElementLicensesDialog())
@@ -138,7 +138,7 @@ public class AboutActivity extends AppCompatActivity {
         return element;
     }
 
-    private Element getLicensesElementAlarmation() {
+    private Element getLicensesElementAlarmatic() {
         final Notices notices = new Notices();
 
         //https://github.com/PSDev/LicensesDialog/tree/master/library/src/main/java/de/psdev/licensesdialog/licenses

@@ -19,7 +19,7 @@ apply plugin: 'com.android.application'
  * You should have received a copy of the GNU General Public License
  * along with ClockPlus.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright 2018 Chris Allenby - content updated for Alarmation
+ * Copyright 2018 Mach91 - content updated for Alarmatic
  *
  */
 
@@ -53,8 +53,8 @@ android {
         applicationId 'uk.mach91.autoalarm'
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 1028
-        versionName '1.0.28'
+        versionCode 1033
+        versionName '1.0.33'
         buildConfigField "long", "TIMESTAMP", System.currentTimeMillis() + "L"
         // Disabled for now because we're not ready to
         // completely port over to vector drawables
