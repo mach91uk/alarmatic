@@ -84,8 +84,16 @@ public final class AlarmPreferences {
         return PreferenceManager.getDefaultSharedPreferences(c).getBoolean( c.getString(R.string.key_screensaver_dim), true);
     }
 
+    public static boolean mustDismissTwice(Context c) {
+        return PreferenceManager.getDefaultSharedPreferences(c).getBoolean( c.getString(R.string.key_dismiss_twice), false);
+    }
+
     public static boolean screensaverShowDate(Context c) {
         return PreferenceManager.getDefaultSharedPreferences(c).getBoolean( c.getString(R.string.key_screensaver_date), true);
+    }
+
+    public static boolean screensaverShowNextAlarm(Context c) {
+        return PreferenceManager.getDefaultSharedPreferences(c).getBoolean( c.getString(R.string.key_screensaver_nextalarm), true);
     }
 
     public static boolean cancelAlarmHoliday(Context c) {

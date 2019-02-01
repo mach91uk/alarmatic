@@ -74,17 +74,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="bottom"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <FrameLayout
-            android:id="@+id/btn_left"
-            android:layout_width="0dp"
+            android:id="@+id/btn_right"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="?selectableItemBackground">
 
             <TextView
-                android:id="@+id/btn_text_left"
+                android:id="@+id/btn_text_right"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -95,14 +95,14 @@
         </FrameLayout>
 
         <FrameLayout
-            android:id="@+id/btn_right"
-            android:layout_width="0dp"
+            android:id="@+id/btn_left"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="?selectableItemBackground">
 
             <TextView
-                android:id="@+id/btn_text_right"
+                android:id="@+id/btn_text_left"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

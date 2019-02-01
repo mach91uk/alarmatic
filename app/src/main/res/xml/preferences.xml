@@ -88,6 +88,11 @@
             android:entryValues="@array/values_flip_action"
             android:defaultValue="1"
             android:summary="%s"/>
+        <SwitchPreference
+            android:key="@string/key_dismiss_twice"
+            android:title="@string/title_dismiss_twice"
+            android:summary="@string/sum_dismiss_twice"
+            android:defaultValue="false"/>
         <ListPreference
             android:key="@string/key_long_click"
             android:title="@string/title_long_click"
@@ -154,6 +159,11 @@
             android:key="@string/key_screensaver_date"
             android:title="@string/title_screensaver_date"
             android:summary="@string/sum_screensaver_date"
+            android:defaultValue="true"/>
+        <SwitchPreference
+            android:key="@string/key_screensaver_nextalarm"
+            android:title="@string/title_screensaver_nextalarm"
+            android:summary="@string/sum_screensaver_nextalarm"
             android:defaultValue="true"/>
         <uk.mach91.autoalarm.settings.SeekBarPreference
             android:defaultValue="10"

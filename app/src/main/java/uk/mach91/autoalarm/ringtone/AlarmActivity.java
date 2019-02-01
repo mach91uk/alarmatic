@@ -31,6 +31,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 
 import uk.mach91.autoalarm.alarms.misc.AlarmController;
 import uk.mach91.autoalarm.alarms.misc.AlarmPreferences;
@@ -57,6 +60,8 @@ public class AlarmActivity extends RingtoneActivity<Alarm> {
     private AlarmController mAlarmController;
     private NotificationManager mNotificationManager;
 
+    private int dissmissCount;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +70,7 @@ public class AlarmActivity extends RingtoneActivity<Alarm> {
         // This could be the case if we're starting a new instance of this activity after leaving the first launch.
         mAlarmController.removeUpcomingAlarmNotification(getRingingObject());
         mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        dissmissCount = 0;
     }
 
     @Override
@@ -146,6 +152,31 @@ public class AlarmActivity extends RingtoneActivity<Alarm> {
         int longClick = AlarmPreferences.longClick(this);
         if (longClick == 0 || longClick == 1) {
             // TODO do we really need to cancel the intent and alarm?
+            //mAlarmController.cancelAlarm(getRingingObject(), false, true);
+            //stopAndFinish();
+            dismissButtonPress();
+        }
+    }
+
+    protected void dismissButtonPress() {
+        boolean dismissTwice = AlarmPreferences.mustDismissTwice(this);
+
+        if (dismissTwice) {
+            if (dissmissCount == 0) {
+                FrameLayout fl_left = findViewById(R.id.btn_left);
+                FrameLayout fl_right = findViewById(R.id.btn_right);
+
+                float x = fl_left.getX();
+                float y = fl_left.getY();
+                fl_left.setX(fl_right.getX());
+                fl_left.setY(fl_right.getY());
+                fl_right.setX(x);
+                fl_right.setY(y);
+            }
+        }
+        dissmissCount++;
+
+        if (!dismissTwice || dissmissCount >=2) {
             mAlarmController.cancelAlarm(getRingingObject(), false, true);
             stopAndFinish();
         }
@@ -162,8 +193,9 @@ public class AlarmActivity extends RingtoneActivity<Alarm> {
 
     @Override
     protected boolean onRightButtonLongClick() {
-        mAlarmController.cancelAlarm(getRingingObject(), false, true);
-        stopAndFinish();
+        //mAlarmController.cancelAlarm(getRingingObject(), false, true);
+        //stopAndFinish();
+        dismissButtonPress();
         return true;
     }
     @Override

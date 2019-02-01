@@ -10,6 +10,11 @@ Alarmatic automatically does this for you by looking at your calendar and checki
 - **Flip your phone and other snooze settings**
 There are many ways to help you snooze your alarms in a way that best suits your needs, including the really quick method of just picking up you phone and flipping it.
 
+- **Protection against accidentally dismissing an alarm**
+No one wants to accidentally dismiss an alarm, so we have provided a couple of features to help. 
+You can opt for dismiss to require a long press (just a tap does nothing). To be really sure, after the first press the Snooze and Dismiss buttons are swapped, requiring a second confirmation press on the Dismiss button in the new location.
+You can choose to enable either of these in the settings (both are off by default).
+
 - **Many alarm volume settings**
 A range of settings to control the volume of the alarms (fade in, system volume, maximum volume etc.).
 

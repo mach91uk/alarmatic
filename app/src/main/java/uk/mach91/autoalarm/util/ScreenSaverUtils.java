@@ -86,6 +86,7 @@ public class ScreenSaverUtils extends FrameLayout implements SensorEventListener
     private boolean firstDrawDone = false;
 
     private boolean mShowDate = true;
+    private boolean mShowNextAlarm = true;
 
     SensorManager mSensorManager;
 
@@ -118,6 +119,7 @@ public class ScreenSaverUtils extends FrameLayout implements SensorEventListener
             int textSize = AlarmPreferences.screensaverTextSize(context);
 
             mShowDate = AlarmPreferences.screensaverShowDate(context);
+            mShowNextAlarm = AlarmPreferences.screensaverShowNextAlarm(context);
 
             float textSizeFloat = 5 + textSize;
 
@@ -275,35 +277,57 @@ public class ScreenSaverUtils extends FrameLayout implements SensorEventListener
                     dateEndIndex = nightClockText.length();
                 }
 
+                long systemTimeTillNextAlarm = -1;
+
+                if (mShowNextAlarm) {
+                    try {
+                        Date nextAlarm = new Date(am.getNextAlarmClock().getTriggerTime());
+                        systemTimeTillNextAlarm = nextAlarm.getTime();
+                    } catch (Exception e) {
+                    }
+                }
+
                 nightClockText += DateFormat.getTimeFormat(getContext()).format(now);
 
                 SpannableString ss1;
 
                 long nextTimeAt= -1;
-                AlarmCursor cursor = new AlarmsTableManager(getContext()).queryEnabledAlarms();
-                while (cursor.moveToNext()) {
-                    Alarm alarm = cursor.getItem();
-                    if (!alarm.isEnabled()) {
-                        throw new IllegalStateException(
-                                "queryEnabledAlarms() returned alarm(s) that aren't enabled");
-                    }
 
-                    if (!alarm.isIgnoringUpcomingRingTime()) {
-                        long thisTimeAt = alarm.ringsAt();
+                if (mShowNextAlarm) {
+                    AlarmCursor cursor = new AlarmsTableManager(getContext()).queryEnabledAlarms();
+                    while (cursor.moveToNext()) {
+                        Alarm alarm = cursor.getItem();
+                        if (!alarm.isEnabled()) {
+                            throw new IllegalStateException(
+                                    "queryEnabledAlarms() returned alarm(s) that aren't enabled");
+                        }
 
-                        boolean cancelDueToHoliday = false;
+                        if (!alarm.isIgnoringUpcomingRingTime()) {
+                            long thisTimeAt = alarm.ringsAt();
 
-                        //if (alarm.label().toLowerCase().equals(AlarmPreferences.cancelAlarmHolidayLabel(getContext()).toLowerCase())) {
-                        if (alarm.skip_holiday()) {
+                            if (thisTimeAt == systemTimeTillNextAlarm) {
+                                systemTimeTillNextAlarm = -1;
+                            }
+
+                            boolean cancelDueToHoliday = false;
+
+                            //if (alarm.label().toLowerCase().equals(AlarmPreferences.cancelAlarmHolidayLabel(getContext()).toLowerCase())) {
+                            if (alarm.skip_holiday()) {
                                 cancelDueToHoliday = DurationUtils.isOnHoliday(getContext(), thisTimeAt);
-                        }
+                            }
 
-                        if (!cancelDueToHoliday && (nextTimeAt == -1 || nextTimeAt > thisTimeAt)) {
-                            nextTimeAt = thisTimeAt;
+                            if (!cancelDueToHoliday && (nextTimeAt == -1 || nextTimeAt > thisTimeAt)) {
+                                nextTimeAt = thisTimeAt;
+                            }
                         }
+                    }
+                    cursor.close();
+
+                    if ((nextTimeAt == -1 && systemTimeTillNextAlarm != -1) ||
+                            (systemTimeTillNextAlarm != -1 && nextTimeAt > systemTimeTillNextAlarm)) {
+                        nextTimeAt = systemTimeTillNextAlarm;
                     }
                 }
-                cursor.close();
 
                 int alarmTextStartIndex = -1;
                 int alarmTextEndIndex = -1;

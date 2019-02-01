@@ -202,6 +202,11 @@
     <string name="title_cancel_alarm_title">Skip if the title of a personal holiday contains</string>
     <string name="default_cancel_alarm_title"></string>
 
+    <string name="key_dismiss_twice">key_dismiss_twice</string>
+    <string name="title_dismiss_twice">Avoid accidental dismisses</string>
+    <string name="sum_dismiss_twice">Force two presses to dismiss, and swap the Snooze and Dismiss button locations after first dismiss</string>
+
+
 
     <string name="title_category_screensaver">Screen saver: Displays time, date and the time to the next alarm</string>
     <string name="key_category_screensaver">key_category_screensaver</string>
@@ -211,6 +216,9 @@
     <string name="key_screensaver_date">key_screensaver_date</string>
     <string name="title_screensaver_date">Show date</string>
     <string name="sum_screensaver_date">Display the day and date</string>
+    <string name="key_screensaver_nextalarm">key_screensaver_nextalarm</string>
+    <string name="title_screensaver_nextalarm">Show  the next alarm</string>
+    <string name="sum_screensaver_nextalarm">Display how much time there is until the next alarm</string>
     <string name="key_screensaver_text_brightness">key_screensaver_text_brightness</string>
     <string name="title_screensaver_brightness">Text brightness</string>
     <string name="key_screensaver_colour">key_screensaver_colour</string>
