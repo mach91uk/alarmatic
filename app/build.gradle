@@ -53,8 +53,8 @@ android {
         applicationId 'uk.mach91.autoalarm'
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 1033
-        versionName '1.0.33'
+        versionCode 1034
+        versionName '1.0.34'
         buildConfigField "long", "TIMESTAMP", System.currentTimeMillis() + "L"
         // Disabled for now because we're not ready to
         // completely port over to vector drawables
