@@ -77,6 +77,7 @@ import static java.lang.Math.abs;
 public class ScreenSaverUtils extends FrameLayout implements SensorEventListener {
     public final static long SHOW_ALARM_MILLS = 10 * 60 * 60 * 1000L;
     public final static int MOVE_TIME_FREQUENCY = 30 * 1000;
+    public final static int FADE_DURATION = 1000;
 
     private Handler mMoveTimeHandler;
     private Runnable mMoveTimeRunnable;
@@ -247,7 +248,7 @@ public class ScreenSaverUtils extends FrameLayout implements SensorEventListener
         if (!firstDrawDone) {
             fadeOut.setDuration(1);
         } else {
-            fadeOut.setDuration(1000);
+            fadeOut.setDuration(FADE_DURATION);
         }
         fadeOut.setAnimationListener(new Animation.AnimationListener() {
             @Override
@@ -271,7 +272,6 @@ public class ScreenSaverUtils extends FrameLayout implements SensorEventListener
 
                 if (mShowDate) {
                     DateFormat df = new DateFormat();
-                    df.format("EEEE, dd MMMM", now);
                     dateStartIndex = nightClockText.length();
                     nightClockText += df.format("EEEE, dd MMMM", now) + "\n";
                     dateEndIndex = nightClockText.length();
@@ -345,6 +345,7 @@ public class ScreenSaverUtils extends FrameLayout implements SensorEventListener
                         long hours = TimeUnit.MILLISECONDS.toHours(tillNextAlarm);
                         long mins = TimeUnit.MILLISECONDS.toMinutes(tillNextAlarm) % TimeUnit.HOURS.toMinutes(1);
                         long secs = TimeUnit.MILLISECONDS.toSeconds(tillNextAlarm) % TimeUnit.MINUTES.toSeconds(1);
+
                         if (secs > 0) {
                             mins++;
                             if (mins >= 60) {
@@ -424,12 +425,22 @@ public class ScreenSaverUtils extends FrameLayout implements SensorEventListener
 
 
                 AlphaAnimation fadeIn = new AlphaAnimation(0.0f, 1.0f);
-                fadeIn.setDuration(1000);
+                fadeIn.setDuration(FADE_DURATION * 3);
 
                 tv.startAnimation(fadeIn);
             }
         });
         v.startAnimation(fadeOut);
+    }
+
+    protected void setTimerDelay() {
+        long timeMs = System.currentTimeMillis();
+        long delayMs = MOVE_TIME_FREQUENCY - (timeMs % MOVE_TIME_FREQUENCY);
+        if (delayMs < (MOVE_TIME_FREQUENCY/2)) {
+            delayMs += MOVE_TIME_FREQUENCY;
+        }
+
+        mMoveTimeHandler.postDelayed(mMoveTimeRunnable, delayMs + 1000);
     }
 
     protected void updateTimeRunnable() {
@@ -439,11 +450,10 @@ public class ScreenSaverUtils extends FrameLayout implements SensorEventListener
         mMoveTimeRunnable = new Runnable() {
             public void run() {
                 updateTime();
-                mMoveTimeHandler.postDelayed(this, MOVE_TIME_FREQUENCY);
+                setTimerDelay();
             }
         };
-        mMoveTimeHandler.postDelayed(mMoveTimeRunnable, MOVE_TIME_FREQUENCY);
-
+        setTimerDelay();
     }
 
     protected void updateTime() {

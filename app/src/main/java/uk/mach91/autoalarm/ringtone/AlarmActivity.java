@@ -22,6 +22,8 @@
 
 package uk.mach91.autoalarm.ringtone;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -56,6 +58,8 @@ import uk.mach91.autoalarm.util.TimeFormatUtils;
 
 public class AlarmActivity extends RingtoneActivity<Alarm> {
     private static final String TAG = "AlarmActivity";
+
+    final private static int BUTTON_ANIMATION_DELAY = 500;
 
     private AlarmController mAlarmController;
     private NotificationManager mNotificationManager;
@@ -166,12 +170,15 @@ public class AlarmActivity extends RingtoneActivity<Alarm> {
                 FrameLayout fl_left = findViewById(R.id.btn_left);
                 FrameLayout fl_right = findViewById(R.id.btn_right);
 
-                float x = fl_left.getX();
-                float y = fl_left.getY();
-                fl_left.setX(fl_right.getX());
-                fl_left.setY(fl_right.getY());
-                fl_right.setX(x);
-                fl_right.setY(y);
+                ObjectAnimator animationLeftY = ObjectAnimator.ofFloat(fl_left, "translationY", fl_right.getY() - fl_left.getY());
+                ObjectAnimator animationRightY = ObjectAnimator.ofFloat(fl_right, "translationY", fl_left.getY() - fl_right.getY());
+                ObjectAnimator animationLeftX = ObjectAnimator.ofFloat(fl_left, "translationX", fl_right.getX() - fl_left.getX());
+                ObjectAnimator animationRightX = ObjectAnimator.ofFloat(fl_right, "translationX", fl_left.getX() - fl_right.getX());
+
+                AnimatorSet set  = new AnimatorSet();
+                set.playTogether(animationLeftY, animationRightY, animationLeftX, animationRightX);
+                set.setDuration(BUTTON_ANIMATION_DELAY);
+                set.start();
             }
         }
         dissmissCount++;

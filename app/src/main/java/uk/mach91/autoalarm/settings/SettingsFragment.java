@@ -169,7 +169,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
             List<String> calendarList = new ArrayList<String>();
             List<String> calendarListValues = new ArrayList<String>();
 
-            if (android.os.Build.VERSION.SDK_INT <= 7) {
+            /*if (android.os.Build.VERSION.SDK_INT <= 7) {
                 cursor = getActivity().getContentResolver().query(Uri.parse("content://calendar/calendars"), new String[]{"_id", "displayName"}, null,
                         null, null);
 
@@ -177,12 +177,14 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
                 cursor = getActivity().getContentResolver().query(Uri.parse("content://com.android.calendar/calendars"),
                         new String[]{"_id", "displayName"}, null, null, null);
 
-            } else {
-                Uri uri = CalendarContract.Calendars.CONTENT_URI;
-                cursor = getActivity().getContentResolver().query(uri,
-                        new String[]{CalendarContract.Calendars._ID, CalendarContract.Calendars.CALENDAR_DISPLAY_NAME, CalendarContract.Calendars.ACCOUNT_NAME}, null, null, CalendarContract.Calendars.ACCOUNT_NAME + " ASC, " + CalendarContract.Calendars.CALENDAR_DISPLAY_NAME + " ASC");
-
             }
+            */
+            //else {
+            Uri uri = CalendarContract.Calendars.CONTENT_URI;
+            cursor = getActivity().getContentResolver().query(uri,
+                    new String[]{CalendarContract.Calendars._ID, CalendarContract.Calendars.CALENDAR_DISPLAY_NAME, CalendarContract.Calendars.ACCOUNT_NAME}, null, null, CalendarContract.Calendars.ACCOUNT_NAME + " ASC, " + CalendarContract.Calendars.CALENDAR_DISPLAY_NAME + " ASC");
+
+            //}
 
             // Get calendars name
             //Log.i("Cursor count " + cursor.getCount());
