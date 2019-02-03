@@ -1,6 +1,6 @@
-<img src="https://github.com/mach91uk/alarmatic/blob/master/hi-res.jpg"
+[<img src="https://github.com/mach91uk/alarmatic/blob/master/hi-res.jpg"
       alt="Alarmatic"
-      height="80">
+      height="80"](https://play.google.com/store/apps/details?id=uk.mach91.autoalarm)
 	  
 # Alarmatic
 Alarmatic is a flexible, customisable alarm, which can automatically skip selected alarms when you are on holiday.
