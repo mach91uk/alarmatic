@@ -7,11 +7,11 @@ Highlights:
 No longer do you need to manually disable your work related alarms when you go on holiday, and then re-enable them once you are back.
 Alarmatic automatically does this for you by looking at your calendar and checking your holiday events. 
 
-- **Flip your phone and other snooze settings**
-There are many ways to help you snooze your alarms in a way that best suits your needs, including the really quick method of just picking up you phone and flipping it.
+- **Flip your device and other snooze settings**
+There are many ways to help you snooze your alarms in a way that best suits your needs, including the really quick method of just picking up you device and flipping it.
 
 - **Shake yourself awake**
-Are you a hard sleeper? Then instead of just pressing a button why not why not shake your phone 10, 20 or even 30 time to snooze or dismiss. All configurable in the settings.
+Are you a hard sleeper? Then instead of just pressing a button why not shake your device 10, 20 or even 30 times to snooze or dismiss. All configurable in the settings.
 
 - **Protection against accidentally dismissing an alarm**
 No one wants to accidentally dismiss an alarm, so we have provided a couple of features to help. 
