@@ -102,7 +102,7 @@
 
     <!-- Flip  action -->
     <string name="key_flip_action">key_flip_action</string>
-    <string name="title_flip_action">Flip over to</string>
+    <string name="title_flip_action">Flip over / shake to</string>
     <string-array name="entries_flip_action">
         <item>Do nothing</item>
         <item>Snooze</item>
@@ -112,6 +112,22 @@
         <item>0</item>
         <item>1</item>
         <item>2</item>
+    </string-array>
+
+    <!-- Flip  action -->
+    <string name="key_flip_shake_action">key_flip_shake_action</string>
+    <string name="title_flip_shake_action">Flip over / shake action</string>
+    <string-array name="entries_flip_shake_action">
+        <item>Flip over</item>
+        <item>Shake 10 times</item>
+        <item>Shake 20 times</item>
+        <item>Shake 30 times</item>
+    </string-array>
+    <string-array name="values_flip_shake_action">
+        <item>0</item>
+        <item>10</item>
+        <item>20</item>
+        <item>30</item>
     </string-array>
 
     <!-- Fade in volume  -->
@@ -222,7 +238,7 @@
     <string name="key_screensaver_text_brightness">key_screensaver_text_brightness</string>
     <string name="title_screensaver_brightness">Text brightness</string>
     <string name="key_screensaver_colour">key_screensaver_colour</string>
-    <string name="title_screensaver_colour">Text colour and brightness</string>
+    <string name="title_screensaver_colour">Text color and brightness</string>
     <string name="key_screensaver_size">key_screensaver_size</string>
     <string name="title_screensaver_size">Text size</string>
 

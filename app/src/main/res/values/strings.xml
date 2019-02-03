@@ -154,5 +154,7 @@
     <string name="alarm_skip_if_ok_holiday">Skip if on holiday</string>
     <string name="alarm_skipping_on_holiday">(skipping, on holiday)</string>
     <string name="alarm_screensaver_alarm_in">Alarm in:</string>
+    <string name="alarm_must_shake">You enabled shake, so shake!</string>
+    <string name="alarm_shake_count">Shake count:</string>string
 
 </resources>

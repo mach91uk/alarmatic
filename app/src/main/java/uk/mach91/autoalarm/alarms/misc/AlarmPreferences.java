@@ -51,6 +51,10 @@ public final class AlarmPreferences {
         return readPreference(c, R.string.key_flip_action, 0);
     }
 
+    public static int flipShakeAction(Context c) {
+        return readPreference(c, R.string.key_flip_shake_action, 0);
+    }
+
     public static int fadeVolume(Context c) {
         return readPreference(c, R.string.key_fade_volume, 1);
     }

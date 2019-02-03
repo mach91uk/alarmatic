@@ -50,8 +50,10 @@ import android.widget.Toast;
 
 import uk.mach91.autoalarm.alarms.misc.AlarmController;
 import uk.mach91.autoalarm.alarms.misc.AlarmPreferences;
+import uk.mach91.autoalarm.ringtone.RingtoneActivity;
 import uk.mach91.autoalarm.util.ContentIntentUtils;
 import uk.mach91.autoalarm.util.DurationUtils;
+import uk.mach91.autoalarm.util.LocalBroadcastHelper;
 import uk.mach91.autoalarm.util.ParcelableUtil;
 import uk.mach91.autoalarm.util.TimeFormatUtils;
 import uk.mach91.autoalarm.MainActivity;
@@ -73,8 +75,9 @@ public class AlarmRingtoneService extends RingtoneService<Alarm> {
     private static final String ACTION_DISMISS = "uk.mach91.autoalarm.ringtone.action.DISMISS";
 
     private AlarmController mAlarmController;
-    private static SensorManager sensorService;
-    private Sensor sensor;
+    private static SensorManager mSensorService;
+    private Sensor mSensor;
+    private Sensor mShakeSensor;
     private boolean mFacingDown;
     private boolean mFacingDownSet;
 
@@ -85,8 +88,16 @@ public class AlarmRingtoneService extends RingtoneService<Alarm> {
     private int mOrigVol = 0;
     private int mDelayBeforeNextVolUp = 3 * 1000;
 
-    private int mFlipAction = 0;
     private int mFadeVolume = 0;
+
+    private static final float SHAKE_THRESHOLD = 1.5f; // m/S**2
+    private static final int MIN_TIME_BETWEEN_SHAKES_MILLISECS = 100;
+    private long mLastShakeUpdate = 0;
+    private int mShakeCount = 0;
+
+    private int mFlipShakeAction =0;
+    private int mFlipAction = 0;
+
 
     private boolean mCancelDueToHoliday = false;
 
@@ -129,24 +140,45 @@ public class AlarmRingtoneService extends RingtoneService<Alarm> {
     public void onCreate() {
         super.onCreate();
 
+        mLastShakeUpdate = 0;
+        mShakeCount = 0;
+
+
+
         mAlarmController = new AlarmController(this, null);
 
         //set up flip action
+        mFlipShakeAction = AlarmPreferences.flipShakeAction(this);
         mFlipAction = AlarmPreferences.flipAction(this);
         if (mFlipAction > 0) {
             //Cancel the alarm when the phone is turned over
-            sensorService = (SensorManager) getSystemService(SENSOR_SERVICE);
-            sensor = sensorService.getDefaultSensor(Sensor.TYPE_GRAVITY);
-            if (sensor != null) {
-                sensorService.registerListener(mySensorEventListener, sensor,
-                        SensorManager.SENSOR_DELAY_NORMAL);
-                Log.i("Compass MainActivity", "Registerered for ORIENTATION Sensor");
-            } else {
-                Log.e("Compass MainActivity", "Registerered for ORIENTATION Sensor");
-                Toast.makeText(this, "ORIENTATION Sensor not found",
-                        Toast.LENGTH_LONG).show();
+            mSensorService = (SensorManager) getSystemService(SENSOR_SERVICE);
+            if (mFlipShakeAction == 0) {
+                mSensor = mSensorService.getDefaultSensor(Sensor.TYPE_GRAVITY);
+                if (mSensor != null) {
+                    mSensorService.registerListener(mySensorEventListener, mSensor,
+                            SensorManager.SENSOR_DELAY_NORMAL);
+                    Log.i("Compass MainActivity", "Registerered for ORIENTATION Sensor");
+                } else {
+                    Log.e("Compass MainActivity", "Registerered for ORIENTATION Sensor");
+                    Toast.makeText(this, "ORIENTATION Sensor not found",
+                            Toast.LENGTH_LONG).show();
+                }
+            } else if (mFlipShakeAction > 0) {
+                mShakeSensor = mSensorService.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+                if (mShakeSensor != null) {
+                    mSensorService.registerListener(mySensorEventListener, mShakeSensor,
+                            SensorManager.SENSOR_DELAY_NORMAL);
+                    Log.i("Compass MainActivity", "Registerered for ORIENTATION Sensor");
+                } else {
+                    Log.e("Compass MainActivity", "Registerered for ORIENTATION Sensor");
+                    Toast.makeText(this, "ACCELEROMETER Sensor not found",
+                            Toast.LENGTH_LONG).show();
+                }
             }
         }
+
+        
 
         //Set volume level
         AudioManager audio = (AudioManager) getSystemService(AUDIO_SERVICE);
@@ -174,8 +206,8 @@ public class AlarmRingtoneService extends RingtoneService<Alarm> {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (sensorService != null && sensor != null) {
-            sensorService.unregisterListener(mySensorEventListener);
+        if (mSensorService != null && (mSensor != null || mShakeSensor != null)) {
+            mSensorService.unregisterListener(mySensorEventListener);
         }
         if (mVolumeHandler != null && mVolumeRunnable != null){
             mVolumeHandler.removeCallbacks(mVolumeRunnable);
@@ -195,7 +227,7 @@ public class AlarmRingtoneService extends RingtoneService<Alarm> {
         public void onSensorChanged(SensorEvent event) {
             final float factor = 0.85F;
 
-            if (event.sensor == sensor) {
+            if (event.sensor == mSensor) {
                 if (!mFacingDownSet) {
                     mFacingDown = event.values[2] < 0;
                     mFacingDownSet = true;
@@ -220,7 +252,32 @@ public class AlarmRingtoneService extends RingtoneService<Alarm> {
                         }
                     }
                 }
+            } else if (event.sensor == mShakeSensor) {
+                long curTime = System.currentTimeMillis();
+                // only allow one update every 100ms.
+                if ((curTime - mLastShakeUpdate) > MIN_TIME_BETWEEN_SHAKES_MILLISECS) {
+                    float x = event.values[0];
+                    float y = event.values[1];
+                    float z = event.values[2];
+
+                    if (mLastShakeUpdate != 0) {
+                        double acceleration = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2)) - SensorManager.GRAVITY_EARTH;
+
+                        if (acceleration > SHAKE_THRESHOLD) {
+                            mShakeCount++;
+
+                            if (mShakeCount >=  mFlipShakeAction) {
+                                mAlarmController.cancelAlarm(getRingingObject(), false, true);
+                                cancelNow();
+                            } else {
+                                shakeNow();
+                            }
+                        }
+                    }
+                    mLastShakeUpdate = curTime;
+                }
             }
+
         }
     };
 

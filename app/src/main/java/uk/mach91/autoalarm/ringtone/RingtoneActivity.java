@@ -37,6 +37,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import uk.mach91.autoalarm.alarms.misc.AlarmPreferences;
 import uk.mach91.autoalarm.ringtone.playback.RingtoneService;
 import uk.mach91.autoalarm.util.LocalBroadcastHelper;
 import uk.mach91.autoalarm.util.ParcelableUtil;
@@ -60,9 +61,15 @@ public abstract class RingtoneActivity<T extends Parcelable> extends BaseActivit
     public static final String ACTION_FINISH = "uk.mach91.autoalarm.ringtone.action.FINISH";
     public static final String EXTRA_RINGING_OBJECT = "uk.mach91.autoalarm.ringtone.extra.RINGING_OBJECT";
     public static final String ACTION_SHOW_SILENCED = "uk.mach91.autoalarm.ringtone.action.SHOW_SILENCED";
+    public static final String ACTION_SHAKE = "uk.mach91.autoalarm.ringtone.action.SHAKE";
 
     private static boolean sIsAlive = false;
     private T mRingingObject;
+
+    private int mShakeCount = 0;
+
+    private int mFlipShakeAction =0;
+    private int mFlipAction = 0;
 
     @BindView(R.id.title) TextView mHeaderTitle;
     @BindView(R.id.auto_silenced_container) LinearLayout mAutoSilencedContainer;
@@ -126,6 +133,11 @@ public abstract class RingtoneActivity<T extends Parcelable> extends BaseActivit
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        mFlipShakeAction = AlarmPreferences.flipShakeAction(this);
+        mFlipAction = AlarmPreferences.flipAction(this);
+
+        mShakeCount = 0;
+
         ButterKnife.bind(this);
 
         final byte[] bytes = getIntent().getByteArrayExtra(EXTRA_RINGING_OBJECT);
@@ -152,8 +164,10 @@ public abstract class RingtoneActivity<T extends Parcelable> extends BaseActivit
         getHeaderContent((LinearLayout) findViewById(R.id.header));
         mAutoSilencedText.setCompoundDrawablesWithIntrinsicBounds(0, getAutoSilencedDrawable(), 0, 0);
         mAutoSilencedText.setText(getAutoSilencedText());
+
         mLeftButton.setText(getLeftButtonText());
         mRightButton.setText(getRightButtonText());
+        updateShakeLeftRightButtonText();
         mLeftButton.setCompoundDrawablesWithIntrinsicBounds(0, getLeftButtonDrawable(), 0, 0);
         mRightButton.setCompoundDrawablesWithIntrinsicBounds(0, getRightButtonDrawable(), 0, 0);
 
@@ -174,6 +188,7 @@ public abstract class RingtoneActivity<T extends Parcelable> extends BaseActivit
         // EditAlarmActivity?
         LocalBroadcastHelper.registerReceiver(this, mFinishReceiver, ACTION_FINISH);
         LocalBroadcastHelper.registerReceiver(this, mOnAutoSilenceReceiver, ACTION_SHOW_SILENCED);
+        LocalBroadcastHelper.registerReceiver(this, mShakeReceiver, ACTION_SHAKE);
     }
 
     @Override
@@ -183,6 +198,7 @@ public abstract class RingtoneActivity<T extends Parcelable> extends BaseActivit
         // EditAlarmActivity?
         LocalBroadcastHelper.unregisterReceiver(this, mFinishReceiver);
         LocalBroadcastHelper.unregisterReceiver(this, mOnAutoSilenceReceiver);
+        LocalBroadcastHelper.unregisterReceiver(this, mShakeReceiver);
     }
 
     @Override
@@ -281,6 +297,28 @@ public abstract class RingtoneActivity<T extends Parcelable> extends BaseActivit
             stopAndFinish();
         }
     };
+
+    private final BroadcastReceiver mShakeReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+           // stopAndFinish();
+            mShakeCount ++;
+            updateShakeLeftRightButtonText();
+        }
+    };
+
+    private void updateShakeLeftRightButtonText () {
+        if (mFlipAction != 0 && mFlipShakeAction > 0) {
+            String buttonText = "\n" + getString(R.string.alarm_shake_count) + " " + mShakeCount + " / " + mFlipShakeAction;
+            if (mFlipAction == 1) {
+                buttonText = getString(getLeftButtonText()) + buttonText;
+                mLeftButton.setText(buttonText);
+            } else if (mFlipAction == 2) {
+                buttonText = getString(getRightButtonText()) + buttonText;
+                mRightButton.setText(buttonText);
+            }
+        }
+    }
 
     private final BroadcastReceiver mOnAutoSilenceReceiver = new BroadcastReceiver() {
         @Override

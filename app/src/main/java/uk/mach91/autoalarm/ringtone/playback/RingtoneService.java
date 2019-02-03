@@ -234,4 +234,8 @@ public abstract class RingtoneService<T extends Parcelable> extends Service {
         LocalBroadcastHelper.sendBroadcast(RingtoneService.this, RingtoneActivity.ACTION_FINISH);
         return null;
     }
+    protected final T shakeNow()  {
+        LocalBroadcastHelper.sendBroadcast(RingtoneService.this, RingtoneActivity.ACTION_SHAKE);
+        return null;
+    }
 }

@@ -10,6 +10,9 @@ Alarmatic automatically does this for you by looking at your calendar and checki
 - **Flip your phone and other snooze settings**
 There are many ways to help you snooze your alarms in a way that best suits your needs, including the really quick method of just picking up you phone and flipping it.
 
+- **Shake yourself awake**
+Are you a hard sleeper? Then instead of just pressing a button why not why not shake your phone 10, 20 or even 30 time to snooze or dismiss. All configurable in the settings.
+
 - **Protection against accidentally dismissing an alarm**
 No one wants to accidentally dismiss an alarm, so we have provided a couple of features to help. 
 You can opt for dismiss to require a long press (just a tap does nothing). To be really sure, after the first press the Snooze and Dismiss buttons are swapped, requiring a second confirmation press on the Dismiss button in the new location.
@@ -24,8 +27,8 @@ Display a notification of upcoming alarms. This also allows the dismissal of onl
 - **Custom ringtone picker**
 Pick a standard alarm tone, or a custom tone by selecting any audio file stored on your device.
 
-- **Screen saver / Night clock**
-A screen saver / night clock can display the current day, date and time as well as the time remaining until your next alarm. You can even select the color and brightness of the text displayed. It works with the standard Android screen saver feature as well as allowing you to manually launch it from within the app.
+- **Screen saver / Desk / Night clock**
+A screen saver / desk / night clock can display the current day, date and time as well as the time remaining until your next alarm. You can even select the color and brightness of the text displayed. It works with the standard Android screen saver feature as well as allowing you to manually launch it from within the app.
 
 - **Notification when your time zone changes**
 When you travel into a different time zone your current alarms might not be appropriate for your new location. Alarmatic can issue a notification reminding you to check your alarms so you can change them if necessary.
