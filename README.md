@@ -22,7 +22,7 @@ Alarmatic automatically does this for you by looking at your calendar and checki
 There are many ways to help you snooze your alarms in a way that best suits your needs, including the really quick method of just picking up you device and flipping it.
 
 - **Shake yourself awake**
-Are you a hard sleeper? Then instead of just pressing a button why not shake your device 10, 20 or even 30 times to snooze or dismiss. All configurable in the settings.
+Are you a heavy sleeper? Then instead of just pressing a button why not shake your device 10, 20 or even 30 times to snooze or dismiss. All configurable in the settings.
 
 - **Protection against accidentally dismissing an alarm**
 No one wants to accidentally dismiss an alarm, so we have provided a couple of features to help. 

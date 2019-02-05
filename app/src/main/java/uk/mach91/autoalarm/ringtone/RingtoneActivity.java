@@ -308,12 +308,19 @@ public abstract class RingtoneActivity<T extends Parcelable> extends BaseActivit
     };
 
     private void updateShakeLeftRightButtonText () {
-        if (mFlipAction != 0 && mFlipShakeAction > 0) {
-            String buttonText = "\n" + getString(R.string.alarm_shake_count) + " " + mShakeCount + " / " + mFlipShakeAction;
-            if (mFlipAction == 1) {
+
+        if (mFlipAction != AlarmPreferences.FLIP_ACTION_NOTHING) {
+            String buttonText;
+
+            if (mFlipShakeAction == 0) {
+                buttonText = "\n" + getString(R.string.alarm_press_or_flip);
+            } else {
+                buttonText = "\n" + getString(R.string.alarm_shake_count) + " " + mShakeCount + " / " + mFlipShakeAction;
+            }
+            if (mFlipAction == AlarmPreferences.FLIP_ACTION_SNOOZE) {
                 buttonText = getString(getLeftButtonText()) + buttonText;
                 mLeftButton.setText(buttonText);
-            } else if (mFlipAction == 2) {
+            } else if (mFlipAction == AlarmPreferences.FLIP_ACTION_DISMISS) {
                 buttonText = getString(getRightButtonText()) + buttonText;
                 mRightButton.setText(buttonText);
             }

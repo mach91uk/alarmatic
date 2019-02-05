@@ -152,7 +152,7 @@ public class AlarmActivity extends RingtoneActivity<Alarm> {
     @Override
     protected void onLeftButtonClick() {
         if (mLongClick == 0 || mLongClick == 2) {
-            if (!(mFlipAction == 1 && mFlipShakeAction >= 0)) {
+            if (!(mFlipAction == AlarmPreferences.FLIP_ACTION_SNOOZE && mFlipShakeAction >= 0)) {
                 mAlarmController.snoozeAlarm(getRingingObject());
                 // Can't call dismiss() because we don't want to also call cancelAlarm()! Why? For example,
                 // we don't want the alarm, if it has no recurrence, to be turned off right now.
@@ -164,7 +164,7 @@ public class AlarmActivity extends RingtoneActivity<Alarm> {
     @Override
     protected void onRightButtonClick() {
         if (mLongClick == 0 || mLongClick == 1) {
-            if (!(mFlipAction == 2 && mFlipShakeAction >= 0)) {
+            if (!(mFlipAction == AlarmPreferences.FLIP_ACTION_DISMISS && mFlipShakeAction >= 0)) {
                 // TODO do we really need to cancel the intent and alarm?
                 //mAlarmController.cancelAlarm(getRingingObject(), false, true);
                 //stopAndFinish();
@@ -202,7 +202,7 @@ public class AlarmActivity extends RingtoneActivity<Alarm> {
 
     @Override
     protected boolean onLeftButtonLongClick() {
-        if (!(mFlipAction == 1 && mFlipShakeAction >= 0)) {
+        if (!(mFlipAction == AlarmPreferences.FLIP_ACTION_SNOOZE && mFlipShakeAction > 0)) {
             mAlarmController.snoozeAlarm(getRingingObject());
             // Can't call dismiss() because we don't want to also call cancelAlarm()! Why? For example,
             // we don't want the alarm, if it has no recurrence, to be turned off right now.
@@ -215,7 +215,7 @@ public class AlarmActivity extends RingtoneActivity<Alarm> {
 
     @Override
     protected boolean onRightButtonLongClick() {
-        if (!(mFlipAction == 2 && mFlipShakeAction >= 0)) {
+        if (!(mFlipAction == AlarmPreferences.FLIP_ACTION_DISMISS && mFlipShakeAction > 0)) {
             dismissButtonPress();
         } else {
             Toast.makeText(this, getString (R.string.alarm_must_shake), Toast.LENGTH_LONG).show();

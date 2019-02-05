@@ -81,6 +81,14 @@
             android:summary="@string/summary_alarm_volume"
             android:title="@string/title_alarm_volume"/>
         <ListPreference
+            android:key="@string/key_long_click"
+            android:title="@string/title_long_click"
+            android:dialogTitle="@string/title_long_click"
+            android:entries="@array/entries_long_click"
+            android:entryValues="@array/values_long_click"
+            android:defaultValue="0"
+            android:summary="%s"/>
+        <ListPreference
             android:key="@string/key_flip_action"
             android:title="@string/title_flip_action"
             android:dialogTitle="@string/title_flip_action"
@@ -101,14 +109,6 @@
             android:title="@string/title_dismiss_twice"
             android:summary="@string/sum_dismiss_twice"
             android:defaultValue="false"/>
-        <ListPreference
-            android:key="@string/key_long_click"
-            android:title="@string/title_long_click"
-            android:dialogTitle="@string/title_long_click"
-            android:entries="@array/entries_long_click"
-            android:entryValues="@array/values_long_click"
-            android:defaultValue="0"
-            android:summary="%s"/>
         <ListPreference
             android:key="@string/key_snooze_duration"
             android:title="@string/title_snooze_duration"

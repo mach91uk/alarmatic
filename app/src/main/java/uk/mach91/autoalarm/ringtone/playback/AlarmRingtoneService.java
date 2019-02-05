@@ -150,7 +150,7 @@ public class AlarmRingtoneService extends RingtoneService<Alarm> {
         //set up flip action
         mFlipShakeAction = AlarmPreferences.flipShakeAction(this);
         mFlipAction = AlarmPreferences.flipAction(this);
-        if (mFlipAction > 0) {
+        if (mFlipAction > AlarmPreferences.FLIP_ACTION_NOTHING) {
             //Cancel the alarm when the phone is turned over
             mSensorService = (SensorManager) getSystemService(SENSOR_SERVICE);
             if (mFlipShakeAction == 0) {
@@ -243,9 +243,9 @@ public class AlarmRingtoneService extends RingtoneService<Alarm> {
                             Log.i(TAG, "UP");
                         }
                         if (mFacingDownSet && mFacingDown != nowDown) {
-                            if (mFlipAction == 1) {
+                            if (mFlipAction == AlarmPreferences.FLIP_ACTION_SNOOZE) {
                                 mAlarmController.snoozeAlarm(getRingingObject());
-                            } else {
+                            } else if (mFlipAction == AlarmPreferences.FLIP_ACTION_DISMISS){
                                 mAlarmController.cancelAlarm(getRingingObject(), false, true);
                             }
                             cancelNow();
@@ -267,7 +267,11 @@ public class AlarmRingtoneService extends RingtoneService<Alarm> {
                             mShakeCount++;
 
                             if (mShakeCount >=  mFlipShakeAction) {
-                                mAlarmController.cancelAlarm(getRingingObject(), false, true);
+                                if (mFlipAction == AlarmPreferences.FLIP_ACTION_SNOOZE) {
+                                    mAlarmController.snoozeAlarm(getRingingObject());
+                                } else  if (mFlipAction == AlarmPreferences.FLIP_ACTION_DISMISS) {
+                                    mAlarmController.cancelAlarm(getRingingObject(), false, true);
+                                }
                                 cancelNow();
                             } else {
                                 shakeNow();

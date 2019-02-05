@@ -156,5 +156,6 @@
     <string name="alarm_screensaver_alarm_in">Alarm in:</string>
     <string name="alarm_must_shake">You enabled shake, so shake!</string>
     <string name="alarm_shake_count">Shake count:</string>string
+    <string name="alarm_press_or_flip">(click or flip)</string>string
 
 </resources>

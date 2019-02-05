@@ -36,6 +36,10 @@ import uk.mach91.autoalarm.R;
 public final class AlarmPreferences {
     private static final String TAG = "AlarmPreferences";
 
+    public static final int FLIP_ACTION_NOTHING = 0;
+    public static final int FLIP_ACTION_SNOOZE = 1;
+    public static final int FLIP_ACTION_DISMISS = 2;
+
     private AlarmPreferences() {}
 
     public static int snoozeDuration(Context c) {
