@@ -70,6 +70,7 @@ public abstract class RingtoneActivity<T extends Parcelable> extends BaseActivit
 
     private int mFlipShakeAction =0;
     private int mFlipAction = 0;
+    private int mLongClick = 0;
 
     @BindView(R.id.title) TextView mHeaderTitle;
     @BindView(R.id.auto_silenced_container) LinearLayout mAutoSilencedContainer;
@@ -135,6 +136,7 @@ public abstract class RingtoneActivity<T extends Parcelable> extends BaseActivit
 
         mFlipShakeAction = AlarmPreferences.flipShakeAction(this);
         mFlipAction = AlarmPreferences.flipAction(this);
+        mLongClick = AlarmPreferences.longClick(this);
 
         mShakeCount = 0;
 
@@ -313,16 +315,45 @@ public abstract class RingtoneActivity<T extends Parcelable> extends BaseActivit
             String buttonText;
 
             if (mFlipShakeAction == 0) {
-                buttonText = "\n" + getString(R.string.alarm_press_or_flip);
+                buttonText = "\n(";
+                //+ getString(R.string.alarm_press_or_flip);
+                if ((mLongClick == AlarmPreferences.LONG_CLICK_SNOOZE || mLongClick == AlarmPreferences.LONG_CLICK_SNOOZE_DISMISS)
+                            && mFlipAction == AlarmPreferences.FLIP_ACTION_SNOOZE ) {
+                    buttonText += getString(R.string.alarm_long_click);
+                } else  if ((mLongClick == AlarmPreferences.LONG_CLICK_DISMISS || mLongClick == AlarmPreferences.LONG_CLICK_SNOOZE_DISMISS)
+                        && mFlipAction == AlarmPreferences.FLIP_ACTION_DISMISS) {
+                    buttonText += getString(R.string.alarm_long_click);
+                } else {
+                    buttonText += getString(R.string.alarm_click);
+                }
+                buttonText += " " + getString(R.string.alarm_or_flip) + ")";
             } else {
-                buttonText = "\n" + getString(R.string.alarm_shake_count) + " " + mShakeCount + " / " + mFlipShakeAction;
+                buttonText = "\n(" + getString(R.string.alarm_shake_count) + " " + mShakeCount + " / " + mFlipShakeAction + ")";
             }
             if (mFlipAction == AlarmPreferences.FLIP_ACTION_SNOOZE) {
                 buttonText = getString(getLeftButtonText()) + buttonText;
                 mLeftButton.setText(buttonText);
+                buttonText = "\n(";
+                if (mLongClick == AlarmPreferences.LONG_CLICK_DISMISS || mLongClick == AlarmPreferences.LONG_CLICK_SNOOZE_DISMISS) {
+                    buttonText += getString(R.string.alarm_long_click);
+                } else {
+                    buttonText += getString(R.string.alarm_click);
+                }
+                buttonText += ")";
+                buttonText = getString(getRightButtonText()) + buttonText;
+                mRightButton.setText(buttonText);
             } else if (mFlipAction == AlarmPreferences.FLIP_ACTION_DISMISS) {
                 buttonText = getString(getRightButtonText()) + buttonText;
                 mRightButton.setText(buttonText);
+                buttonText = "\n(";
+                if (mLongClick == AlarmPreferences.LONG_CLICK_SNOOZE || mLongClick == AlarmPreferences.LONG_CLICK_SNOOZE_DISMISS) {
+                    buttonText += getString(R.string.alarm_long_click);
+                } else  {
+                    buttonText += getString(R.string.alarm_click);
+                }
+                buttonText += ")";
+                buttonText = getString(getLeftButtonText()) + buttonText;
+                mLeftButton.setText(buttonText);
             }
         }
     }

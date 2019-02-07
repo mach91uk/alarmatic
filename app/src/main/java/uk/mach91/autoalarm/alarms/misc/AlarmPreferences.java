@@ -40,6 +40,11 @@ public final class AlarmPreferences {
     public static final int FLIP_ACTION_SNOOZE = 1;
     public static final int FLIP_ACTION_DISMISS = 2;
 
+    public static final int LONG_CLICK_DISABLED = 0;
+    public static final int LONG_CLICK_SNOOZE = 1;
+    public static final int LONG_CLICK_DISMISS = 2;
+    public static final int LONG_CLICK_SNOOZE_DISMISS = 3;
+
     private AlarmPreferences() {}
 
     public static int snoozeDuration(Context c) {
@@ -52,7 +57,7 @@ public final class AlarmPreferences {
     }
 
     public static int flipAction(Context c) {
-        return readPreference(c, R.string.key_flip_action, 0);
+        return readPreference(c, R.string.key_flip_action, FLIP_ACTION_NOTHING);
     }
 
     public static int flipShakeAction(Context c) {
@@ -64,7 +69,7 @@ public final class AlarmPreferences {
     }
 
     public static int longClick(Context c) {
-        return readPreference(c, R.string.key_long_click, 0);
+        return readPreference(c, R.string.key_long_click, LONG_CLICK_SNOOZE_DISMISS);
     }
 
 
@@ -93,7 +98,11 @@ public final class AlarmPreferences {
     }
 
     public static boolean mustDismissTwice(Context c) {
-        return PreferenceManager.getDefaultSharedPreferences(c).getBoolean( c.getString(R.string.key_dismiss_twice), false);
+        return PreferenceManager.getDefaultSharedPreferences(c).getBoolean( c.getString(R.string.key_dismiss_twice), true);
+    }
+
+    public static boolean mustSnoozeTwice(Context c) {
+        return PreferenceManager.getDefaultSharedPreferences(c).getBoolean( c.getString(R.string.key_snooze_twice), false);
     }
 
     public static boolean screensaverShowDate(Context c) {

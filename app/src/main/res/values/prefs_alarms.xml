@@ -222,6 +222,9 @@
     <string name="title_dismiss_twice">Avoid accidental dismisses</string>
     <string name="sum_dismiss_twice">Force two presses to dismiss, and swap the Snooze and Dismiss button locations after first dismiss</string>
 
+    <string name="key_snooze_twice">key_snooze_twice</string>
+    <string name="title_snooze_twice">Avoid accidental snoozes</string>
+    <string name="sum_snooze_twice">Force two presses to snoze, and swap the Snooze and Dismiss button locations after first snooze</string>
 
 
     <string name="title_category_screensaver">Screen saver: Displays time, date and the time to the next alarm</string>

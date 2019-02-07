@@ -154,8 +154,13 @@
     <string name="alarm_skip_if_ok_holiday">Skip if on holiday</string>
     <string name="alarm_skipping_on_holiday">(skipping, on holiday)</string>
     <string name="alarm_screensaver_alarm_in">Alarm in:</string>
-    <string name="alarm_must_shake">You enabled shake, so shake!</string>
-    <string name="alarm_shake_count">Shake count:</string>string
-    <string name="alarm_press_or_flip">(click or flip)</string>string
+    <string name="alarm_must_shake">Shake is enabled, so please shake!</string>
+    <string name="alarm_shake_count">Shake:</string>
+    <string name="alarm_click">click</string>
+    <string name="alarm_long_click">long click</string>
+    <string name="alarm_or_flip">or flip</string>
+    <string name="alarm_long_click_required">Long click is enabled, so please long click!</string>
+    <string name="alarm_accidental_snooze_protection">Accidental snooze protection is enabled, please click again!</string>
+    <string name="alarm_accidental_dismiss_protection">Accidental dismiss protection is enabled, please click again!</string>
 
 </resources>

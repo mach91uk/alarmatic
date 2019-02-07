@@ -65,7 +65,8 @@ public class AlarmActivity extends RingtoneActivity<Alarm> {
     private AlarmController mAlarmController;
     private NotificationManager mNotificationManager;
 
-    private int dissmissCount;
+    private int dismissCount;
+    private int snoozeCount;
 
     private int mLongClick = 0;
     private int mFlipShakeAction =0;
@@ -79,7 +80,8 @@ public class AlarmActivity extends RingtoneActivity<Alarm> {
         // This could be the case if we're starting a new instance of this activity after leaving the first launch.
         mAlarmController.removeUpcomingAlarmNotification(getRingingObject());
         mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        dissmissCount = 0;
+        dismissCount = 0;
+        snoozeCount = 0;
 
         mLongClick = AlarmPreferences.longClick(this);
         mFlipShakeAction = AlarmPreferences.flipShakeAction(this);
@@ -151,51 +153,89 @@ public class AlarmActivity extends RingtoneActivity<Alarm> {
 
     @Override
     protected void onLeftButtonClick() {
-        if (mLongClick == 0 || mLongClick == 2) {
-            if (!(mFlipAction == AlarmPreferences.FLIP_ACTION_SNOOZE && mFlipShakeAction >= 0)) {
-                mAlarmController.snoozeAlarm(getRingingObject());
-                // Can't call dismiss() because we don't want to also call cancelAlarm()! Why? For example,
-                // we don't want the alarm, if it has no recurrence, to be turned off right now.
-                stopAndFinish();
+        if (mLongClick == AlarmPreferences.LONG_CLICK_DISABLED || !(mLongClick == AlarmPreferences.LONG_CLICK_SNOOZE || mLongClick == AlarmPreferences.LONG_CLICK_SNOOZE_DISMISS)) {
+            if (!(mFlipAction == AlarmPreferences.FLIP_ACTION_SNOOZE && mFlipShakeAction > 0)) {
+                snoozeDismissButtonPress(true);
+            }  else {
+                Toast.makeText(this, getString (R.string.alarm_must_shake), Toast.LENGTH_LONG).show();
             }
+        } else {
+            Toast.makeText(this, getString(R.string.alarm_long_click_required), Toast.LENGTH_LONG).show();
+
         }
     }
 
     @Override
     protected void onRightButtonClick() {
-        if (mLongClick == 0 || mLongClick == 1) {
-            if (!(mFlipAction == AlarmPreferences.FLIP_ACTION_DISMISS && mFlipShakeAction >= 0)) {
-                // TODO do we really need to cancel the intent and alarm?
-                //mAlarmController.cancelAlarm(getRingingObject(), false, true);
-                //stopAndFinish();
-                dismissButtonPress();
+        if (mLongClick == AlarmPreferences.LONG_CLICK_DISABLED || !(mLongClick == AlarmPreferences.LONG_CLICK_DISMISS || mLongClick == AlarmPreferences.LONG_CLICK_SNOOZE_DISMISS)) {
+            if (!(mFlipAction == AlarmPreferences.FLIP_ACTION_DISMISS && mFlipShakeAction > 0)) {
+                snoozeDismissButtonPress(false);
+            } else {
+                Toast.makeText(this, getString (R.string.alarm_must_shake), Toast.LENGTH_LONG).show();
             }
+        } else {
+            Toast.makeText(this, getString(R.string.alarm_long_click_required), Toast.LENGTH_LONG).show();
+
         }
     }
 
-    protected void dismissButtonPress() {
-        boolean dismissTwice = AlarmPreferences.mustDismissTwice(this);
+    protected void snoozeDismissButtonPress(boolean snooze) {
+        boolean dismissTwice;
+
+        if (snooze) {
+            dismissTwice = AlarmPreferences.mustSnoozeTwice(this);
+        } else {
+            dismissTwice = AlarmPreferences.mustDismissTwice(this);
+        }
+
 
         if (dismissTwice) {
-            if (dissmissCount == 0) {
+            if ((snooze && snoozeCount == 0) ||
+                    (!snooze && dismissCount == 0)) {
                 FrameLayout fl_left = findViewById(R.id.btn_left);
                 FrameLayout fl_right = findViewById(R.id.btn_right);
 
-                ObjectAnimator animationLeftY = ObjectAnimator.ofFloat(fl_left, "translationY", fl_right.getY() - fl_left.getY());
-                ObjectAnimator animationRightY = ObjectAnimator.ofFloat(fl_right, "translationY", fl_left.getY() - fl_right.getY());
-                ObjectAnimator animationLeftX = ObjectAnimator.ofFloat(fl_left, "translationX", fl_right.getX() - fl_left.getX());
-                ObjectAnimator animationRightX = ObjectAnimator.ofFloat(fl_right, "translationX", fl_left.getX() - fl_right.getX());
+                float y1 = fl_right.getY() - fl_left.getY();
+                float y2 = fl_left.getY() - fl_right.getY();
+                float x1 = fl_right.getX() - fl_left.getX();
+                float x2 = fl_left.getX() - fl_right.getX();
+
+                if ((snoozeCount + dismissCount) > 0) {
+                    y1 = 0;
+                    y2 = 0;
+                    x1 = 0;
+                    x2 = 0;
+                }
+
+                ObjectAnimator animationLeftY = ObjectAnimator.ofFloat(fl_left, "translationY", y1);
+                ObjectAnimator animationRightY = ObjectAnimator.ofFloat(fl_right, "translationY", y2);
+                ObjectAnimator animationLeftX = ObjectAnimator.ofFloat(fl_left, "translationX", x1);
+                ObjectAnimator animationRightX = ObjectAnimator.ofFloat(fl_right, "translationX", x2);
 
                 AnimatorSet set  = new AnimatorSet();
                 set.playTogether(animationLeftY, animationRightY, animationLeftX, animationRightX);
                 set.setDuration(BUTTON_ANIMATION_DELAY);
                 set.start();
+                if (snooze) {
+                    Toast.makeText(this, getString (R.string.alarm_accidental_snooze_protection), Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(this, getString (R.string.alarm_accidental_dismiss_protection), Toast.LENGTH_LONG).show();
+                }
+
             }
         }
-        dissmissCount++;
+        if (snooze) {
+            snoozeCount++;
+        } else {
+            dismissCount++;
+        }
 
-        if (!dismissTwice || dissmissCount >=2) {
-            mAlarmController.cancelAlarm(getRingingObject(), false, true);
+        if (!dismissTwice || ((snooze && snoozeCount >= 2) || (!snooze && dismissCount >= 2))) {
+            if (snooze) {
+                mAlarmController.snoozeAlarm(getRingingObject());
+            } else {
+                mAlarmController.cancelAlarm(getRingingObject(), false, true);
+            }
             stopAndFinish();
         }
     }
@@ -203,10 +243,7 @@ public class AlarmActivity extends RingtoneActivity<Alarm> {
     @Override
     protected boolean onLeftButtonLongClick() {
         if (!(mFlipAction == AlarmPreferences.FLIP_ACTION_SNOOZE && mFlipShakeAction > 0)) {
-            mAlarmController.snoozeAlarm(getRingingObject());
-            // Can't call dismiss() because we don't want to also call cancelAlarm()! Why? For example,
-            // we don't want the alarm, if it has no recurrence, to be turned off right now.
-            stopAndFinish();
+            snoozeDismissButtonPress(true);
         } else {
             Toast.makeText(this, getString (R.string.alarm_must_shake), Toast.LENGTH_LONG).show();
         }
@@ -216,7 +253,7 @@ public class AlarmActivity extends RingtoneActivity<Alarm> {
     @Override
     protected boolean onRightButtonLongClick() {
         if (!(mFlipAction == AlarmPreferences.FLIP_ACTION_DISMISS && mFlipShakeAction > 0)) {
-            dismissButtonPress();
+            snoozeDismissButtonPress(false);
         } else {
             Toast.makeText(this, getString (R.string.alarm_must_shake), Toast.LENGTH_LONG).show();
         }

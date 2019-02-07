@@ -425,7 +425,7 @@ public class ScreenSaverUtils extends FrameLayout implements SensorEventListener
 
 
                 AlphaAnimation fadeIn = new AlphaAnimation(0.0f, 1.0f);
-                fadeIn.setDuration(FADE_DURATION * 3);
+                fadeIn.setDuration(FADE_DURATION);
 
                 tv.startAnimation(fadeIn);
             }
