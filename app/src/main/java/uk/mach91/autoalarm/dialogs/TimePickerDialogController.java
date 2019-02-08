@@ -35,6 +35,7 @@ import com.philliphsu.bottomsheetpickers.time.BottomSheetTimePickerDialog;
 import com.philliphsu.bottomsheetpickers.time.grid.GridTimePickerDialog;
 import com.philliphsu.bottomsheetpickers.time.numberpad.NumberPadTimePickerDialog;
 import uk.mach91.autoalarm.R;
+import uk.mach91.autoalarm.timepickers.Utils;
 
 /**
  * Created by Phillip Hsu on 9/6/2016.
@@ -66,6 +67,8 @@ public final class TimePickerDialogController extends DialogFragmentController<B
         boolean isNumpadStyle = prefTimePickerStyle.equals(numpadStyle);
         boolean isGridStyle = prefTimePickerStyle.equals(gridStyle);
         if (isNumpadStyle || isGridStyle) {
+            final String themeGreen = mContext.getString(R.string.theme_green);
+            final String themePurple = mContext.getString(R.string.theme_purple);
             final String themeLight = mContext.getString(R.string.theme_light);
             final String themeDark = mContext.getString(R.string.theme_dark);
             final String themeBlack = mContext.getString(R.string.theme_black);
@@ -78,6 +81,10 @@ public final class TimePickerDialogController extends DialogFragmentController<B
                 dialogColorRes = R.color.alert_dialog_background_color_inverse;
             } else if (prefTheme.equals(themeBlack)) {
                 dialogColorRes = R.color.alert_dialog_background_color_black;
+            } else if (prefTheme.equals(themeGreen)) {
+                dialogColorRes = R.color.alert_dialog_background_color_green;
+            } else if (prefTheme.equals(themePurple)) {
+                dialogColorRes = R.color.alert_dialog_background_color_purple;
             } else {
                 dialogColorRes = 0;
             }
@@ -89,7 +96,7 @@ public final class TimePickerDialogController extends DialogFragmentController<B
                         .setThemeDark(true)
                         .build();
             } else {
-                final int selectedColor = ContextCompat.getColor(mContext, R.color.colorAccent);
+                final int selectedColor = Utils.getThemeAccentColor(mContext);
                 final int unselectedColor = ContextCompat.getColor(mContext, android.R.color.white);
                 dialog = new GridTimePickerDialog.Builder(
                         mListener,

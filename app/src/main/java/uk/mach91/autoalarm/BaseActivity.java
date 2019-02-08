@@ -66,6 +66,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         final String themeDark = getString(R.string.theme_dark);
         final String themeBlack = getString(R.string.theme_black);
         final String themeLight = getString(R.string.theme_light);
+        final String themeGreen = getString(R.string.theme_green);
+        final String themePurple = getString(R.string.theme_purple);
         String theme = PreferenceManager.getDefaultSharedPreferences(this).getString(
                 getString(R.string.key_theme), null);
         if (themeDark.equals(theme)) {
@@ -74,6 +76,10 @@ public abstract class BaseActivity extends AppCompatActivity {
             setTheme(R.style.AppTheme_Black);
         } else if (themeLight.equals(theme)) {
             setTheme(R.style.AppTheme_Light);
+        } else if (themeGreen.equals(theme)) {
+            setTheme(R.style.AppTheme_Green);
+        } else if (themePurple.equals(theme)) {
+            setTheme(R.style.AppTheme_Purple);
         }
         // ========================================================================================
         setContentView(layoutResId());

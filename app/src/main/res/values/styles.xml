@@ -70,6 +70,16 @@
 
     <style name="AppTheme.Light" parent="BaseAppTheme.Light"></style>
 
+    <style name="BaseAppTheme.Green">
+        <item name="colorPrimary">@color/colorPrimaryGreen</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryGreenDark</item>
+        <item name="colorAccent">@color/colorAccentGreen</item>
+        <item name="cardBackgroundColor">@color/card_background_color_green</item>
+        <item name="alertDialogTheme">@style/AppCompatAlertDialogStyle.Green</item>
+        <item name="android:windowBackground">@color/colorPrimaryGreen</item>
+    </style>
+    <style name="AppTheme.Green" parent="BaseAppTheme.Green"></style>
+
     <!-- TODO: Rename to GridLayoutElement -->
 
     <!-- TODO: Rename to GridLayout[Text/Button/TextView]? -->
@@ -101,6 +111,28 @@
         <item name="colorAccent">@color/colorAccentBlack</item>
         <item name="android:background">@color/alert_dialog_background_color_black</item>
     </style>
+
+    <style name="AppCompatAlertDialogStyle.Green">
+        <item name="colorAccent">@color/colorAccentInverse</item>
+        <item name="android:background">@color/alert_dialog_background_color_green</item>
+    </style>
+
+
+
+    <style name="BaseAppTheme.Purple">
+        <item name="colorPrimary">@color/colorPrimaryPurple</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryPurpleDark</item>
+        <item name="colorAccent">@color/colorAccentPurple</item>
+        <item name="cardBackgroundColor">@color/card_background_color_purple</item>
+        <item name="alertDialogTheme">@style/AppCompatAlertDialogStyle.Purple</item>
+        <item name="android:windowBackground">@color/colorPrimaryPurple</item>
+    </style>
+    <style name="AppTheme.Purple" parent="BaseAppTheme.Purple"></style>
+    <style name="AppCompatAlertDialogStyle.Purple">
+        <item name="colorAccent">@color/colorAccentPurple</item>
+        <item name="android:background">@color/alert_dialog_background_color_purple</item>
+    </style>
+
 
     <!--Style for SeekBar that spans full width-->
 

@@ -33,10 +33,14 @@
     <string name="theme_light">Light</string>
     <string name="theme_dark">Dark</string>
     <string name="theme_black">Black</string>
+    <string name="theme_green">Green</string>
+    <string name="theme_purple">Purple</string>
     <string-array name="array_theme">
         <item>@string/theme_light</item>
         <item>@string/theme_dark</item>
         <item>@string/theme_black</item>
+        <item>@string/theme_green</item>
+        <item>@string/theme_purple</item>
     </string-array>
 
     <string name="timezone">timezone</string>

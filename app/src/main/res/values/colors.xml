@@ -46,4 +46,19 @@
     <color name="empty_recyclerview_text_color">#4dffffff</color>
 
     <color name="black_overlay">#66000000</color> <!--30% white-->
+
+
+
+    <color name="colorPrimaryGreen">#00723F</color>
+    <color name="colorPrimaryGreenDark">#004225</color>
+    <color name="colorAccentGreen">#FF5252</color>
+    <color name="alert_dialog_background_color_green">@color/colorPrimaryGreen</color>
+    <color name="card_background_color_green">@color/colorPrimaryGreenDark</color>
+
+    <color name="colorPrimaryPurple">#B530AC</color>
+    <color name="colorPrimaryPurpleDark">#96288D</color>
+    <color name="colorAccentPurple">#D8B400</color>
+    <color name="alert_dialog_background_color_purple">@color/colorPrimaryPurpleDark</color>
+    <color name="card_background_color_purple">@color/alert_dialog_background_color_purple</color>
+
 </resources>
