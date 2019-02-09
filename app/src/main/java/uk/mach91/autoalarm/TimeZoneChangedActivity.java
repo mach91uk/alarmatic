@@ -73,7 +73,7 @@ public class TimeZoneChangedActivity extends AppCompatActivity {
 
          View aboutPage  = new AboutPage(this)
                 .isRTL(false)
-                .setImage(R.drawable.ic_about_title_logo)
+                .setImage(R.drawable.ic_alarmatic_logo)
                 .setDescription(getString(R.string.time_zone_change_description_1))
                 .addItem(new Element().setTitle(getString(R.string.time_zone_change_description_2)))
                 .addItem(new Element().setTitle(getString(R.string.time_zone_change_description_3)))

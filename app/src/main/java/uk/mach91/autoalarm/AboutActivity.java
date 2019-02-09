@@ -85,7 +85,7 @@ public class AboutActivity extends AppCompatActivity {
 
         View aboutPage  = new AboutPage(this)
                 .isRTL(false)
-                .setImage(R.drawable.ic_about_title_logo)
+                .setImage(R.drawable.ic_alarmatic_logo)
                 .setDescription(getString(R.string.about_description))
                 .addItem(versionElement)
                 .addItem(new Element().setTitle(String.format(getString(R.string.about_build_date), buildDateStr)))
