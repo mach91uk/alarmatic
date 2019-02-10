@@ -22,7 +22,7 @@
 
 package uk.mach91.autoalarm.dialogs;
 
-import android.support.v4.app.FragmentManager;
+import androidx.fragment.app.FragmentManager;
 import android.util.Log;
 
 /**

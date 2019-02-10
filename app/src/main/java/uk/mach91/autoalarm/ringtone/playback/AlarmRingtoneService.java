@@ -22,16 +22,11 @@
 
 package uk.mach91.autoalarm.ringtone.playback;
 
-import android.Manifest;
-import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -40,31 +35,17 @@ import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Parcelable;
-import android.provider.BaseColumns;
-import android.provider.CalendarContract;
 import android.provider.Settings;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.Toast;
 
 import uk.mach91.autoalarm.alarms.misc.AlarmController;
 import uk.mach91.autoalarm.alarms.misc.AlarmPreferences;
-import uk.mach91.autoalarm.ringtone.RingtoneActivity;
-import uk.mach91.autoalarm.util.ContentIntentUtils;
 import uk.mach91.autoalarm.util.DurationUtils;
-import uk.mach91.autoalarm.util.LocalBroadcastHelper;
 import uk.mach91.autoalarm.util.ParcelableUtil;
 import uk.mach91.autoalarm.util.TimeFormatUtils;
-import uk.mach91.autoalarm.MainActivity;
 import uk.mach91.autoalarm.R;
 import uk.mach91.autoalarm.alarms.Alarm;
-import uk.mach91.autoalarm.alarms.misc.AlarmController;
-import uk.mach91.autoalarm.alarms.misc.AlarmPreferences;
-
-import uk.mach91.autoalarm.alarms.misc.AlarmController;
-import uk.mach91.autoalarm.alarms.misc.AlarmPreferences;
-import uk.mach91.autoalarm.util.TimeFormatUtils;
 
 import static uk.mach91.autoalarm.util.TimeFormatUtils.formatTime;
 

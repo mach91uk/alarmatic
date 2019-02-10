@@ -25,13 +25,10 @@ package uk.mach91.autoalarm.util;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import uk.mach91.autoalarm.list.RecyclerViewFragment;
 import uk.mach91.autoalarm.MainActivity;
-import uk.mach91.autoalarm.list.RecyclerViewFragment;
-
-import uk.mach91.autoalarm.list.RecyclerViewFragment;
 
 import static android.app.PendingIntent.FLAG_CANCEL_CURRENT;
 

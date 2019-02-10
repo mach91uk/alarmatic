@@ -24,7 +24,7 @@ package uk.mach91.autoalarm.alarms.misc;
 
 import android.content.Context;
 import android.preference.PreferenceManager;
-import android.support.annotation.StringRes;
+import androidx.annotation.StringRes;
 
 import uk.mach91.autoalarm.R;
 

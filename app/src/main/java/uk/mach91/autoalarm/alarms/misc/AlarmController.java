@@ -27,7 +27,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.support.design.widget.Snackbar;
+import com.google.android.material.snackbar.Snackbar;
 import android.util.Log;
 import android.view.View;
 
@@ -37,15 +37,12 @@ import uk.mach91.autoalarm.R;
 import uk.mach91.autoalarm.alarms.Alarm;
 import uk.mach91.autoalarm.alarms.background.PendingAlarmScheduler;
 import uk.mach91.autoalarm.alarms.background.UpcomingAlarmReceiver;
-import uk.mach91.autoalarm.alarms.data.AlarmsTableManager;
 import uk.mach91.autoalarm.ringtone.AlarmActivity;
 import uk.mach91.autoalarm.ringtone.playback.AlarmRingtoneService;
 import uk.mach91.autoalarm.util.ContentIntentUtils;
 import uk.mach91.autoalarm.util.DelayedSnackbarHandler;
 import uk.mach91.autoalarm.util.DurationUtils;
 import uk.mach91.autoalarm.util.ParcelableUtil;
-
-import uk.mach91.autoalarm.alarms.data.AlarmsTableManager;
 
 import static android.app.PendingIntent.FLAG_CANCEL_CURRENT;
 import static android.app.PendingIntent.FLAG_NO_CREATE;

@@ -27,8 +27,8 @@ import uk.mach91.autoalarm.alarms.data.AlarmCursor;
 import uk.mach91.autoalarm.alarms.data.AlarmsTableManager;
 import uk.mach91.autoalarm.alarms.Alarm;
 import uk.mach91.autoalarm.alarms.misc.AlarmController;
-import android.support.v4.app.JobIntentService;
-import android.support.annotation.NonNull;
+import androidx.core.app.JobIntentService;
+import androidx.annotation.NonNull;
 
 /**
  * Created by Mach91 on 22/09/2018.

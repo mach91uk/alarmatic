@@ -22,9 +22,9 @@
 
 package uk.mach91.autoalarm.dialogs;
 
-import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentManager;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
 import android.util.Log;
 
 /**

@@ -23,11 +23,8 @@
 package uk.mach91.autoalarm.dialogs;
 
 import android.net.Uri;
-import android.support.v4.app.FragmentManager;
+import androidx.fragment.app.FragmentManager;
 import android.util.Log;
-
-import uk.mach91.autoalarm.dialogs.DialogFragmentController;
-import uk.mach91.autoalarm.dialogs.RingtonePickerDialog;
 
 /**
  * Created by Phillip Hsu on 9/20/2016.

@@ -25,10 +25,10 @@ package uk.mach91.autoalarm.dialogs;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.support.annotation.ColorInt;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
+import androidx.annotation.ColorInt;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.core.content.ContextCompat;
 import android.text.format.DateFormat;
 
 import com.philliphsu.bottomsheetpickers.time.BottomSheetTimePickerDialog;

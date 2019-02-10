@@ -34,20 +34,15 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Parcelable;
 import android.os.Vibrator;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.util.Log;
 
 import uk.mach91.autoalarm.util.LocalBroadcastHelper;
 import uk.mach91.autoalarm.util.ParcelableUtil;
 import uk.mach91.autoalarm.R;
 import uk.mach91.autoalarm.ringtone.RingtoneActivity;
-import uk.mach91.autoalarm.util.LocalBroadcastHelper;
-import uk.mach91.autoalarm.util.ParcelableUtil;
 
 import java.util.concurrent.TimeUnit;
-
-import uk.mach91.autoalarm.util.LocalBroadcastHelper;
-import uk.mach91.autoalarm.util.ParcelableUtil;
 
 /**
  * Runs in the foreground. While it can still be killed by the system, it stays alive significantly

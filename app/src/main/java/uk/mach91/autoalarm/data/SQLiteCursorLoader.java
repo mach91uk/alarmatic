@@ -26,11 +26,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.support.v4.content.AsyncTaskLoader;
+import androidx.loader.content.AsyncTaskLoader;
 import android.util.Log;
-
-import uk.mach91.autoalarm.util.LocalBroadcastHelper;
-import uk.mach91.autoalarm.util.LocalBroadcastHelper;
 
 import uk.mach91.autoalarm.util.LocalBroadcastHelper;
 

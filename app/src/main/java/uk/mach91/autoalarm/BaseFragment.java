@@ -23,13 +23,14 @@
 package uk.mach91.autoalarm;
 
 import android.os.Bundle;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import androidx.annotation.LayoutRes;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.viewpager.widget.ViewPager;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -68,7 +69,7 @@ public abstract class BaseFragment extends Fragment {
 
     /**
      * Callback invoked when this Fragment is part of a ViewPager and it has been
-     * selected, as indicated by {@link android.support.v4.view.ViewPager.OnPageChangeListener#onPageSelected(int)
+     * selected, as indicated by {@link ViewPager.OnPageChangeListener#onPageSelected(int)
      * onPageSelected(int)}.
      */
     public void onPageSelected() {

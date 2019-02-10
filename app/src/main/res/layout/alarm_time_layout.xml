@@ -42,7 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"/>
 
-    <android.support.v7.widget.SwitchCompat
+    <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/on_off_switch"
         android:layout_width="48dp"
         android:layout_height="48dp"

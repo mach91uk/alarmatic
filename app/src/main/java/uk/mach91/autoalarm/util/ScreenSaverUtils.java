@@ -20,22 +20,14 @@
 
 package uk.mach91.autoalarm.util;
 
-import android.Manifest;
 import android.app.AlarmManager;
 import android.content.Context;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.net.Uri;
 import android.os.Handler;
-import android.preference.PreferenceManager;
-import android.provider.CalendarContract;
-import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.format.DateFormat;
 import android.text.style.RelativeSizeSpan;
@@ -44,7 +36,6 @@ import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.Gravity;
-import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;

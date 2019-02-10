@@ -20,15 +20,9 @@
 
 package uk.mach91.autoalarm;
 
-import android.app.AlertDialog;
-import android.app.NotificationManager;
-import android.app.UiModeManager;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 

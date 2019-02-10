@@ -23,9 +23,9 @@
 package uk.mach91.autoalarm.alarms.ui;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.content.Loader;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.Nullable;
+import androidx.loader.content.Loader;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,10 +40,7 @@ import uk.mach91.autoalarm.alarms.data.AlarmsListCursorLoader;
 import uk.mach91.autoalarm.alarms.data.AsyncAlarmsTableUpdateHandler;
 import uk.mach91.autoalarm.alarms.misc.AlarmController;
 import uk.mach91.autoalarm.dialogs.TimePickerDialogController;
-import uk.mach91.autoalarm.list.RecyclerViewFragment;
 import uk.mach91.autoalarm.util.DelayedSnackbarHandler;
-
-import uk.mach91.autoalarm.list.RecyclerViewFragment;
 
 import static uk.mach91.autoalarm.util.FragmentTagUtils.makeTag;
 

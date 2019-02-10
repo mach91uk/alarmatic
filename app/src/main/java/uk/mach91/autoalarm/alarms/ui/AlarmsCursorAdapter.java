@@ -22,23 +22,14 @@
 
 package uk.mach91.autoalarm.alarms.ui;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.ViewGroup;
 
 import uk.mach91.autoalarm.alarms.Alarm;
 import uk.mach91.autoalarm.alarms.misc.AlarmController;
 import uk.mach91.autoalarm.list.BaseCursorAdapter;
 import uk.mach91.autoalarm.list.OnListItemInteractionListener;
-import uk.mach91.autoalarm.list.BaseCursorAdapter;
-import uk.mach91.autoalarm.list.OnListItemInteractionListener;
-import uk.mach91.autoalarm.alarms.Alarm;
 import uk.mach91.autoalarm.alarms.data.AlarmCursor;
-import uk.mach91.autoalarm.alarms.misc.AlarmController;
-
-import uk.mach91.autoalarm.alarms.Alarm;
-import uk.mach91.autoalarm.alarms.misc.AlarmController;
-import uk.mach91.autoalarm.list.BaseCursorAdapter;
-import uk.mach91.autoalarm.list.OnListItemInteractionListener;
 
 /**
  * Created by Phillip Hsu on 6/29/2016.

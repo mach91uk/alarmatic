@@ -23,17 +23,14 @@
 package uk.mach91.autoalarm.alarms.data;
 
 import android.content.Context;
-import android.support.design.widget.Snackbar;
+import com.google.android.material.snackbar.Snackbar;
 import android.view.View;
 
 import uk.mach91.autoalarm.list.ScrollHandler;
 import uk.mach91.autoalarm.data.AsyncDatabaseTableUpdateHandler;
 import uk.mach91.autoalarm.R;
 import uk.mach91.autoalarm.alarms.Alarm;
-import uk.mach91.autoalarm.list.ScrollHandler;
 import uk.mach91.autoalarm.alarms.misc.AlarmController;
-
-import uk.mach91.autoalarm.list.ScrollHandler;
 
 /**
  * Created by Phillip Hsu on 7/1/2016.

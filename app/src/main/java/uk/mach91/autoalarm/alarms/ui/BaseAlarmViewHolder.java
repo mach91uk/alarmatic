@@ -24,13 +24,13 @@ package uk.mach91.autoalarm.alarms.ui;
 
 import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.IdRes;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SwitchCompat;
+import androidx.annotation.IdRes;
+import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
+import androidx.core.content.ContextCompat;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 import android.text.format.DateFormat;
 import android.view.MotionEvent;
 import android.view.View;
@@ -49,7 +49,6 @@ import uk.mach91.autoalarm.list.BaseViewHolder;
 import uk.mach91.autoalarm.list.OnListItemInteractionListener;
 import com.philliphsu.bottomsheetpickers.time.BottomSheetTimePickerDialog.OnTimeSetListener;
 import uk.mach91.autoalarm.timepickers.Utils;
-import uk.mach91.autoalarm.util.DurationUtils;
 import uk.mach91.autoalarm.util.FragmentTagUtils;
 import uk.mach91.autoalarm.util.TimeTextUtils;
 

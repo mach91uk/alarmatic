@@ -17,11 +17,11 @@
 package uk.mach91.autoalarm.alarms.ui;
 
 import android.content.Context;
-import android.support.v4.view.AccessibilityDelegateCompat;
-import android.support.v4.view.ViewCompat;
-import android.support.v4.view.accessibility.AccessibilityEventCompat;
-import android.support.v4.view.accessibility.AccessibilityNodeInfoCompat;
-import android.support.v7.widget.AppCompatImageButton;
+import androidx.core.view.AccessibilityDelegateCompat;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.accessibility.AccessibilityEventCompat;
+import androidx.core.view.accessibility.AccessibilityNodeInfoCompat;
+import androidx.appcompat.widget.AppCompatImageButton;
 import android.util.AttributeSet;
 import android.view.SoundEffectConstants;
 import android.view.View;
@@ -52,7 +52,7 @@ public class TempCheckableImageButton extends AppCompatImageButton implements Ch
     }
 
     public TempCheckableImageButton(Context context, AttributeSet attrs) {
-        this(context, attrs, android.support.v7.appcompat.R.attr.imageButtonStyle);
+        this(context, attrs, androidx.appcompat.R.attr.imageButtonStyle);
     }
 
     public TempCheckableImageButton(Context context, AttributeSet attrs, int defStyleAttr) {

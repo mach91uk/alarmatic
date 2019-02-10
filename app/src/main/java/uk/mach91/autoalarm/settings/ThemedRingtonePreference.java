@@ -30,13 +30,8 @@ import android.net.Uri;
 import android.os.Parcelable;
 import android.preference.RingtonePreference;
 import android.provider.Settings;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.AttributeSet;
-
-import uk.mach91.autoalarm.dialogs.RingtonePickerDialog;
-import uk.mach91.autoalarm.dialogs.RingtonePickerDialogController;
-import uk.mach91.autoalarm.dialogs.RingtonePickerDialog;
-import uk.mach91.autoalarm.dialogs.RingtonePickerDialogController;
 
 import uk.mach91.autoalarm.dialogs.RingtonePickerDialog;
 import uk.mach91.autoalarm.dialogs.RingtonePickerDialogController;
