@@ -32,7 +32,6 @@
         <item name="themedIconTint">@color/icon_color_active_dark</item>
         <!--TODO: Copy this resource over, because it will be going to BottomSheetTimePickers.-->
         <item name="android:textColorHint">@color/text_color_disabled_dark</item>
-        <item name="themedPopupOverlay">@style/ThemeOverlay.AppCompat.Dark</item>
         <!--BottomSheetTimePickers-->
         <item name="themeDark">true</item>
     </style>
@@ -44,6 +43,11 @@
         <item name="cardBackgroundColor">@color/card_background_color</item>
         <item name="alertDialogTheme">@style/AppCompatAlertDialogStyle</item>
         <item name="android:windowBackground">@color/colorPrimary</item>
+        <item name="themedPopupOverlay">@style/ThemeOverlay.Light</item>
+    </style>
+    <style name="ThemeOverlay.Light" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:colorBackground">@color/colorPrimaryDark</item>
+        <item name="android:textColor">@color/icon_color_active_dark</item>
     </style>
 
     <style name="BaseAppTheme.Dark">
@@ -53,6 +57,11 @@
         <item name="cardBackgroundColor">@color/card_background_color_inverse</item>
         <item name="alertDialogTheme">@style/AppCompatAlertDialogStyle.Dark</item>
         <item name="android:windowBackground">@color/colorPrimaryInverse</item>
+        <item name="themedPopupOverlay">@style/ThemeOverlay.Dark</item>
+    </style>
+    <style name="ThemeOverlay.Dark" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:colorBackground">@color/colorPrimaryDarkInverse</item>
+        <item name="android:textColor">@color/icon_color_active_dark</item>
     </style>
 
     <style name="BaseAppTheme.Black">
@@ -62,6 +71,11 @@
         <item name="cardBackgroundColor">@color/card_background_color_black</item>
         <item name="alertDialogTheme">@style/AppCompatAlertDialogStyle.Black</item>
         <item name="android:windowBackground">@android:color/black</item>
+        <item name="themedPopupOverlay">@style/ThemeOverlay.Black</item>
+    </style>
+    <style name="ThemeOverlay.Black" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:colorBackground">@android:color/black</item>
+        <item name="android:textColor">@color/icon_color_active_dark</item>
     </style>
 
     <style name="AppTheme.Dark" parent="BaseAppTheme.Dark"></style>
@@ -77,7 +91,13 @@
         <item name="cardBackgroundColor">@color/card_background_color_green</item>
         <item name="alertDialogTheme">@style/AppCompatAlertDialogStyle.Green</item>
         <item name="android:windowBackground">@color/colorPrimaryGreen</item>
+        <item name="themedPopupOverlay">@style/ThemeOverlay.Green</item>
     </style>
+    <style name="ThemeOverlay.Green" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:colorBackground">@color/colorPrimaryGreenDark</item>
+        <item name="android:textColor">@color/icon_color_active_dark</item>
+    </style>
+
     <style name="AppTheme.Green" parent="BaseAppTheme.Green"></style>
 
     <!-- TODO: Rename to GridLayoutElement -->
@@ -125,14 +145,18 @@
         <item name="colorAccent">@color/colorAccentPurple</item>
         <item name="cardBackgroundColor">@color/card_background_color_purple</item>
         <item name="alertDialogTheme">@style/AppCompatAlertDialogStyle.Purple</item>
-        <item name="android:windowBackground">@color/colorPrimaryPurple</item>
+        <item name="android:windowBackground">?attr/colorPrimary</item>
+        <item name="themedPopupOverlay">@style/ThemeOverlay.Purple</item>
+    </style>
+    <style name="ThemeOverlay.Purple" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:colorBackground">@color/card_background_color_purple</item>
+        <item name="android:textColor">@color/icon_color_active_dark</item>
     </style>
     <style name="AppTheme.Purple" parent="BaseAppTheme.Purple"></style>
     <style name="AppCompatAlertDialogStyle.Purple">
-        <item name="colorAccent">@color/colorAccentPurple</item>
-        <item name="android:background">@color/alert_dialog_background_color_purple</item>
+        <item name="colorAccent">?attr/colorAccent</item>
+        <item name="android:background">?attr/colorPrimaryDark</item>
     </style>
-
 
     <!--Style for SeekBar that spans full width-->
 
