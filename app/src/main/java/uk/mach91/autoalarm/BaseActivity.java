@@ -33,6 +33,7 @@ import android.view.Menu;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import uk.mach91.autoalarm.timepickers.Utils;
 
 /**
  * Created by Phillip Hsu on 5/31/2016.
@@ -63,24 +64,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
         // ========================================================================================
         // TOneverDO: Set theme after setContentView()
-        final String themeDark = getString(R.string.theme_dark);
-        final String themeBlack = getString(R.string.theme_black);
-        final String themeLight = getString(R.string.theme_light);
-        final String themeGreen = getString(R.string.theme_green);
-        final String themePurple = getString(R.string.theme_purple);
-        String theme = PreferenceManager.getDefaultSharedPreferences(this).getString(
-                getString(R.string.key_theme), null);
-        if (themeDark.equals(theme)) {
-            setTheme(R.style.AppTheme_Dark);
-        } else if (themeBlack.equals(theme)) {
-            setTheme(R.style.AppTheme_Black);
-        } else if (themeLight.equals(theme)) {
-            setTheme(R.style.AppTheme_Light);
-        } else if (themeGreen.equals(theme)) {
-            setTheme(R.style.AppTheme_Green);
-        } else if (themePurple.equals(theme)) {
-            setTheme(R.style.AppTheme_Purple);
-        }
+
+        new Utils().setThemeFromPreference(this);
+
         // ========================================================================================
         setContentView(layoutResId());
 

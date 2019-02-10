@@ -32,8 +32,8 @@ import android.view.View;
 import java.text.DateFormat;
 import java.util.Date;
 
-import mehdi.sakout.aboutpage.AboutPage;
-import mehdi.sakout.aboutpage.Element;
+import uk.mach91.autoalarm.aboutdialog.AboutPage;
+import uk.mach91.autoalarm.aboutdialog.Element;
 
 import de.psdev.licensesdialog.LicensesDialog;
 import de.psdev.licensesdialog.licenses.ApacheSoftwareLicense20;
@@ -42,32 +42,18 @@ import de.psdev.licensesdialog.licenses.GnuGeneralPublicLicense30;
 import de.psdev.licensesdialog.licenses.MITLicense;
 import de.psdev.licensesdialog.model.Notice;
 import de.psdev.licensesdialog.model.Notices;
+import uk.mach91.autoalarm.timepickers.Utils;
 
 /**
  * Created by Mach91 on 22/09/2018.
  */
 public class AboutActivity extends AppCompatActivity {
 
-    int nOrigNightMode;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_about);
 
-        setTheme(getApplicationInfo().theme);
-
-        UiModeManager uiManager = (UiModeManager) getSystemService(Context.UI_MODE_SERVICE);
-        nOrigNightMode = uiManager.getNightMode();
-
-        final String themeLight = getString(R.string.theme_light);
-        String theme = PreferenceManager.getDefaultSharedPreferences(this).getString(
-                getString(R.string.key_theme), null);
-        if (!themeLight.equals(theme) && (nOrigNightMode != UiModeManager.MODE_NIGHT_YES)) {
-            uiManager.setNightMode(UiModeManager.MODE_NIGHT_YES);
-        } else {
-            nOrigNightMode = -1;
-        }
+        new Utils().setThemeFromPreference(this);
 
         Element versionElement = new Element();
         String version = String.format(getString(R.string.about_version), BuildConfig.VERSION_NAME);
@@ -82,8 +68,7 @@ public class AboutActivity extends AppCompatActivity {
         versionElement.setTitle(version);
 
         //Element licenseElement = getLicensesElement();
-
-        View aboutPage  = new AboutPage(this)
+        View aboutPage  = new AboutPage(this, getResources().getColor(R.color.textColorPrimary), getResources().getColor(R.color.textColorHighlight))
                 .isRTL(false)
                 .setImage(R.drawable.ic_alarmatic_logo)
                 .setDescription(getString(R.string.about_description))
@@ -124,7 +109,7 @@ public class AboutActivity extends AppCompatActivity {
                 .setNotices(notices)
                 .setIncludeOwnLicense(false)
                 .setShowFullLicenseText(true)
-                .setThemeResourceId(getApplicationInfo().theme)
+                .setThemeResourceId(new Utils().getThemeID(this))
                 .build();
 
         Element element = new Element();
@@ -153,7 +138,7 @@ public class AboutActivity extends AppCompatActivity {
                 .setNotices(notices)
                 .setIncludeOwnLicense(false)
                 .setShowFullLicenseText(true)
-                .setThemeResourceId(getApplicationInfo().theme)
+                .setThemeResourceId(new Utils().getThemeID(this))
                 .build();
 
         Element element = new Element();
@@ -180,7 +165,7 @@ public class AboutActivity extends AppCompatActivity {
                 .setNotices(notices)
                 .setIncludeOwnLicense(false)
                 .setShowFullLicenseText(true)
-                .setThemeResourceId(getApplicationInfo().theme)
+                .setThemeResourceId(new Utils().getThemeID(this))
                 .build();
 
         Element element = new Element();
@@ -208,7 +193,7 @@ public class AboutActivity extends AppCompatActivity {
                 .setNotices(notices)
                 .setIncludeOwnLicense(false)
                 .setShowFullLicenseText(true)
-                .setThemeResourceId(getApplicationInfo().theme)
+                .setThemeResourceId(new Utils().getThemeID(this))
                 .build();
 
         Element element = new Element();
@@ -235,7 +220,7 @@ public class AboutActivity extends AppCompatActivity {
                 .setNotices(notices)
                 .setIncludeOwnLicense(false)
                 .setShowFullLicenseText(true)
-                .setThemeResourceId(getApplicationInfo().theme)
+                .setThemeResourceId(new Utils().getThemeID(this))
                 .build();
 
         Element element = new Element();
@@ -257,7 +242,7 @@ public class AboutActivity extends AppCompatActivity {
                 .setNotices(notices)
                 .setIncludeOwnLicense(true)
                 .setShowFullLicenseText(true)
-                .setThemeResourceId(getApplicationInfo().theme)
+                .setThemeResourceId(new Utils().getThemeID(this))
                 .build();
 
         Element element = new Element();
@@ -277,12 +262,5 @@ public class AboutActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
-        // Don't do this or we can get into a infinite loop between onCreate and this.
-        //if (nOrigNightMode >= 0) {
-        //    UiModeManager uiManager = (UiModeManager) getSystemService(Context.UI_MODE_SERVICE);
-        //    uiManager.setNightMode(nOrigNightMode);
-        //    nOrigNightMode = -1;
-        //}
     }
 }

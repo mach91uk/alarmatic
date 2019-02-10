@@ -27,6 +27,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.RippleDrawable;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.support.annotation.AttrRes;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
@@ -298,4 +299,51 @@ public class Utils {
             a.recycle();
         }
     }
+
+    public int getThemeID(Context context) {
+        int themeID = 0;
+        final String themeDark = context.getString(R.string.theme_dark);
+        final String themeBlack = context.getString(R.string.theme_black);
+        final String themeLight = context.getString(R.string.theme_light);
+        final String themeGreen = context.getString(R.string.theme_green);
+        final String themePurple = context.getString(R.string.theme_purple);
+        String theme = PreferenceManager.getDefaultSharedPreferences(context).getString(context.getString(R.string.key_theme), null);
+        if (themeDark.equals(theme)) {
+            themeID = R.style.AppTheme_Dark;
+        } else if (themeBlack.equals(theme)) {
+            themeID = R.style.AppTheme_Black;
+        } else if (themeLight.equals(theme)) {
+            themeID = R.style.AppTheme_Light;
+        } else if (themeGreen.equals(theme)) {
+            themeID = R.style.AppTheme_Green;
+        } else if (themePurple.equals(theme)) {
+            themeID = R.style.AppTheme_Purple;
+        } else {
+            themeID = context.getApplicationInfo().theme;
+        }
+        return themeID;
+    }
+
+    public void setThemeFromPreference(Context context) {
+        final String themeDark = context.getString(R.string.theme_dark);
+        final String themeBlack = context.getString(R.string.theme_black);
+        final String themeLight = context.getString(R.string.theme_light);
+        final String themeGreen = context.getString(R.string.theme_green);
+        final String themePurple = context.getString(R.string.theme_purple);
+        String theme = PreferenceManager.getDefaultSharedPreferences(context).getString(context.getString(R.string.key_theme), null);
+        if (themeDark.equals(theme)) {
+            context.setTheme(R.style.AppTheme_Dark);
+        } else if (themeBlack.equals(theme)) {
+            context.setTheme(R.style.AppTheme_Black);
+        } else if (themeLight.equals(theme)) {
+            context.setTheme(R.style.AppTheme_Light);
+        } else if (themeGreen.equals(theme)) {
+            context.setTheme(R.style.AppTheme_Green);
+        } else if (themePurple.equals(theme)) {
+            context.setTheme(R.style.AppTheme_Purple);
+        } else {
+            context.setTheme(context.getApplicationInfo().theme);
+        }
+    }
+
 }

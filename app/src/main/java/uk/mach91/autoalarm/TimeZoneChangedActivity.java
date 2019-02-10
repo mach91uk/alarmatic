@@ -34,33 +34,21 @@ import android.view.View;
 
 import java.util.TimeZone;
 
-import mehdi.sakout.aboutpage.AboutPage;
-import mehdi.sakout.aboutpage.Element;
+import uk.mach91.autoalarm.aboutdialog.AboutPage;
+import uk.mach91.autoalarm.aboutdialog.Element;
+import uk.mach91.autoalarm.timepickers.Utils;
 
 /**
  * Created by Mach91 on 22/09/2018.
  */
 public class TimeZoneChangedActivity extends AppCompatActivity {
 
-    int nOrigNightMode;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
          super.onCreate(savedInstanceState);
 
-         setTheme(getApplicationInfo().theme);
-
-         UiModeManager uiManager = (UiModeManager) getSystemService(Context.UI_MODE_SERVICE);
-         nOrigNightMode = uiManager.getNightMode();
-
-        final String themeLight = getString(R.string.theme_light);
-        String theme = PreferenceManager.getDefaultSharedPreferences(this).getString(
-                getString(R.string.key_theme), null);
-        if (!themeLight.equals(theme) && (nOrigNightMode != UiModeManager.MODE_NIGHT_YES)) {
-             uiManager.setNightMode(UiModeManager.MODE_NIGHT_YES);
-         } else {
-             nOrigNightMode = -1;
-         }
+         //setTheme(getApplicationInfo().theme);
+         new Utils().setThemeFromPreference(this);
 
          Intent intent = getIntent();
 
@@ -71,7 +59,7 @@ public class TimeZoneChangedActivity extends AppCompatActivity {
          TimeZone oldTimeZone = TimeZone.getTimeZone(oldTzId);
          TimeZone newTimeZone = TimeZone.getTimeZone(newTZ);
 
-         View aboutPage  = new AboutPage(this)
+         View aboutPage  = new AboutPage(this, getResources().getColor(R.color.textColorPrimary), getResources().getColor(R.color.textColorHighlight))
                 .isRTL(false)
                 .setImage(R.drawable.ic_alarmatic_logo)
                 .setDescription(getString(R.string.time_zone_change_description_1))
@@ -92,12 +80,5 @@ public class TimeZoneChangedActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
-        // Don't do this or we can get into a infinite loop between onCreate and this.
-        //if (nOrigNightMode >= 0) {
-        //    UiModeManager uiManager = (UiModeManager) getSystemService(Context.UI_MODE_SERVICE);
-        //    uiManager.setNightMode(nOrigNightMode);
-        //    nOrigNightMode = -1;
-        //}
     }
 }

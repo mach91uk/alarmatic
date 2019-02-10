@@ -21,6 +21,9 @@
   -->
 
 <resources>
+    <color name="textColorPrimary">#C1C1C1</color>
+    <color name="textColorHighlight">#FFFFFF</color>
+
     <color name="colorPrimary">#1C46A0</color>
     <color name="colorPrimaryDark">#143782</color>
     <color name="card_background_color">@color/alert_dialog_background_color</color>
@@ -60,5 +63,24 @@
     <color name="colorAccentPurple">#D8B400</color>
     <color name="alert_dialog_background_color_purple">@color/colorPrimaryPurpleDark</color>
     <color name="card_background_color_purple">@color/alert_dialog_background_color_purple</color>
+
+
+
+    <!-- About Page -->
+    <!-- General -->
+    <color name="about_item_icon_color">#313131</color>
+    <color name="about_background_color">#FFFFFF</color>
+    <color name="about_separator_color">#e1e1e1</color>
+    <!-- Text -->
+    <color name="about_description_text_color">#595959</color>
+    <color name="about_item_text_color">#7c7c7c</color>
+    <color name="about_text_color">#595959</color>
+    <!-- Social -->
+    <color name="about_facebook_color">#3b5998</color>
+    <color name="about_twitter_color">#55acee</color>
+    <color name="about_instagram_color">#3f729b</color>
+    <color name="about_play_store_color">#45BBC2</color>
+    <color name="about_youtube_color">#cd201f</color>
+    <color name="about_github_color">#333333</color>
 
 </resources>

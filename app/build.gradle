@@ -53,8 +53,8 @@ android {
         applicationId 'uk.mach91.autoalarm'
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 1044
-        versionName '1.0.44'
+        versionCode 1045
+        versionName '1.0.45'
         buildConfigField "long", "TIMESTAMP", System.currentTimeMillis() + "L"
         // Disabled for now because we're not ready to
         // completely port over to vector drawables
@@ -115,9 +115,6 @@ dependencies {
         exclude group: 'com.android.support', module: 'design'
         exclude group: 'com.android.support', module: 'gridlayout-v7'
     }
-    implementation 'com.github.medyo:android-about-page:1.2.4'
     implementation 'de.psdev.licensesdialog:licensesdialog:1.8.3'
     implementation 'com.rarepebble:colorpicker:2.4.2'
-    //compile module(':library')
-    //implementation project(':subProject:library')
 }
