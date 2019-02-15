@@ -28,34 +28,19 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
-import android.media.AudioManager;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Parcelable;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
 import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import uk.mach91.autoalarm.alarms.misc.AlarmController;
 import uk.mach91.autoalarm.alarms.misc.AlarmPreferences;
 import uk.mach91.autoalarm.ringtone.playback.AlarmRingtoneService;
 import uk.mach91.autoalarm.ringtone.playback.RingtoneService;
+import uk.mach91.autoalarm.timepickers.Utils;
 import uk.mach91.autoalarm.util.TimeFormatUtils;
 import uk.mach91.autoalarm.R;
 import uk.mach91.autoalarm.alarms.Alarm;
-import uk.mach91.autoalarm.alarms.misc.AlarmController;
-import uk.mach91.autoalarm.alarms.misc.AlarmPreferences;
-import uk.mach91.autoalarm.ringtone.playback.AlarmRingtoneService;
-import uk.mach91.autoalarm.ringtone.playback.RingtoneService;
-import uk.mach91.autoalarm.util.TimeFormatUtils;
-
-import uk.mach91.autoalarm.alarms.misc.AlarmController;
-import uk.mach91.autoalarm.alarms.misc.AlarmPreferences;
-import uk.mach91.autoalarm.ringtone.playback.AlarmRingtoneService;
-import uk.mach91.autoalarm.ringtone.playback.RingtoneService;
-import uk.mach91.autoalarm.util.TimeFormatUtils;
 
 public class AlarmActivity extends RingtoneActivity<Alarm> {
     private static final String TAG = "AlarmActivity";
@@ -70,7 +55,6 @@ public class AlarmActivity extends RingtoneActivity<Alarm> {
 
     private int mLongClick = 0;
     private int mFlipShakeAction =0;
-    private int mFlipAction = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +69,6 @@ public class AlarmActivity extends RingtoneActivity<Alarm> {
 
         mLongClick = AlarmPreferences.longClick(this);
         mFlipShakeAction = AlarmPreferences.flipShakeAction(this);
-        mFlipAction = AlarmPreferences.flipAction(this);
     }
 
     @Override
@@ -152,30 +135,50 @@ public class AlarmActivity extends RingtoneActivity<Alarm> {
     }
 
     @Override
-    protected void onLeftButtonClick() {
-        if (mLongClick == AlarmPreferences.LONG_CLICK_DISABLED || !(mLongClick == AlarmPreferences.LONG_CLICK_SNOOZE || mLongClick == AlarmPreferences.LONG_CLICK_SNOOZE_DISMISS)) {
-            if (!(mFlipAction == AlarmPreferences.FLIP_ACTION_SNOOZE && mFlipShakeAction > 0)) {
-                snoozeDismissButtonPress(true);
-            }  else {
-                Toast.makeText(this, getString (R.string.alarm_must_shake), Toast.LENGTH_LONG).show();
-            }
+    protected boolean onLeftButtonLongClick() {
+        if (!(mFlipAction == AlarmPreferences.FLIP_ACTION_SNOOZE && mFlipShakeAction > 0)) {
+            snoozeDismissButtonPress(true);
         } else {
-            Toast.makeText(this, getString(R.string.alarm_long_click_required), Toast.LENGTH_LONG).show();
+//            Toast.makeText(this, getString (R.string.alarm_must_shake), Toast.LENGTH_LONG).show();
+            new Utils().showSnackbar(mSnackbarAnchor, getString (R.string.alarm_must_shake));
+        }
+        return true;
+    }
 
+    @Override
+    protected boolean onRightButtonLongClick() {
+        if (!(mFlipAction == AlarmPreferences.FLIP_ACTION_DISMISS && mFlipShakeAction > 0)) {
+            snoozeDismissButtonPress(false);
+        } else {
+//            Toast.makeText(this, getString (R.string.alarm_must_shake), Toast.LENGTH_LONG).show();
+            new Utils().showSnackbar(mSnackbarAnchor, getString (R.string.alarm_must_shake));
+        }
+        return true;
+    }
+
+    @Override
+    protected void onLeftButtonClick() {
+        if (!(mFlipAction == AlarmPreferences.FLIP_ACTION_SNOOZE && mFlipShakeAction > 0)) {
+            if (mLongClick == AlarmPreferences.LONG_CLICK_DISABLED || !(mLongClick == AlarmPreferences.LONG_CLICK_SNOOZE || mLongClick == AlarmPreferences.LONG_CLICK_SNOOZE_DISMISS)) {
+                snoozeDismissButtonPress(true);
+            } else {
+                new Utils().showSnackbar(mSnackbarAnchor, getString (R.string.alarm_long_click_required));
+            }
+        }  else {
+            new Utils().showSnackbar(mSnackbarAnchor, getString (R.string.alarm_must_shake));
         }
     }
 
     @Override
     protected void onRightButtonClick() {
-        if (mLongClick == AlarmPreferences.LONG_CLICK_DISABLED || !(mLongClick == AlarmPreferences.LONG_CLICK_DISMISS || mLongClick == AlarmPreferences.LONG_CLICK_SNOOZE_DISMISS)) {
-            if (!(mFlipAction == AlarmPreferences.FLIP_ACTION_DISMISS && mFlipShakeAction > 0)) {
+        if (!(mFlipAction == AlarmPreferences.FLIP_ACTION_DISMISS && mFlipShakeAction > 0)) {
+            if (mLongClick == AlarmPreferences.LONG_CLICK_DISABLED || !(mLongClick == AlarmPreferences.LONG_CLICK_DISMISS || mLongClick == AlarmPreferences.LONG_CLICK_SNOOZE_DISMISS)) {
                 snoozeDismissButtonPress(false);
             } else {
-                Toast.makeText(this, getString (R.string.alarm_must_shake), Toast.LENGTH_LONG).show();
+                new Utils().showSnackbar(mSnackbarAnchor, getString (R.string.alarm_long_click_required));
             }
         } else {
-            Toast.makeText(this, getString(R.string.alarm_long_click_required), Toast.LENGTH_LONG).show();
-
+            new Utils().showSnackbar(mSnackbarAnchor, getString (R.string.alarm_must_shake));
         }
     }
 
@@ -217,9 +220,11 @@ public class AlarmActivity extends RingtoneActivity<Alarm> {
                 set.setDuration(BUTTON_ANIMATION_DELAY);
                 set.start();
                 if (snooze) {
-                    Toast.makeText(this, getString (R.string.alarm_accidental_snooze_protection), Toast.LENGTH_LONG).show();
+//                    Toast.makeText(this, getString (R.string.alarm_accidental_snooze_protection), Toast.LENGTH_LONG).show();
+                    new Utils().showSnackbar(mSnackbarAnchor, getString (R.string.alarm_accidental_snooze_protection));
                 } else {
-                    Toast.makeText(this, getString (R.string.alarm_accidental_dismiss_protection), Toast.LENGTH_LONG).show();
+//                    Toast.makeText(this, getString (R.string.alarm_accidental_dismiss_protection), Toast.LENGTH_LONG).show();
+                    new Utils().showSnackbar(mSnackbarAnchor, getString (R.string.alarm_accidental_dismiss_protection));
                 }
 
             }
@@ -240,25 +245,6 @@ public class AlarmActivity extends RingtoneActivity<Alarm> {
         }
     }
 
-    @Override
-    protected boolean onLeftButtonLongClick() {
-        if (!(mFlipAction == AlarmPreferences.FLIP_ACTION_SNOOZE && mFlipShakeAction > 0)) {
-            snoozeDismissButtonPress(true);
-        } else {
-            Toast.makeText(this, getString (R.string.alarm_must_shake), Toast.LENGTH_LONG).show();
-        }
-        return true;
-    }
-
-    @Override
-    protected boolean onRightButtonLongClick() {
-        if (!(mFlipAction == AlarmPreferences.FLIP_ACTION_DISMISS && mFlipShakeAction > 0)) {
-            snoozeDismissButtonPress(false);
-        } else {
-            Toast.makeText(this, getString (R.string.alarm_must_shake), Toast.LENGTH_LONG).show();
-        }
-        return true;
-    }
     @Override
     protected Parcelable.Creator<Alarm> getParcelableCreator() {
         return Alarm.CREATOR;

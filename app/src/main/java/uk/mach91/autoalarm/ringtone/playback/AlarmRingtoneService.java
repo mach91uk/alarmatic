@@ -37,17 +37,16 @@ import android.os.Handler;
 import android.os.Parcelable;
 import android.provider.Settings;
 import android.util.Log;
-import android.widget.Toast;
 
 import uk.mach91.autoalarm.alarms.misc.AlarmController;
 import uk.mach91.autoalarm.alarms.misc.AlarmPreferences;
+import uk.mach91.autoalarm.ringtone.RingtoneActivity;
 import uk.mach91.autoalarm.util.DurationUtils;
+import uk.mach91.autoalarm.util.LocalBroadcastHelper;
 import uk.mach91.autoalarm.util.ParcelableUtil;
 import uk.mach91.autoalarm.util.TimeFormatUtils;
 import uk.mach91.autoalarm.R;
 import uk.mach91.autoalarm.alarms.Alarm;
-
-import static uk.mach91.autoalarm.util.TimeFormatUtils.formatTime;
 
 public class AlarmRingtoneService extends RingtoneService<Alarm> {
     private static final String TAG = "AlarmRingtoneService";
@@ -139,22 +138,26 @@ public class AlarmRingtoneService extends RingtoneService<Alarm> {
                 if (mSensor != null) {
                     mSensorService.registerListener(mySensorEventListener, mSensor,
                             SensorManager.SENSOR_DELAY_NORMAL);
-                    Log.i("Compass MainActivity", "Registerered for ORIENTATION Sensor");
+                    Log.i("AlarmRingtoneService", "Registered for TYPE_GRAVITY Sensor");
                 } else {
-                    Log.e("Compass MainActivity", "Registerered for ORIENTATION Sensor");
-                    Toast.makeText(this, "ORIENTATION Sensor not found",
-                            Toast.LENGTH_LONG).show();
+                    Log.e("AlarmRingtoneService", "Registration failed for TYPE_GRAVITY Sensor");
+//                    Toast.makeText(this, "GRAVITY Sensor not found",
+//                            Toast.LENGTH_LONG).show();
+                    mFlipAction = AlarmPreferences.FLIP_ACTION_NOTHING;
+                    LocalBroadcastHelper.sendBroadcast(this, RingtoneActivity.ACTION_SENSOR_NOT_OK);
                 }
             } else if (mFlipShakeAction > 0) {
                 mShakeSensor = mSensorService.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
                 if (mShakeSensor != null) {
                     mSensorService.registerListener(mySensorEventListener, mShakeSensor,
                             SensorManager.SENSOR_DELAY_NORMAL);
-                    Log.i("Compass MainActivity", "Registerered for ORIENTATION Sensor");
+                    Log.i("AlarmRingtoneService", "Registered for TYPE_ACCELEROMETER Sensor");
                 } else {
-                    Log.e("Compass MainActivity", "Registerered for ORIENTATION Sensor");
-                    Toast.makeText(this, "ACCELEROMETER Sensor not found",
-                            Toast.LENGTH_LONG).show();
+                    Log.e("AlarmRingtoneService", "Registration failed for TYPE_ACCELEROMETER Sensor");
+//                    Toast.makeText(this, "ACCELEROMETER Sensor not found",
+//                            Toast.LENGTH_LONG).show();
+                    mFlipAction = AlarmPreferences.FLIP_ACTION_NOTHING;
+                    LocalBroadcastHelper.sendBroadcast(this, RingtoneActivity.ACTION_SENSOR_NOT_OK);
                 }
             }
         }

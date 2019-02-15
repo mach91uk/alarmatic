@@ -70,7 +70,7 @@
     <!-- General -->
     <color name="about_item_icon_color">#313131</color>
     <color name="about_background_color">#FFFFFF</color>
-    <color name="about_separator_color">#e1e1e1</color>
+    <color name="about_separator_color">#66C1C1C1</color>
     <!-- Text -->
     <color name="about_description_text_color">#595959</color>
     <color name="about_item_text_color">#7c7c7c</color>

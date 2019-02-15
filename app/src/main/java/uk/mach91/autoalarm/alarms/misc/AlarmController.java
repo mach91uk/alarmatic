@@ -27,7 +27,6 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import com.google.android.material.snackbar.Snackbar;
 import android.util.Log;
 import android.view.View;
 
@@ -39,6 +38,7 @@ import uk.mach91.autoalarm.alarms.background.PendingAlarmScheduler;
 import uk.mach91.autoalarm.alarms.background.UpcomingAlarmReceiver;
 import uk.mach91.autoalarm.ringtone.AlarmActivity;
 import uk.mach91.autoalarm.ringtone.playback.AlarmRingtoneService;
+import uk.mach91.autoalarm.timepickers.Utils;
 import uk.mach91.autoalarm.util.ContentIntentUtils;
 import uk.mach91.autoalarm.util.DelayedSnackbarHandler;
 import uk.mach91.autoalarm.util.DurationUtils;
@@ -126,7 +126,7 @@ public final class AlarmController {
         if (showSnackbar) {
             String message = mAppContext.getString(R.string.alarm_set_for,
                     DurationUtils.toString(mAppContext, alarm.ringsIn(), false/*abbreviate*/));
-            showSnackbar(message);
+            new Utils().showSnackbar(mSnackbarAnchor, message);
         }
     }
 
@@ -171,7 +171,7 @@ public final class AlarmController {
             long time = alarm.isSnoozed() ? alarm.snoozingUntil() : alarm.ringsAt();
             String msg = mAppContext.getString(R.string.upcoming_alarm_dismissed,
                     formatTime(mAppContext, time));
-            showSnackbar(msg);
+            new Utils().showSnackbar(mSnackbarAnchor, msg);
         }
         // ------------------------------------------------------------------------------------
 
@@ -253,23 +253,5 @@ public final class AlarmController {
         // Even when we try to retrieve a previous instance that actually did exist,
         // null can be returned for some reason. Thus, we don't checkNotNull().
         return PendingIntent.getBroadcast(mAppContext, alarm.getIntId(), intent, flag);
-    }
-
-    private void showSnackbar(final String message) {
-        // Is the window containing this anchor currently focused?
-//        Log.d(TAG, "Anchor has window focus? " + mSnackbarAnchor.hasWindowFocus());
-        if (mSnackbarAnchor != null /*&& mSnackbarAnchor.hasWindowFocus()*/) {
-            // Queue the message on the view's message loop, so the message
-            // gets processed once the view gets attached to the window.
-            // This executes on the UI thread, just like not queueing it will,
-            // but the difference here is we wait for the view to be attached
-            // to the window (if not already) before executing the runnable code.
-            mSnackbarAnchor.post(new Runnable() {
-                @Override
-                public void run() {
-                    Snackbar.make(mSnackbarAnchor, message, Snackbar.LENGTH_LONG).show();
-                }
-            });
-        }
     }
 }

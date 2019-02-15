@@ -37,8 +37,12 @@ import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import android.text.format.Time;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import uk.mach91.autoalarm.R;
 
@@ -345,5 +349,36 @@ public class Utils {
             context.setTheme(context.getApplicationInfo().theme);
         }
     }
+
+    public void showSnackbar(View snackbarAnchor, final String message) {
+        showSnackbar(snackbarAnchor, message, Snackbar.LENGTH_LONG);
+    }
+
+    public void showSnackbar(View snackbarAnchor, final String message, int length) {
+        // Is the window containing this anchor currently focused?
+//        Log.d(TAG, "Anchor has window focus? " + mSnackbarAnchor.hasWindowFocus());
+        if (snackbarAnchor != null /*&& mSnackbarAnchor.hasWindowFocus()*/) {
+            // Queue the message on the view's message loop, so the message
+            // gets processed once the view gets attached to the window.
+            // This executes on the UI thread, just like not queueing it will,
+            // but the difference here is we wait for the view to be attached
+            // to the window (if not already) before executing the runnable code.
+            snackbarAnchor.post(new Runnable() {
+                @Override
+                public void run() {
+                    Snackbar snack = Snackbar.make(snackbarAnchor, message, length);
+                    View view = snack.getView();
+                    TextView tv = (TextView) view.findViewById(com.google.android.material.R.id.snackbar_text);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                        tv.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                    } else {
+                        tv.setGravity(Gravity.CENTER_HORIZONTAL);
+                    }
+                    snack.show();
+                }
+            });
+        }
+    }
+
 
 }

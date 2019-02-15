@@ -154,6 +154,7 @@
     <string name="alarm_skipping_on_holiday">(skipping, on holiday)</string>
     <string name="alarm_screensaver_alarm_in">Alarm in:</string>
     <string name="alarm_must_shake">Shake is enabled, so please shake!</string>
+    <string name="alarm_sensor_registration_failed">Flip/shake sensor registration failed, please use the buttons.</string>
     <string name="alarm_shake_count">Shake:</string>
     <string name="alarm_click">click</string>
     <string name="alarm_long_click">long click</string>

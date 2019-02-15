@@ -37,8 +37,11 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import uk.mach91.autoalarm.alarms.misc.AlarmPreferences;
 import uk.mach91.autoalarm.ringtone.playback.RingtoneService;
+import uk.mach91.autoalarm.timepickers.Utils;
 import uk.mach91.autoalarm.util.LocalBroadcastHelper;
 import uk.mach91.autoalarm.util.ParcelableUtil;
 import uk.mach91.autoalarm.BaseActivity;
@@ -49,6 +52,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnLongClick;
+
+import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_NOSENSOR;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -62,6 +67,7 @@ public abstract class RingtoneActivity<T extends Parcelable> extends BaseActivit
     public static final String EXTRA_RINGING_OBJECT = "uk.mach91.autoalarm.ringtone.extra.RINGING_OBJECT";
     public static final String ACTION_SHOW_SILENCED = "uk.mach91.autoalarm.ringtone.action.SHOW_SILENCED";
     public static final String ACTION_SHAKE = "uk.mach91.autoalarm.ringtone.action.SHAKE";
+    public static final String ACTION_SENSOR_NOT_OK = "uk.mach91.autoalarm.ringtone.action.SENSOR_NOT_OK";
 
     private static boolean sIsAlive = false;
     private T mRingingObject;
@@ -69,9 +75,10 @@ public abstract class RingtoneActivity<T extends Parcelable> extends BaseActivit
     private int mShakeCount = 0;
 
     private int mFlipShakeAction =0;
-    private int mFlipAction = 0;
+    public int mFlipAction = 0;
     private int mLongClick = 0;
 
+    @BindView(R.id.main_content) View mSnackbarAnchor;
     @BindView(R.id.title) TextView mHeaderTitle;
     @BindView(R.id.auto_silenced_container) LinearLayout mAutoSilencedContainer;
     @BindView(R.id.auto_silenced_text) TextView mAutoSilencedText;
@@ -153,10 +160,16 @@ public abstract class RingtoneActivity<T extends Parcelable> extends BaseActivit
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_ALLOW_LOCK_WHILE_SCREEN_ON);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
             setShowWhenLocked(true);
             setTurnScreenOn(true);
+        }
+
+        // Honor rotation on tablets; fix the orientation on phones.
+        if (!getResources().getBoolean(R.bool.rotateAlarmAlert)) {
+            setRequestedOrientation(SCREEN_ORIENTATION_NOSENSOR);
         }
 
         // Close dialogs and window shade, so this is fully visible
@@ -191,6 +204,7 @@ public abstract class RingtoneActivity<T extends Parcelable> extends BaseActivit
         LocalBroadcastHelper.registerReceiver(this, mFinishReceiver, ACTION_FINISH);
         LocalBroadcastHelper.registerReceiver(this, mOnAutoSilenceReceiver, ACTION_SHOW_SILENCED);
         LocalBroadcastHelper.registerReceiver(this, mShakeReceiver, ACTION_SHAKE);
+        LocalBroadcastHelper.registerReceiver(this, mSensorNotOKReceiver, ACTION_SENSOR_NOT_OK);
     }
 
     @Override
@@ -201,6 +215,7 @@ public abstract class RingtoneActivity<T extends Parcelable> extends BaseActivit
         LocalBroadcastHelper.unregisterReceiver(this, mFinishReceiver);
         LocalBroadcastHelper.unregisterReceiver(this, mOnAutoSilenceReceiver);
         LocalBroadcastHelper.unregisterReceiver(this, mShakeReceiver);
+        LocalBroadcastHelper.unregisterReceiver(this, mSensorNotOKReceiver);
     }
 
     @Override
@@ -309,53 +324,46 @@ public abstract class RingtoneActivity<T extends Parcelable> extends BaseActivit
         }
     };
 
+    private final BroadcastReceiver mSensorNotOKReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // stopAndFinish();
+            new Utils().showSnackbar(mSnackbarAnchor, getString (R.string.alarm_sensor_registration_failed), Snackbar.LENGTH_INDEFINITE);
+            mFlipAction = AlarmPreferences.FLIP_ACTION_NOTHING;
+            updateShakeLeftRightButtonText();
+        }
+    };
+
     private void updateShakeLeftRightButtonText () {
 
-        if (mFlipAction != AlarmPreferences.FLIP_ACTION_NOTHING) {
-            String buttonText;
+        String leftButtonText = getString(R.string.alarm_click);
+        String rightButtonText = getString(R.string.alarm_click);
 
-            if (mFlipShakeAction == 0) {
-                buttonText = "\n(";
-                //+ getString(R.string.alarm_press_or_flip);
-                if ((mLongClick == AlarmPreferences.LONG_CLICK_SNOOZE || mLongClick == AlarmPreferences.LONG_CLICK_SNOOZE_DISMISS)
-                            && mFlipAction == AlarmPreferences.FLIP_ACTION_SNOOZE ) {
-                    buttonText += getString(R.string.alarm_long_click);
-                } else  if ((mLongClick == AlarmPreferences.LONG_CLICK_DISMISS || mLongClick == AlarmPreferences.LONG_CLICK_SNOOZE_DISMISS)
-                        && mFlipAction == AlarmPreferences.FLIP_ACTION_DISMISS) {
-                    buttonText += getString(R.string.alarm_long_click);
-                } else {
-                    buttonText += getString(R.string.alarm_click);
-                }
-                buttonText += " " + getString(R.string.alarm_or_flip) + ")";
-            } else {
-                buttonText = "\n(" + getString(R.string.alarm_shake_count) + " " + mShakeCount + " / " + mFlipShakeAction + ")";
-            }
-            if (mFlipAction == AlarmPreferences.FLIP_ACTION_SNOOZE) {
-                buttonText = getString(getLeftButtonText()) + buttonText;
-                mLeftButton.setText(buttonText);
-                buttonText = "\n(";
-                if (mLongClick == AlarmPreferences.LONG_CLICK_DISMISS || mLongClick == AlarmPreferences.LONG_CLICK_SNOOZE_DISMISS) {
-                    buttonText += getString(R.string.alarm_long_click);
-                } else {
-                    buttonText += getString(R.string.alarm_click);
-                }
-                buttonText += ")";
-                buttonText = getString(getRightButtonText()) + buttonText;
-                mRightButton.setText(buttonText);
+        if (mLongClick == AlarmPreferences.LONG_CLICK_SNOOZE || mLongClick == AlarmPreferences.LONG_CLICK_SNOOZE_DISMISS) {
+            leftButtonText = getString(R.string.alarm_long_click) ;
+        }
+
+        if (mLongClick == AlarmPreferences.LONG_CLICK_DISMISS || mLongClick == AlarmPreferences.LONG_CLICK_SNOOZE_DISMISS) {
+            rightButtonText = getString(R.string.alarm_long_click) ;
+        }
+
+        if (mFlipAction != AlarmPreferences.FLIP_ACTION_NOTHING) {
+            if (mFlipShakeAction == 0 && mFlipAction == AlarmPreferences.FLIP_ACTION_SNOOZE) {
+                leftButtonText += " " + getString(R.string.alarm_or_flip);
+            } else if (mFlipShakeAction == 0 && mFlipAction == AlarmPreferences.FLIP_ACTION_DISMISS) {
+                rightButtonText += " " + getString(R.string.alarm_or_flip);
+            } else if (mFlipAction == AlarmPreferences.FLIP_ACTION_SNOOZE) {
+                leftButtonText = getString(R.string.alarm_shake_count) + " " + mShakeCount + " / " + mFlipShakeAction;
             } else if (mFlipAction == AlarmPreferences.FLIP_ACTION_DISMISS) {
-                buttonText = getString(getRightButtonText()) + buttonText;
-                mRightButton.setText(buttonText);
-                buttonText = "\n(";
-                if (mLongClick == AlarmPreferences.LONG_CLICK_SNOOZE || mLongClick == AlarmPreferences.LONG_CLICK_SNOOZE_DISMISS) {
-                    buttonText += getString(R.string.alarm_long_click);
-                } else  {
-                    buttonText += getString(R.string.alarm_click);
-                }
-                buttonText += ")";
-                buttonText = getString(getLeftButtonText()) + buttonText;
-                mLeftButton.setText(buttonText);
+                rightButtonText = getString(R.string.alarm_shake_count) + " " + mShakeCount + " / " + mFlipShakeAction;
             }
         }
+
+        leftButtonText = getString(getLeftButtonText()) + "\n(" + leftButtonText + ")";
+        rightButtonText = getString(getRightButtonText()) + "\n(" + rightButtonText + ")";
+
+        mLeftButton.setText(leftButtonText);
+        mRightButton.setText(rightButtonText);
     }
 
     private final BroadcastReceiver mOnAutoSilenceReceiver = new BroadcastReceiver() {

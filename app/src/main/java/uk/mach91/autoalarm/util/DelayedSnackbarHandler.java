@@ -25,6 +25,8 @@ package uk.mach91.autoalarm.util;
 import com.google.android.material.snackbar.Snackbar;
 import android.view.View;
 
+import uk.mach91.autoalarm.timepickers.Utils;
+
 /**
  * Created by Phillip Hsu on 7/10/2016.
  *
@@ -73,7 +75,8 @@ public final class DelayedSnackbarHandler {
      */
     public static void makeAndShow(View snackbarAnchor) {
         if (snackbarAnchor != null && message != null) {
-            Snackbar.make(snackbarAnchor, message, Snackbar.LENGTH_LONG).show();
+            new Utils().showSnackbar(snackbarAnchor, message);
+//            Snackbar.make(snackbarAnchor, message, Snackbar.LENGTH_LONG).show();
             message = null;
         }
     }
