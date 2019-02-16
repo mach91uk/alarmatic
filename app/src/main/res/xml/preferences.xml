@@ -178,6 +178,11 @@
             android:title="@string/title_screensaver_nextalarm"
             android:summary="@string/sum_screensaver_nextalarm"
             android:defaultValue="true"/>
+        <SwitchPreference
+            android:key="@string/key_screensaver_nextevent"
+            android:title="@string/title_screensaver_nextevent"
+            android:summary="@string/sum_screensaver_nextevent"
+            android:defaultValue="false"/>
         <uk.mach91.autoalarm.settings.SeekBarPreference
             android:defaultValue="10"
             android:title="@string/title_screensaver_size"

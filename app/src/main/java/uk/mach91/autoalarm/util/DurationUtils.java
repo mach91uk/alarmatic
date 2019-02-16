@@ -28,6 +28,8 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.CalendarContract;
+import android.text.format.DateFormat;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import androidx.core.content.ContextCompat;
@@ -36,6 +38,8 @@ import uk.mach91.autoalarm.R;
 import uk.mach91.autoalarm.alarms.misc.AlarmPreferences;
 
 import java.util.concurrent.TimeUnit;
+
+import java.util.Date;
 
 /**
  * Created by Phillip Hsu on 6/6/2016.
@@ -188,6 +192,65 @@ public class DurationUtils {
             cur.close();
         }
         return cancelDueToHoliday;
+    }
+
+    public static String nextCalendatEvent(Context context, long startAr, long endAt) {
+        String nextCalendarEvent = "";
+        long nextCalendarEventTime = -1;
+
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_CALENDAR) == PackageManager.PERMISSION_GRANTED) {
+
+            Uri uri = CalendarContract.Events.CONTENT_URI;
+
+            String[] projection =
+                    {
+                            "_id",
+                            CalendarContract.Events.TITLE,
+                            CalendarContract.Events.DTSTART,
+                            CalendarContract.Events.DTEND
+                    };
+
+            String selection = CalendarContract.Events.DTSTART + " >= ? AND "
+                    + CalendarContract.Events.DTSTART + "<= ? ";
+
+            String[] selectionArgs = new String[2];
+            selectionArgs[0] = String.valueOf(startAr);
+            selectionArgs[1] = String.valueOf(endAt);
+
+            Cursor cur = context.getContentResolver().query(uri, projection, selection, selectionArgs, null);
+
+            while (cur.moveToNext()) {
+                String title = cur.getString(cur.getColumnIndex(CalendarContract.Events.TITLE));
+                String alarmStartTimeStr = cur.getString(cur.getColumnIndex(CalendarContract.Events.DTSTART));
+                String alarmEndTimeStr = cur.getString(cur.getColumnIndex(CalendarContract.Events.DTEND));
+                long alarmStartTime = -1;
+                long alarmEndTime = -1;
+                try {
+                    alarmStartTime = Long.parseLong(alarmStartTimeStr);
+                    alarmEndTime = Long.parseLong(alarmEndTimeStr);
+                } catch (NumberFormatException nfe) {
+                }
+
+                if (alarmStartTime != -1 && alarmEndTime != -1 &&
+                        (nextCalendarEventTime == -1 || alarmStartTime < nextCalendarEventTime)) {
+                    DateFormat df = new DateFormat();
+                    Date alarmStartDate = new Date(alarmStartTime);
+                    Date alarmEndDate = new Date(alarmEndTime);
+                    String timneText = "";
+
+                    timneText += "Next event: " + df.format("HH:mm", alarmStartDate) + " - " + df.format("HH:mm", alarmEndDate) + "\n";
+                    if (title.length() > 23) {
+                        title = title.substring(0, 20) + "...";
+                    }
+
+                    nextCalendarEventTime = alarmStartTime;
+                    nextCalendarEvent = timneText + title;
+                }
+            }
+            cur.close();
+        }
+
+        return nextCalendarEvent;
     }
 
     @StringRes

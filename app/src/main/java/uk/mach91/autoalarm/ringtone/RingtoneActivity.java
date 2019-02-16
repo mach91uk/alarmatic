@@ -328,7 +328,7 @@ public abstract class RingtoneActivity<T extends Parcelable> extends BaseActivit
         @Override
         public void onReceive(Context context, Intent intent) {
             // stopAndFinish();
-            new Utils().showSnackbar(mSnackbarAnchor, getString (R.string.alarm_sensor_registration_failed), Snackbar.LENGTH_INDEFINITE);
+            Utils.showSnackbar(mSnackbarAnchor, getString (R.string.alarm_sensor_registration_failed), Snackbar.LENGTH_INDEFINITE);
             mFlipAction = AlarmPreferences.FLIP_ACTION_NOTHING;
             updateShakeLeftRightButtonText();
         }

@@ -47,7 +47,7 @@ public class AboutActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        new Utils().setThemeFromPreference(this);
+        Utils.setThemeFromPreference(this);
 
         Element versionElement = new Element();
         String version = String.format(getString(R.string.about_version), BuildConfig.VERSION_NAME);
@@ -103,7 +103,7 @@ public class AboutActivity extends AppCompatActivity {
                 .setNotices(notices)
                 .setIncludeOwnLicense(false)
                 .setShowFullLicenseText(true)
-                .setThemeResourceId(new Utils().getThemeID(this))
+                .setThemeResourceId(Utils.getThemeID(this))
                 .build();
 
         Element element = new Element();
@@ -132,7 +132,7 @@ public class AboutActivity extends AppCompatActivity {
                 .setNotices(notices)
                 .setIncludeOwnLicense(false)
                 .setShowFullLicenseText(true)
-                .setThemeResourceId(new Utils().getThemeID(this))
+                .setThemeResourceId(Utils.getThemeID(this))
                 .build();
 
         Element element = new Element();
@@ -159,7 +159,7 @@ public class AboutActivity extends AppCompatActivity {
                 .setNotices(notices)
                 .setIncludeOwnLicense(false)
                 .setShowFullLicenseText(true)
-                .setThemeResourceId(new Utils().getThemeID(this))
+                .setThemeResourceId(Utils.getThemeID(this))
                 .build();
 
         Element element = new Element();
@@ -187,7 +187,7 @@ public class AboutActivity extends AppCompatActivity {
                 .setNotices(notices)
                 .setIncludeOwnLicense(false)
                 .setShowFullLicenseText(true)
-                .setThemeResourceId(new Utils().getThemeID(this))
+                .setThemeResourceId(Utils.getThemeID(this))
                 .build();
 
         Element element = new Element();
@@ -214,7 +214,7 @@ public class AboutActivity extends AppCompatActivity {
                 .setNotices(notices)
                 .setIncludeOwnLicense(false)
                 .setShowFullLicenseText(true)
-                .setThemeResourceId(new Utils().getThemeID(this))
+                .setThemeResourceId(Utils.getThemeID(this))
                 .build();
 
         Element element = new Element();
@@ -236,7 +236,7 @@ public class AboutActivity extends AppCompatActivity {
                 .setNotices(notices)
                 .setIncludeOwnLicense(true)
                 .setShowFullLicenseText(true)
-                .setThemeResourceId(new Utils().getThemeID(this))
+                .setThemeResourceId(Utils.getThemeID(this))
                 .build();
 
         Element element = new Element();

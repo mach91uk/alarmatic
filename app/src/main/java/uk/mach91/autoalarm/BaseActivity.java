@@ -65,7 +65,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         // ========================================================================================
         // TOneverDO: Set theme after setContentView()
 
-        new Utils().setThemeFromPreference(this);
+        Utils.setThemeFromPreference(this);
 
         // ========================================================================================
         setContentView(layoutResId());

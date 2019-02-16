@@ -126,7 +126,7 @@ public final class AlarmController {
         if (showSnackbar) {
             String message = mAppContext.getString(R.string.alarm_set_for,
                     DurationUtils.toString(mAppContext, alarm.ringsIn(), false/*abbreviate*/));
-            new Utils().showSnackbar(mSnackbarAnchor, message);
+            Utils.showSnackbar(mSnackbarAnchor, message);
         }
     }
 
@@ -171,7 +171,7 @@ public final class AlarmController {
             long time = alarm.isSnoozed() ? alarm.snoozingUntil() : alarm.ringsAt();
             String msg = mAppContext.getString(R.string.upcoming_alarm_dismissed,
                     formatTime(mAppContext, time));
-            new Utils().showSnackbar(mSnackbarAnchor, msg);
+            Utils.showSnackbar(mSnackbarAnchor, msg);
         }
         // ------------------------------------------------------------------------------------
 

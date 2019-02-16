@@ -75,7 +75,7 @@ public final class DelayedSnackbarHandler {
      */
     public static void makeAndShow(View snackbarAnchor) {
         if (snackbarAnchor != null && message != null) {
-            new Utils().showSnackbar(snackbarAnchor, message);
+            Utils.showSnackbar(snackbarAnchor, message);
 //            Snackbar.make(snackbarAnchor, message, Snackbar.LENGTH_LONG).show();
             message = null;
         }

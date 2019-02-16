@@ -27,6 +27,8 @@
     <string name="title_system_date_time_settings">System date \u0026 time settings</string>
     <string name="summary_system_date_time_settings">Show and edit the system date \u0026 time settings</string>
 
+    <string name="key_settings_orig_theme">key_settings_orig_theme</string>
+
     <string name="key_theme">key_theme</string>
     <string name="title_theme">Theme</string>
 

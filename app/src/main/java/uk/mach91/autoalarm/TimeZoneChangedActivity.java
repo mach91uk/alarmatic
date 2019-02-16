@@ -42,7 +42,7 @@ public class TimeZoneChangedActivity extends AppCompatActivity {
          super.onCreate(savedInstanceState);
 
          //setTheme(getApplicationInfo().theme);
-         new Utils().setThemeFromPreference(this);
+        Utils.setThemeFromPreference(this);
 
          Intent intent = getIntent();
 

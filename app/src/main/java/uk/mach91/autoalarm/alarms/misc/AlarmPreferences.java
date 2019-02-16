@@ -113,6 +113,10 @@ public final class AlarmPreferences {
         return PreferenceManager.getDefaultSharedPreferences(c).getBoolean( c.getString(R.string.key_screensaver_nextalarm), true);
     }
 
+    public static boolean screensaverShowNextEvent(Context c) {
+        return PreferenceManager.getDefaultSharedPreferences(c).getBoolean( c.getString(R.string.key_screensaver_nextevent), false);
+    }
+
     public static boolean cancelAlarmHoliday(Context c) {
         return PreferenceManager.getDefaultSharedPreferences(c).getBoolean( c.getString(R.string.key_cancel_alarm_holiday), c.getResources().getBoolean(R.bool.default_cancel_alarm_holiday));
     }

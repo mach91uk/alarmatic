@@ -79,6 +79,7 @@ public class ScreenSaverUtils extends FrameLayout implements SensorEventListener
 
     private boolean mShowDate = true;
     private boolean mShowNextAlarm = true;
+    private boolean mShowNextEvent = true;
 
     SensorManager mSensorManager;
 
@@ -112,6 +113,7 @@ public class ScreenSaverUtils extends FrameLayout implements SensorEventListener
 
             mShowDate = AlarmPreferences.screensaverShowDate(context);
             mShowNextAlarm = AlarmPreferences.screensaverShowNextAlarm(context);
+            mShowNextEvent = AlarmPreferences.screensaverShowNextEvent(context);
 
             float textSizeFloat = 5 + textSize;
 
@@ -121,6 +123,7 @@ public class ScreenSaverUtils extends FrameLayout implements SensorEventListener
 //            mTextView.setTypeface(Typeface.create("sans-serif-thin", Typeface.NORMAL));
             mTextView.setTypeface(Typeface.create("sans-serif-lite", Typeface.NORMAL));
             mTextView.setGravity(Gravity.CENTER);
+
             //int textBrightness = AlarmPreferences.screensaverTextColour(context);
 
             //float alpha = 255 * (textBrightness + 2) / 16;
@@ -265,6 +268,7 @@ public class ScreenSaverUtils extends FrameLayout implements SensorEventListener
                     DateFormat df = new DateFormat();
                     dateStartIndex = nightClockText.length();
                     nightClockText += df.format("EEEE, dd MMMM", now) + "\n";
+
                     dateEndIndex = nightClockText.length();
                 }
 
@@ -281,6 +285,23 @@ public class ScreenSaverUtils extends FrameLayout implements SensorEventListener
                 nightClockText += DateFormat.getTimeFormat(getContext()).format(now);
 
                 SpannableString ss1;
+
+                int calendarEventStartIndex = -1;
+                int calendarEventEndIndex = -1;
+
+                if (mShowNextEvent) {
+                    long startTime = now.getTime();
+                    long endTime = now.getTime() + SHOW_ALARM_MILLS;
+
+                    String nextCalendartEvent = DurationUtils.nextCalendatEvent(getContext(), startTime, endTime);
+                    if (nextCalendartEvent != "") {
+                        if (calendarEventStartIndex == -1) {
+                            calendarEventStartIndex  = nightClockText.length();
+                        }
+                        nightClockText += "\n" + nextCalendartEvent;
+                        calendarEventEndIndex = nightClockText.length();
+                    }
+                }
 
                 long nextTimeAt= -1;
 
@@ -353,7 +374,9 @@ public class ScreenSaverUtils extends FrameLayout implements SensorEventListener
 
                         alarmTimeEndIndex = nightClockText.length();
                     }
+
                 }
+
 
                 ss1 = new SpannableString(nightClockText);
 
@@ -363,6 +386,9 @@ public class ScreenSaverUtils extends FrameLayout implements SensorEventListener
                 if (alarmTextStartIndex >= 0) {
                     ss1.setSpan(new RelativeSizeSpan(0.25f), alarmTextStartIndex, alarmTextEndIndex, 0); // set size
                     ss1.setSpan(new RelativeSizeSpan(0.35f), alarmTextEndIndex, alarmTimeEndIndex, 0); // set size
+                }
+                if (calendarEventStartIndex >= 0) {
+                    ss1.setSpan(new RelativeSizeSpan(0.25f), calendarEventStartIndex, calendarEventEndIndex, 0); // set size
                 }
 
 
@@ -381,12 +407,6 @@ public class ScreenSaverUtils extends FrameLayout implements SensorEventListener
                 int textWidth = tv.getMeasuredWidth();
                 int textHeight = tv.getMeasuredHeight();
 
-                if (mScreenRotation == 90 || mScreenRotation == 270) {
-                    int temp = textHeight;
-                    textHeight = textWidth;
-                    textWidth = temp;
-                }
-
 
                 int x;
                 int y;
@@ -396,19 +416,32 @@ public class ScreenSaverUtils extends FrameLayout implements SensorEventListener
                     y = (winHeight - textHeight) / 2;
                     firstDrawDone = true;
                 } else {
-                    if (random == null) {
-                        random = new Random();
-                        random.setSeed(now.getTime());
+                   if (random == null) {
+                       random = new Random();
+                       random.setSeed(now.getTime());
+                   }
+                   int maxX = winWidth - textWidth;
+                   int maxY = winHeight - textHeight;
+                   if (mScreenRotation == 90 || mScreenRotation == 270) {
+                       maxX = winWidth - textHeight;
+                       maxY = winHeight - textWidth;
+                   }
+                    if (maxX < 1) {
+                        maxX = 1;
                     }
-                    int randomX = random.nextInt(winWidth - textWidth);
-                    int randomY = random.nextInt(winHeight - textHeight);
-                    x = randomX;
-                    y = randomY;
+                    if (maxY < 1) {
+                        maxY = 1;
+                    }
+                   int randomX = random.nextInt(maxX);
+                   int randomY = random.nextInt(maxY);
+
+                   x = randomX;
+                   y = randomY;
                 }
 
                 if (mScreenRotation == 90 || mScreenRotation == 270) {
-                    x-= abs((textWidth - textHeight) / 2);
-                    y+= abs((textWidth - textHeight) / 2);
+                   x-= (textWidth - textHeight) / 2;
+                   y+= (textWidth - textHeight) / 2;
                 }
 
                 tv.setX(x);

@@ -54,6 +54,7 @@ import uk.mach91.autoalarm.R;
 public class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener, ActivityCompat.OnRequestPermissionsResultCallback {
 
     private static final int  MY_PERMISSIONS_REQUEST_READ_CALENDAR = 10;
+    private static final int  MY_PERMISSIONS_REQUEST_READ_CALENDAR_SCREENSAVER = 11;
 
     public SettingsFragment() {}
 
@@ -73,6 +74,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
 //        setSummary(getPreferenceScreen().getSharedPreferences(), getString(R.string.key_cancel_alarm_label), getString(R.string.disabled));
 
         SwitchPreference p = (SwitchPreference) findPreference(getString(R.string.key_cancel_alarm_holiday));
+        SwitchPreference sp2 = (SwitchPreference) findPreference(getString(R.string.key_screensaver_nextevent));
 
         SeekBarPreference sbp = (SeekBarPreference) findPreference(getString(R.string.key_screensaver_size));
 
@@ -82,6 +84,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         Preference pref = findPreference(getString(R.string.key_cancel_alarm_holiday));
         if (ContextCompat.checkSelfPermission(pref.getContext(), Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
             p.setChecked(false);
+            sp2.setChecked(false);
         }
 
         EditTextPreference p2 = (EditTextPreference) findPreference(getString(R.string.key_cancel_alarm_title));
@@ -232,7 +235,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         Preference pref = findPreference(key);
 
         if (pref instanceof SwitchPreference) {
-            if (key.equals(getString(R.string.key_cancel_alarm_holiday))){
+            if (key.equals(getString(R.string.key_cancel_alarm_holiday))) {
                 boolean val = sharedPreferences.getBoolean(key, false);
                 EditTextPreference p2 = (EditTextPreference) findPreference(getString(R.string.key_cancel_alarm_title));
                 ListPreference p3 = (ListPreference) findPreference(getString(R.string.key_cancel_alarm_calendar));
@@ -259,7 +262,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
 
                         //ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_CALENDAR}, MY_PERMISSIONS_REQUEST_READ_CALENDAR);
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                            requestPermissions(new String[]{Manifest.permission.READ_CALENDAR},MY_PERMISSIONS_REQUEST_READ_CALENDAR);
+                            requestPermissions(new String[]{Manifest.permission.READ_CALENDAR}, MY_PERMISSIONS_REQUEST_READ_CALENDAR);
                         }
 
                         // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
@@ -274,7 +277,16 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
 //                        p5.setEnabled(true);
                     }
                 }
-            } if (key.equals(getString(R.string.key_timer_vibrate))) {
+            } else if (key.equals(getString(R.string.key_screensaver_nextevent))) {
+                boolean val = sharedPreferences.getBoolean(key, false);
+                if (val) {
+                    if (ContextCompat.checkSelfPermission(pref.getContext(), Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            requestPermissions(new String[]{Manifest.permission.READ_CALENDAR}, MY_PERMISSIONS_REQUEST_READ_CALENDAR_SCREENSAVER);
+                        }
+                    }
+                }
+            } else if (key.equals(getString(R.string.key_timer_vibrate))) {
                 boolean val = sharedPreferences.getBoolean(key, false);
                 if (val) {
                     Vibrator vibrator = (Vibrator) pref.getContext().getSystemService(Context.VIBRATOR_SERVICE);
@@ -289,6 +301,10 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
                 if (val.isEmpty()) {
                     setSummary(getPreferenceScreen().getSharedPreferences(), key, getString(R.string.disabled));
                 }
+            }
+        } else if (pref instanceof ListPreference) {
+            if (key.equals(getString(R.string.key_theme))) {
+                getActivity().recreate();
             }
         }
     }
@@ -319,6 +335,22 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
                     p.setChecked(false);
+                }
+                return;
+            }
+
+            case MY_PERMISSIONS_REQUEST_READ_CALENDAR_SCREENSAVER: {
+                // If request is cancelled, the result arrays are empty.
+                SwitchPreference sp2 = (SwitchPreference) findPreference(getString(R.string.key_screensaver_nextevent));
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    ListPreference p3 = (ListPreference) findPreference(getString(R.string.key_cancel_alarm_calendar));
+                    ListPreference p4 = (ListPreference) findPreference(getString(R.string.key_cancel_alarm_bank_calendar));
+
+                    setCalendatListPreferenceData(p3);
+                    setCalendatListPreferenceData(p4);
+                } else {
+                    sp2.setChecked(false);
                 }
                 return;
             }

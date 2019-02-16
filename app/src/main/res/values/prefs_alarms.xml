@@ -236,8 +236,11 @@
     <string name="title_screensaver_date">Show date</string>
     <string name="sum_screensaver_date">Display the day and date</string>
     <string name="key_screensaver_nextalarm">key_screensaver_nextalarm</string>
-    <string name="title_screensaver_nextalarm">Show  the next alarm</string>
+    <string name="title_screensaver_nextalarm">Show the next alarm</string>
     <string name="sum_screensaver_nextalarm">Display how much time there is until the next alarm</string>
+    <string name="key_screensaver_nextevent">key_screensaver_nextevent</string>
+    <string name="title_screensaver_nextevent">Show the next calendar even</string>
+    <string name="sum_screensaver_nextevent">Display the time and title of your next event in your calendar</string>
     <string name="key_screensaver_text_brightness">key_screensaver_text_brightness</string>
     <string name="title_screensaver_brightness">Text brightness</string>
     <string name="key_screensaver_colour">key_screensaver_colour</string>

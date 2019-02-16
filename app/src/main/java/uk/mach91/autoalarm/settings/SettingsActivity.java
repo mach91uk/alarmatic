@@ -66,7 +66,14 @@ public class SettingsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-        mInitialTheme = getSelectedTheme();
+        mInitialTheme = mPrefs.getString(getString(R.string.key_settings_orig_theme), "");
+//        mInitialTheme = getSelectedTheme();
+        if (mInitialTheme == "") {
+            mInitialTheme = getSelectedTheme();
+            SharedPreferences.Editor prefsEditor = mPrefs.edit();
+            prefsEditor.putString(getString(R.string.key_settings_orig_theme), mInitialTheme);
+            prefsEditor.commit();
+        }
         mInitialSkipIfOnHoliday = getSkipIfOnHoliday();
         mInitalFirstDayOfTheWeek = getFirstDayOfTheWeek();
     }
@@ -129,6 +136,10 @@ public class SettingsActivity extends BaseActivity {
                 firstDayOfWeek != mInitalFirstDayOfTheWeek) {
             recreateLayout = true;
         }
+        SharedPreferences.Editor prefsEditor = mPrefs.edit();
+        prefsEditor.putString(getString(R.string.key_settings_orig_theme), "");
+        prefsEditor.commit();
+
         result.putExtra(EXTRA_THEME_CHANGED, recreateLayout);
         setResult(Activity.RESULT_OK, result);
     }

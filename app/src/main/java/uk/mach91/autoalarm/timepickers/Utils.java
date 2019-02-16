@@ -304,7 +304,7 @@ public class Utils {
         }
     }
 
-    public int getThemeID(Context context) {
+    public static int getThemeID(Context context) {
         int themeID = 0;
         final String themeDark = context.getString(R.string.theme_dark);
         final String themeBlack = context.getString(R.string.theme_black);
@@ -328,7 +328,7 @@ public class Utils {
         return themeID;
     }
 
-    public void setThemeFromPreference(Context context) {
+    public static void setThemeFromPreference(Context context) {
         final String themeDark = context.getString(R.string.theme_dark);
         final String themeBlack = context.getString(R.string.theme_black);
         final String themeLight = context.getString(R.string.theme_light);
@@ -350,11 +350,11 @@ public class Utils {
         }
     }
 
-    public void showSnackbar(View snackbarAnchor, final String message) {
+    public static void showSnackbar(View snackbarAnchor, final String message) {
         showSnackbar(snackbarAnchor, message, Snackbar.LENGTH_LONG);
     }
 
-    public void showSnackbar(View snackbarAnchor, final String message, int length) {
+    public static void showSnackbar(View snackbarAnchor, final String message, int length) {
         // Is the window containing this anchor currently focused?
 //        Log.d(TAG, "Anchor has window focus? " + mSnackbarAnchor.hasWindowFocus());
         if (snackbarAnchor != null /*&& mSnackbarAnchor.hasWindowFocus()*/) {

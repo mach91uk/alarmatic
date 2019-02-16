@@ -140,7 +140,7 @@ public class AlarmActivity extends RingtoneActivity<Alarm> {
             snoozeDismissButtonPress(true);
         } else {
 //            Toast.makeText(this, getString (R.string.alarm_must_shake), Toast.LENGTH_LONG).show();
-            new Utils().showSnackbar(mSnackbarAnchor, getString (R.string.alarm_must_shake));
+            Utils.showSnackbar(mSnackbarAnchor, getString (R.string.alarm_must_shake));
         }
         return true;
     }
@@ -151,7 +151,7 @@ public class AlarmActivity extends RingtoneActivity<Alarm> {
             snoozeDismissButtonPress(false);
         } else {
 //            Toast.makeText(this, getString (R.string.alarm_must_shake), Toast.LENGTH_LONG).show();
-            new Utils().showSnackbar(mSnackbarAnchor, getString (R.string.alarm_must_shake));
+            Utils.showSnackbar(mSnackbarAnchor, getString (R.string.alarm_must_shake));
         }
         return true;
     }
@@ -162,10 +162,10 @@ public class AlarmActivity extends RingtoneActivity<Alarm> {
             if (mLongClick == AlarmPreferences.LONG_CLICK_DISABLED || !(mLongClick == AlarmPreferences.LONG_CLICK_SNOOZE || mLongClick == AlarmPreferences.LONG_CLICK_SNOOZE_DISMISS)) {
                 snoozeDismissButtonPress(true);
             } else {
-                new Utils().showSnackbar(mSnackbarAnchor, getString (R.string.alarm_long_click_required));
+                Utils.showSnackbar(mSnackbarAnchor, getString (R.string.alarm_long_click_required));
             }
         }  else {
-            new Utils().showSnackbar(mSnackbarAnchor, getString (R.string.alarm_must_shake));
+            Utils.showSnackbar(mSnackbarAnchor, getString (R.string.alarm_must_shake));
         }
     }
 
@@ -175,10 +175,10 @@ public class AlarmActivity extends RingtoneActivity<Alarm> {
             if (mLongClick == AlarmPreferences.LONG_CLICK_DISABLED || !(mLongClick == AlarmPreferences.LONG_CLICK_DISMISS || mLongClick == AlarmPreferences.LONG_CLICK_SNOOZE_DISMISS)) {
                 snoozeDismissButtonPress(false);
             } else {
-                new Utils().showSnackbar(mSnackbarAnchor, getString (R.string.alarm_long_click_required));
+                Utils.showSnackbar(mSnackbarAnchor, getString (R.string.alarm_long_click_required));
             }
         } else {
-            new Utils().showSnackbar(mSnackbarAnchor, getString (R.string.alarm_must_shake));
+            Utils.showSnackbar(mSnackbarAnchor, getString (R.string.alarm_must_shake));
         }
     }
 
@@ -221,10 +221,10 @@ public class AlarmActivity extends RingtoneActivity<Alarm> {
                 set.start();
                 if (snooze) {
 //                    Toast.makeText(this, getString (R.string.alarm_accidental_snooze_protection), Toast.LENGTH_LONG).show();
-                    new Utils().showSnackbar(mSnackbarAnchor, getString (R.string.alarm_accidental_snooze_protection));
+                    Utils.showSnackbar(mSnackbarAnchor, getString (R.string.alarm_accidental_snooze_protection));
                 } else {
 //                    Toast.makeText(this, getString (R.string.alarm_accidental_dismiss_protection), Toast.LENGTH_LONG).show();
-                    new Utils().showSnackbar(mSnackbarAnchor, getString (R.string.alarm_accidental_dismiss_protection));
+                    Utils.showSnackbar(mSnackbarAnchor, getString (R.string.alarm_accidental_dismiss_protection));
                 }
 
             }
