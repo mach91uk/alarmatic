@@ -19,6 +19,8 @@
 
 package uk.mach91.autoalarm;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -31,8 +33,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import uk.mach91.autoalarm.alarms.misc.AlarmPreferences;
 import uk.mach91.autoalarm.timepickers.Utils;
 
 /**
@@ -52,10 +57,16 @@ public abstract class BaseActivity extends AppCompatActivity {
     @LayoutRes protected abstract int layoutResId();
     @MenuRes   protected abstract int menuResId();
 
+    public FirebaseAnalytics mFirebaseAnalytics;
+
     @CallSuper
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Obtain the FirebaseAnalytics instance.
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+
         // Initialize the associated SharedPreferences file with default values
         // for each preference when the user first opens your application.
         // When false, the system sets the default values only if this method has
@@ -66,6 +77,12 @@ public abstract class BaseActivity extends AppCompatActivity {
         // TOneverDO: Set theme after setContentView()
 
         Utils.setThemeFromPreference(this);
+
+        if (AlarmPreferences.isUserExperianceEnabled(this)) {
+            mFirebaseAnalytics.setAnalyticsCollectionEnabled(true);
+        }
+
+
 
         // ========================================================================================
         setContentView(layoutResId());

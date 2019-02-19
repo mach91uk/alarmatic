@@ -74,7 +74,7 @@ public class AboutActivity extends AppCompatActivity {
                 .addEmail(getString(R.string.about_email))
                 .addGitHub("mach91uk/alarmatic")
                 .addPlayStore(getString(R.string.about_playstore))
-                .addWebsite("https://github.com/mach91uk/alarmatic/blob/master/privacypolicy.txt")
+                .addWebsite("https://htmlpreview.github.io/?https://github.com/mach91uk/alarmatic/blob/master/privacypolicy.html")
                 .addGroup(getString(R.string.about_open_source_licenses))
                 .addItem(getLicensesElementAlarmatic())
                 .addItem(getLicensesElementClockPlus())

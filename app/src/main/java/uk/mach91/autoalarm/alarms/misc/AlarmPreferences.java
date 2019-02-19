@@ -113,6 +113,10 @@ public final class AlarmPreferences {
         return PreferenceManager.getDefaultSharedPreferences(c).getBoolean( c.getString(R.string.key_screensaver_nextalarm), true);
     }
 
+    public static boolean isUserExperianceEnabled(Context c) {
+        return PreferenceManager.getDefaultSharedPreferences(c).getBoolean( c.getString(R.string.key_user_experience_program), false);
+    }
+
     public static boolean screensaverShowNextEvent(Context c) {
         return PreferenceManager.getDefaultSharedPreferences(c).getBoolean( c.getString(R.string.key_screensaver_nextevent), false);
     }

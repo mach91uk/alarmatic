@@ -43,13 +43,17 @@ import android.preference.RingtonePreference;
 import android.preference.SwitchPreference;
 import android.provider.CalendarContract;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import uk.mach91.autoalarm.BaseActivity;
 import uk.mach91.autoalarm.R;
+import uk.mach91.autoalarm.timepickers.Utils;
 
 public class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener, ActivityCompat.OnRequestPermissionsResultCallback {
 
@@ -275,6 +279,8 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
                         p3.setEnabled(true);
                         p4.setEnabled(true);
 //                        p5.setEnabled(true);
+
+                        Utils.logFirebaseEvent(getActivity(),"SETTINGS", "SKIP_HOLIDAYS_ALLOWED");
                     }
                 }
             } else if (key.equals(getString(R.string.key_screensaver_nextevent))) {
@@ -284,6 +290,8 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                             requestPermissions(new String[]{Manifest.permission.READ_CALENDAR}, MY_PERMISSIONS_REQUEST_READ_CALENDAR_SCREENSAVER);
                         }
+                    } else {
+                        Utils.logFirebaseEvent(getActivity(),"SETTINGS", "SCREENSAVER_NEXT_EVENT");
                     }
                 }
             } else if (key.equals(getString(R.string.key_timer_vibrate))) {
@@ -292,7 +300,12 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
                     Vibrator vibrator = (Vibrator) pref.getContext().getSystemService(Context.VIBRATOR_SERVICE);
                     vibrator.vibrate(300);
                 }
+            } else if (key.equals(getString(R.string.key_user_experience_program))) {
+                boolean val = sharedPreferences.getBoolean(key, false);
+                FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(this.getActivity());
+                firebaseAnalytics.setAnalyticsCollectionEnabled(val);
             }
+
         } else if (pref instanceof EditTextPreference) {
             if (key.equals(getString(R.string.key_cancel_alarm_title))){
 //                    key.equals(getString(R.string.key_cancel_alarm_label))) {
@@ -331,10 +344,13 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
 //                    p5.setEnabled(true);
                     setCalendatListPreferenceData(p3);
                     setCalendatListPreferenceData(p4);
+
+                    Utils.logFirebaseEvent(getActivity(),"SETTINGS", "CALENDAR_ACCESS_ALLOWED");
                 } else {
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
                     p.setChecked(false);
+                    Utils.logFirebaseEvent(getActivity(),"SETTINGS", "CALENDAR_ACCESS_BLOCKED");
                 }
                 return;
             }
@@ -349,8 +365,11 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
 
                     setCalendatListPreferenceData(p3);
                     setCalendatListPreferenceData(p4);
+
+                    Utils.logFirebaseEvent(getActivity(),"SETTINGS", "SKIP_HOLIDAYS_ALLOWED");
                 } else {
                     sp2.setChecked(false);
+                    Utils.logFirebaseEvent(getActivity(),"SETTINGS", "SKIP_HOLIDAYS_BLOCKED");
                 }
                 return;
             }

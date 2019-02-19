@@ -38,9 +38,12 @@ import android.os.Parcelable;
 import android.provider.Settings;
 import android.util.Log;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 import uk.mach91.autoalarm.alarms.misc.AlarmController;
 import uk.mach91.autoalarm.alarms.misc.AlarmPreferences;
 import uk.mach91.autoalarm.ringtone.RingtoneActivity;
+import uk.mach91.autoalarm.timepickers.Utils;
 import uk.mach91.autoalarm.util.DurationUtils;
 import uk.mach91.autoalarm.util.LocalBroadcastHelper;
 import uk.mach91.autoalarm.util.ParcelableUtil;
@@ -86,10 +89,11 @@ public class AlarmRingtoneService extends RingtoneService<Alarm> {
         // We can have this before super because this will only call through
         // WHILE this Service has already been alive.
 
-        if (mCancelDueToHoliday) {
-            final byte[] bytes = intent.getByteArrayExtra(EXTRA_RINGING_OBJECT);
-            if (bytes != null) {
-                boolean skip_holiday = ParcelableUtil.unmarshall(bytes, getParcelableCreator()).skip_holiday();
+        final byte[] bytes = intent.getByteArrayExtra(EXTRA_RINGING_OBJECT);
+        if (bytes != null) {
+            boolean skip_holiday = ParcelableUtil.unmarshall(bytes, getParcelableCreator()).skip_holiday();
+            Utils.logFirebaseEvent(this, "ALARM_SETTING", "SKIP_HOLIDAY-" + skip_holiday);
+            if (mCancelDueToHoliday) {
                 //if (lable.toLowerCase().equals(AlarmPreferences.cancelAlarmHolidayLabel(this).toLowerCase())) {
                 if (skip_holiday) {
                     AudioManager audio = (AudioManager) getSystemService(AUDIO_SERVICE);
@@ -97,6 +101,7 @@ public class AlarmRingtoneService extends RingtoneService<Alarm> {
                     Handler mCalendarHandler = new Handler();
                     audio.setStreamVolume(AudioManager.STREAM_ALARM, 0, 0);
                     mCalendarHandler.postDelayed(mCalendarRunnable, 900);
+                    Utils.logFirebaseEvent(this, "ALARM_ACTION", "SKIP_HOLIDAY");
                 }
             }
         }
@@ -184,6 +189,9 @@ public class AlarmRingtoneService extends RingtoneService<Alarm> {
         }
 
         mCancelDueToHoliday = DurationUtils.isOnHoliday(this, System.currentTimeMillis());
+
+        Utils.logFirebaseEvent(this, "SETTINGS", "SKIP_HOLIDAY-" + AlarmPreferences.cancelAlarmHoliday(this));
+
     }
 
 
@@ -229,8 +237,10 @@ public class AlarmRingtoneService extends RingtoneService<Alarm> {
                         if (mFacingDownSet && mFacingDown != nowDown) {
                             if (mFlipAction == AlarmPreferences.FLIP_ACTION_SNOOZE) {
                                 mAlarmController.snoozeAlarm(getRingingObject());
+                                Utils.logFirebaseEvent(getApplicationContext(), "ALARM_ACTION", "FLIP_SNOOZE");
                             } else if (mFlipAction == AlarmPreferences.FLIP_ACTION_DISMISS){
                                 mAlarmController.cancelAlarm(getRingingObject(), false, true);
+                                Utils.logFirebaseEvent(getApplicationContext(), "ALARM_ACTION", "FLIP_DISMISS");
                             }
                             cancelNow();
                         }
@@ -253,8 +263,10 @@ public class AlarmRingtoneService extends RingtoneService<Alarm> {
                             if (mShakeCount >=  mFlipShakeAction) {
                                 if (mFlipAction == AlarmPreferences.FLIP_ACTION_SNOOZE) {
                                     mAlarmController.snoozeAlarm(getRingingObject());
+                                    Utils.logFirebaseEvent(getApplicationContext(), "ALARM_ACTION", "SHAKE_SNOOZE");
                                 } else  if (mFlipAction == AlarmPreferences.FLIP_ACTION_DISMISS) {
                                     mAlarmController.cancelAlarm(getRingingObject(), false, true);
+                                    Utils.logFirebaseEvent(getApplicationContext(), "ALARM_ACTION", "SHAKE_DISMISS");
                                 }
                                 cancelNow();
                             } else {

@@ -20,6 +20,7 @@ import android.animation.Keyframe;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
@@ -27,6 +28,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.RippleDrawable;
 import android.os.Build;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import androidx.annotation.AttrRes;
 import androidx.annotation.ColorInt;
@@ -43,8 +45,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
+import uk.mach91.autoalarm.BaseActivity;
 import uk.mach91.autoalarm.R;
+import uk.mach91.autoalarm.alarms.misc.AlarmPreferences;
 
 import java.util.Calendar;
 
@@ -378,6 +383,21 @@ public class Utils {
                 }
             });
         }
+    }
+
+    public static void logFirebaseEvent(Context context , String type, String item) {
+        FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(context);
+
+        if (AlarmPreferences.isUserExperianceEnabled(context)) {
+            firebaseAnalytics.setAnalyticsCollectionEnabled(true);
+        }
+
+        Bundle bundle = new Bundle();
+
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, item);
+        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, item);
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, type);
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
     }
 
 

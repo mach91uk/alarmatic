@@ -121,3 +121,4 @@ fabric.properties
 /captures
 #
 keystore.properties
+/app/google-services.json

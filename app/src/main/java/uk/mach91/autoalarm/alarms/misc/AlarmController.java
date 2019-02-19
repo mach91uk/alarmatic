@@ -200,6 +200,7 @@ public final class AlarmController {
 
         // If service is not running, nothing happens
         mAppContext.stopService(new Intent(mAppContext, AlarmRingtoneService.class));
+        Utils.logFirebaseEvent(mAppContext, "ALARM_ACTION", "DISMISS");
     }
 
     public void snoozeAlarm(Alarm alarm) {
@@ -215,6 +216,7 @@ public final class AlarmController {
         // the list screen is resumed so that it can display the Snackbar for us.
         DelayedSnackbarHandler.prepareMessage(message);
         save(alarm);
+        Utils.logFirebaseEvent(mAppContext, "ALARM_ACTION", "SNOOZE");
     }
 
     public void removeUpcomingAlarmNotification(Alarm a) {

@@ -69,6 +69,30 @@ public class AlarmActivity extends RingtoneActivity<Alarm> {
 
         mLongClick = AlarmPreferences.longClick(this);
         mFlipShakeAction = AlarmPreferences.flipShakeAction(this);
+
+        String longClick = "DISABLED";
+        if (mLongClick == AlarmPreferences.LONG_CLICK_SNOOZE) {
+            longClick = "SNOOZE";
+        } else if (mLongClick == AlarmPreferences.LONG_CLICK_DISMISS) {
+            longClick = "DISMISS";
+        } else if (mLongClick == AlarmPreferences.LONG_CLICK_SNOOZE_DISMISS) {
+            longClick = "SNOOZE_DISMISS";
+        }
+        Utils.logFirebaseEvent(this,"SETTINGS", "LONG_CLICK-" + longClick);
+        String flipAction = "NOTHING";
+        if (mFlipAction == AlarmPreferences.FLIP_ACTION_SNOOZE) {
+            flipAction = "SNOOZE";
+        } else if (mFlipAction == AlarmPreferences.FLIP_ACTION_DISMISS) {
+            flipAction = "DISMISS";
+        }
+        Utils.logFirebaseEvent(this,"SETTINGS", "FLIP_SHAKE_TO-" + flipAction);
+        String flipShakeAction = "NOTHING";
+        if (mFlipShakeAction == 0) {
+            flipShakeAction = "FLIP";
+        } else {
+            flipShakeAction = "SHAKE-" + mFlipShakeAction;
+        }
+        Utils.logFirebaseEvent(this,"SETTINGS", "FLIP_SHAKE_ACTION-" + flipShakeAction);
     }
 
     @Override

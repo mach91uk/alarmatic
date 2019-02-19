@@ -23,6 +23,7 @@
 package uk.mach91.autoalarm;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -35,6 +36,8 @@ import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -43,14 +46,18 @@ import androidx.core.content.ContextCompat;
 import androidx.loader.content.Loader;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.viewpager.widget.ViewPager;
+
+import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.method.LinkMovementMethod;
 import android.text.style.ImageSpan;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import java.util.TimeZone;
@@ -198,6 +205,42 @@ public class MainActivity extends BaseActivity implements ActivityCompat.OnReque
 
         mAddItemDrawable = ContextCompat.getDrawable(this, R.drawable.ic_add_24dp);
         handleActionScrollToStableId(getIntent(), false);
+
+
+        SharedPreferences prefSetts = PreferenceManager.getDefaultSharedPreferences(this);
+
+        boolean askedUserExp = prefSetts.getBoolean(getString(R.string.key_asked_user_experience_program), false);
+
+        if (!askedUserExp) {
+
+            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which) {
+                        case DialogInterface.BUTTON_POSITIVE:
+                            SharedPreferences.Editor prefsEditor = prefSetts.edit();
+                            prefsEditor.putBoolean(getString(R.string.key_user_experience_program), true);
+                            prefsEditor.putBoolean(getString(R.string.key_asked_user_experience_program), true);
+                            prefsEditor.commit();
+                            mFirebaseAnalytics.setAnalyticsCollectionEnabled(true);
+                            break;
+
+                        case DialogInterface.BUTTON_NEGATIVE:
+                            SharedPreferences.Editor prefsEditor2 = prefSetts.edit();
+                            prefsEditor2.putBoolean(getString(R.string.key_asked_user_experience_program), true);
+                            prefsEditor2.commit();
+                            break;
+                    }
+                }
+            };
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            final AlertDialog alertDialog = builder.setMessage(Html.fromHtml(getString(R.string.asked_user_experience_program)))
+                    .setPositiveButton(getString (R.string.yes), dialogClickListener)
+                    .setTitle(getString (R.string.user_experience_title))
+                    .setNegativeButton(getString (R.string.no), dialogClickListener).show();
+            ((TextView)alertDialog.findViewById(android.R.id.message)).setMovementMethod(LinkMovementMethod.getInstance());
+        }
     }
 
     private void setTabIcon(int index, @DrawableRes int iconRes, String title, @NonNull final ColorStateList color) {
