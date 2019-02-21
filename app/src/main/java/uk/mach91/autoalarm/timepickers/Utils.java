@@ -37,6 +37,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
+
+import android.provider.Settings;
 import android.text.format.Time;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -385,12 +387,18 @@ public class Utils {
         }
     }
 
+    public static void firebaseOnOff(Context context, FirebaseAnalytics fb, boolean turnOn) {
+        String testLabSetting = Settings.System.getString(context.getContentResolver(), "firebase.test.lab");
+        if ("true" .equals(testLabSetting)) {
+           turnOn = false;
+        }
+        fb.setAnalyticsCollectionEnabled(turnOn);
+    }
+
     public static void logFirebaseEvent(Context context , String type, String item) {
         FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(context);
 
-        if (AlarmPreferences.isUserExperianceEnabled(context)) {
-            firebaseAnalytics.setAnalyticsCollectionEnabled(true);
-        }
+        firebaseOnOff(context, firebaseAnalytics, AlarmPreferences.isUserExperianceEnabled(context));
 
         Bundle bundle = new Bundle();
 
@@ -399,6 +407,5 @@ public class Utils {
         bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, type);
         firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
     }
-
 
 }

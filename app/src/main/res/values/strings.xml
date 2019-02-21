@@ -176,7 +176,7 @@
     <string name="about_website">Privacy Policy</string>
 
     <string name="key_asked_user_experience_program">key_asked_user_experience_program</string>
-    <string name="asked_user_experience_program"><![CDATA[You can help improve Alarmatic by opting in. If you allow us we will gather anonymous usage statistics and share them with the developers to help improve the application for you.<BR><a href=\"https://htmlpreview.github.io/?https://github.com/mach91uk/alarmatic/blob/master/privacypolicy.html\">Check this link to view our privacy policy.</a><BR><BR>Do you want to sign up?]]></string>
+    <string name="asked_user_experience_program"><![CDATA[You can help improve Alarmatic by opting in. If you allow us we will gather anonymous usage statistics and share them with the developers to help improve the application for you.<BR>Please refer to our <a href=\"https://htmlpreview.github.io/?https://github.com/mach91uk/alarmatic/blob/master/privacypolicy.html\">privacy policy</a> for more details.<BR>You can control this anytime in the settings.<BR><BR>Do you want to sign up?]]></string>
     <string name="user_experience_title">User Experience Improvement Program</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>

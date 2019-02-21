@@ -78,11 +78,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         Utils.setThemeFromPreference(this);
 
-        if (AlarmPreferences.isUserExperianceEnabled(this)) {
-            mFirebaseAnalytics.setAnalyticsCollectionEnabled(true);
-        }
-
-
+        Utils.firebaseOnOff(this, mFirebaseAnalytics, AlarmPreferences.isUserExperianceEnabled(this));
 
         // ========================================================================================
         setContentView(layoutResId());

@@ -53,6 +53,7 @@ import java.util.List;
 
 import uk.mach91.autoalarm.BaseActivity;
 import uk.mach91.autoalarm.R;
+import uk.mach91.autoalarm.alarms.misc.AlarmPreferences;
 import uk.mach91.autoalarm.timepickers.Utils;
 
 public class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener, ActivityCompat.OnRequestPermissionsResultCallback {
@@ -301,9 +302,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
                     vibrator.vibrate(300);
                 }
             } else if (key.equals(getString(R.string.key_user_experience_program))) {
-                boolean val = sharedPreferences.getBoolean(key, false);
-                FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(this.getActivity());
-                firebaseAnalytics.setAnalyticsCollectionEnabled(val);
+                Utils.firebaseOnOff(this.getActivity(), FirebaseAnalytics.getInstance(this.getActivity()), sharedPreferences.getBoolean(key, false));
             }
 
         } else if (pref instanceof EditTextPreference) {

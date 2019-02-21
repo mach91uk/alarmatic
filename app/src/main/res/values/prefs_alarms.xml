@@ -238,7 +238,7 @@
 
     <string name="key_user_experience_program">key_user_experience_program</string>
     <string name="title_user_experience_program">User experience improvement program</string>
-    <string name="sum_user_experience_program">Anonymous usage statistics will be gathered and shared with the developers</string>
+    <string name="sum_user_experience_program">Anonymous usage data will be gathered and shared with the developers so they can improve Alarmatic, please see our privacy policy for details</string>
 
     <string name="key_screensaver_nextalarm">key_screensaver_nextalarm</string>
     <string name="title_screensaver_nextalarm">Show the next alarm</string>

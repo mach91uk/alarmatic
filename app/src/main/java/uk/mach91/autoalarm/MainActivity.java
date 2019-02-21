@@ -36,6 +36,7 @@ import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
@@ -222,13 +223,15 @@ public class MainActivity extends BaseActivity implements ActivityCompat.OnReque
                             prefsEditor.putBoolean(getString(R.string.key_user_experience_program), true);
                             prefsEditor.putBoolean(getString(R.string.key_asked_user_experience_program), true);
                             prefsEditor.commit();
-                            mFirebaseAnalytics.setAnalyticsCollectionEnabled(true);
+                            Utils.firebaseOnOff(getBaseContext(), mFirebaseAnalytics, true);
                             break;
 
                         case DialogInterface.BUTTON_NEGATIVE:
                             SharedPreferences.Editor prefsEditor2 = prefSetts.edit();
+                            prefsEditor2.putBoolean(getString(R.string.key_user_experience_program), false);
                             prefsEditor2.putBoolean(getString(R.string.key_asked_user_experience_program), true);
                             prefsEditor2.commit();
+                            Utils.firebaseOnOff(getBaseContext(), mFirebaseAnalytics, false);
                             break;
                     }
                 }
