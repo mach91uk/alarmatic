@@ -23,6 +23,7 @@
 package uk.mach91.autoalarm.settings;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -68,11 +69,10 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         super.onCreate(savedInstanceState);
 
 
-
         addPreferencesFromResource(R.xml.preferences);
 
         // Set ringtone summary
-        setSummary(getPreferenceScreen().getSharedPreferences(), getString(R.string.key_timer_ringtone));
+        setSummary(getPreferenceScreen().getSharedPreferences(), getString(R.string.key_default_alarm_tone_picker));
         setSummary(getPreferenceScreen().getSharedPreferences(), getString(R.string.key_cancel_alarm_calendar));
         setSummary(getPreferenceScreen().getSharedPreferences(), getString(R.string.key_cancel_alarm_title), getString(R.string.disabled));
         setSummary(getPreferenceScreen().getSharedPreferences(), getString(R.string.key_cancel_alarm_bank_calendar));
@@ -390,11 +390,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
             Uri ringtoneUri = Uri.parse(prefs.getString(key, defVal));
             Ringtone ringtone = RingtoneManager.getRingtone(getActivity(), ringtoneUri);
 
-            String summary = ringtone.getTitle(getActivity());
-
-            if (summary.lastIndexOf("/") >= 0) {
-                summary = summary.substring(summary.lastIndexOf("/") + 1);
-            }
+            String summary = Utils.getAlarmToneTitle(getActivity(), ringtoneUri);
 
             pref.setSummary(summary);
         } else if (pref instanceof EditTextPreference) {

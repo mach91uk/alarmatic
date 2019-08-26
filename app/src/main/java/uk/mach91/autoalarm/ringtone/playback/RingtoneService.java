@@ -175,7 +175,9 @@ public abstract class RingtoneService<T extends Parcelable> extends Service {
     @Override
     public void onDestroy() {
         Log.d(TAG, "onDestroy()");
-        mRingtone.stop();
+        if (mRingtone != null) {
+            mRingtone.stop();
+        }
         mAudioManager.abandonAudioFocus(null); // no listener was set
         if (mVibrator != null) {
             mVibrator.cancel();

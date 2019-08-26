@@ -23,7 +23,11 @@
 package uk.mach91.autoalarm.alarms.misc;
 
 import android.content.Context;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
+
 import androidx.annotation.StringRes;
 
 import uk.mach91.autoalarm.R;
@@ -152,5 +156,14 @@ public final class AlarmPreferences {
     public static int readPreference(Context c, @StringRes int key, int defaultValue) {
         String value = PreferenceManager.getDefaultSharedPreferences(c).getString(c.getString(key), null);
         return null == value ? defaultValue : Integer.parseInt(value);
+    }
+
+    public static Uri defaultAlarmTone(Context c) {
+        String value = PreferenceManager.getDefaultSharedPreferences(c).getString(c.getString(R.string.key_default_alarm_tone_picker), "");
+        if (value == "") {
+            return RingtoneManager.getActualDefaultRingtoneUri(c, RingtoneManager.TYPE_ALARM);
+        } else {
+            return Uri.parse(value);
+        }
     }
 }

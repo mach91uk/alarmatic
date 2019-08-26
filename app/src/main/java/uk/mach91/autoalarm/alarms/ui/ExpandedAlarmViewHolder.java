@@ -318,16 +318,11 @@ public class ExpandedAlarmViewHolder extends BaseAlarmViewHolder {
         DrawableCompat.setTint(ringtoneIcon, iconTint);
         mRingtone.setCompoundDrawablesRelativeWithIntrinsicBounds(ringtoneIcon, null, null, null);
 
-        String title = RingtoneManager.getRingtone(getContext(),
-                getSelectedRingtoneUri()).getTitle(getContext());
 
-        RingtoneManager rm = new RingtoneManager(getContext());
-        rm.setType(RingtoneManager.TYPE_ALARM);
-        Uri uri = getSelectedRingtoneUri();
-        int selIndex = rm.getRingtonePosition(uri);
+        String title = Utils.getAlarmToneTitle((Activity)getContext(), getSelectedRingtoneUri());
 
-        if (title.lastIndexOf("/") >= 0) {
-            title = title.substring(title.lastIndexOf("/") + 1);
+        if (getAlarm().ringtone().isEmpty()){
+            title += getContext().getString(R.string.default_tone);
         }
 
         mRingtone.setText(title);
@@ -360,7 +355,8 @@ public class ExpandedAlarmViewHolder extends BaseAlarmViewHolder {
         // which will resolved to the actual sound when played").
         String ringtone = getAlarm().ringtone();
         return ringtone.isEmpty() ?
-                RingtoneManager.getActualDefaultRingtoneUri(getContext(), RingtoneManager.TYPE_ALARM)
+                AlarmPreferences.defaultAlarmTone((getContext()))
+                //RingtoneManager.getActualDefaultRingtoneUri(getContext(), RingtoneManager.TYPE_ALARM)
                 : Uri.parse(ringtone);
     }
 

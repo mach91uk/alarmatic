@@ -43,6 +43,11 @@
         <item>@string/grid_selector</item>
     </string-array>
 
+    <!-- Defualt allarm tone picker -->
+    <string name="key_default_alarm_tone_picker">key_default_alarm_tone_picker</string>
+    <string name="title_default_alarm_tone_picker">Default alarm tone</string>
+    <string name="system_default_alarm_tone">System default</string>
+
     <!-- Silence after -->
     <string name="key_silence_after">key_silence_after</string>
     <string name="title_silence_after">Silence unanswered alarm after</string>

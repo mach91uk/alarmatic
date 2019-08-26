@@ -21,12 +21,16 @@ import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
+import android.database.Cursor;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.RippleDrawable;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -38,6 +42,7 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 
+import android.provider.OpenableColumns;
 import android.provider.Settings;
 import android.text.format.Time;
 import android.util.TypedValue;
@@ -54,6 +59,8 @@ import uk.mach91.autoalarm.R;
 import uk.mach91.autoalarm.alarms.misc.AlarmPreferences;
 
 import java.util.Calendar;
+
+import static android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION;
 
 /**
  * Utility helper functions for time and date pickers.
@@ -406,6 +413,38 @@ public class Utils {
         bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, item);
         bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, type);
         firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+    }
+
+    public static String getAlarmToneTitle(Context c, Uri uri) {
+        RingtoneManager rm = new RingtoneManager(c);
+        rm.setType(RingtoneManager.TYPE_ALARM);
+        int selIndex = rm.getRingtonePosition(uri);
+
+        String title = RingtoneManager.getRingtone(c,
+                uri).getTitle(c);
+
+        if (title.lastIndexOf("/") >= 0) {
+            title = title.substring(title.lastIndexOf("/") + 1);
+        }
+
+        if (selIndex < 0 && title.lastIndexOf("audio:") >= 0) {
+            ContentResolver resolver = c.getContentResolver();
+
+            resolver.takePersistableUriPermission(uri, FLAG_GRANT_READ_URI_PERMISSION);
+
+            Cursor cursor = resolver.query(uri, null, null, null, null, null);
+
+            try {
+                if (cursor != null && cursor.moveToFirst()) {
+                    String displayName = cursor.getString(
+                            cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                    title = displayName;
+                }
+            } finally {
+                cursor.close();
+            }
+        }
+        return title;
     }
 
 }

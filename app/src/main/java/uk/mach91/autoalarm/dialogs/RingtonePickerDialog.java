@@ -23,6 +23,7 @@
 package uk.mach91.autoalarm.dialogs;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -35,6 +36,8 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AlertDialog;
+
+import android.provider.OpenableColumns;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -44,6 +47,7 @@ import java.util.List;
 
 import uk.mach91.autoalarm.R;
 import uk.mach91.autoalarm.ringtone.playback.RingtoneLoop;
+import uk.mach91.autoalarm.timepickers.Utils;
 
 import static android.app.Activity.RESULT_OK;
 import static android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION;
@@ -203,10 +207,8 @@ public class RingtonePickerDialog extends BaseAlertDialogFragment {
 
                         //String ringtone = getAlarm().ringtone();
 
-                        String title = RingtoneManager.getRingtone(getContext(), uri).getTitle(getContext());
-                        if (title.lastIndexOf("/") >= 0) {
-                            title = title.substring(title.lastIndexOf("/") + 1);
-                        }
+                        String title = Utils.getAlarmToneTitle((Activity)getContext(), uri);
+
                         mRingtonesAdapter.remove(mCustomString);
                         mCustomString = String.format(getString(R.string.custom_ringtone), title);
                         mRingtonesAdapter.insert(mCustomString, 0);
@@ -215,35 +217,6 @@ public class RingtonePickerDialog extends BaseAlertDialogFragment {
                         mRingtoneUri = uri;
                         mRingtone = new RingtoneLoop(getActivity(), mRingtoneUri);
                         mRingtone.play();
-
-                        ContentResolver resolver = this.getActivity().getContentResolver();
-
-                        resolver.takePersistableUriPermission(uri, FLAG_GRANT_READ_URI_PERMISSION);
-
-                        /*
-                        Cursor cursor = resolver.query(uri, null, null, null, null, null);
-
-                        try {
-                            if (cursor != null && cursor.moveToFirst()) {
-                                String displayName = cursor.getString(
-                                        cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
-                                Log.i(TAG, "Display Name: " + displayName);
-
-                                mRingtonesAdapter.remove(mCustomString);
-                                mCustomString = "[custom: " + displayName + "]";
-                                mRingtonesAdapter.insert(mCustomString, 0);
-                                mRingtonesAdapter.notifyDataSetChanged();
-
-                               // resolver.revokeUriPermission(mRingtoneUri, FLAG_GRANT_READ_URI_PERMISSION);
-                                mRingtoneUri = uri;
-                                mRingtone = new RingtoneLoop(getActivity(), mRingtoneUri);
-                                mRingtone.play();
-
-                            }
-                        } finally {
-                            cursor.close();
-                        }
-                        */
 
                     }
                 }
@@ -265,10 +238,8 @@ public class RingtonePickerDialog extends BaseAlertDialogFragment {
         mCustomString = getString(R.string.select_custom_ringtone);
 
         if (checkedItem < 0) {
-            String title = RingtoneManager.getRingtone(getContext(), mRingtoneUri).getTitle(getContext());
-            if (title.lastIndexOf("/") >= 0) {
-                title = title.substring(title.lastIndexOf("/") + 1);
-            }
+            String title = Utils.getAlarmToneTitle((Activity)getContext(), mRingtoneUri);
+
             mCustomString = String.format(getString(R.string.custom_ringtone), title);
 
             checkedItem = 0;

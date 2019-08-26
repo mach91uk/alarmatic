@@ -45,6 +45,7 @@ public class SettingsActivity extends BaseActivity {
 
     private boolean mInitialSkipIfOnHoliday;
     private int mInitalFirstDayOfTheWeek;
+    private String mInitalDefualtAlarmTone;
 
     public static final int  MODE_STANDARD = 0;
     public static final int  MODE_HOLIDAY = 1;
@@ -76,6 +77,7 @@ public class SettingsActivity extends BaseActivity {
         }
         mInitialSkipIfOnHoliday = getSkipIfOnHoliday();
         mInitalFirstDayOfTheWeek = getFirstDayOfTheWeek();
+        mInitalDefualtAlarmTone = getDefaultAlarmTone();
     }
 
     @Override
@@ -101,7 +103,7 @@ public class SettingsActivity extends BaseActivity {
                     super.onBackPressed();
                     return true;
                 } else {
-                    setThemeResult(getSelectedTheme(), getSkipIfOnHoliday(), getFirstDayOfTheWeek());
+                    setThemeResult(getSelectedTheme(), getSkipIfOnHoliday(), getFirstDayOfTheWeek(), getDefaultAlarmTone());
                     return false; // Don't capture, proceed as usual
                 }
             default:
@@ -111,7 +113,7 @@ public class SettingsActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        setThemeResult(getSelectedTheme(), getSkipIfOnHoliday(), getFirstDayOfTheWeek());
+        setThemeResult(getSelectedTheme(), getSkipIfOnHoliday(), getFirstDayOfTheWeek(), getDefaultAlarmTone());
         super.onBackPressed();
     }
 
@@ -128,12 +130,18 @@ public class SettingsActivity extends BaseActivity {
         return null == value ? 1 : Integer.parseInt(value);
     }
 
-    private void setThemeResult(String selectedTheme, boolean skipIfOnHoliday, int firstDayOfWeek) {
+    private String getDefaultAlarmTone() {
+        String value = mPrefs.getString(getString(R.string.key_default_alarm_tone_picker), null);
+        return value;
+    }
+
+    private void setThemeResult(String selectedTheme, boolean skipIfOnHoliday, int firstDayOfWeek, String defaultAlarmTone) {
         Intent result = new Intent();
         boolean recreateLayout = false;
         if (!selectedTheme.equals(mInitialTheme) ||
                 skipIfOnHoliday != mInitialSkipIfOnHoliday ||
-                firstDayOfWeek != mInitalFirstDayOfTheWeek) {
+                firstDayOfWeek != mInitalFirstDayOfTheWeek ||
+                defaultAlarmTone != mInitalDefualtAlarmTone) {
             recreateLayout = true;
         }
         SharedPreferences.Editor prefsEditor = mPrefs.edit();

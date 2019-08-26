@@ -130,6 +130,11 @@
             android:entryValues="@array/values_duration"
             android:defaultValue="5"
             android:summary="%s"/>
+        <uk.mach91.autoalarm.settings.ThemedRingtonePreference
+            android:key="@string/key_default_alarm_tone_picker"
+            android:title="@string/title_default_alarm_tone_picker"
+            android:ringtoneType="alarm"
+            android:defaultValue="content://settings/system/alarm_alert"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/title_category_alarms" android:key="@string/key_category_alarms">
         <ListPreference
