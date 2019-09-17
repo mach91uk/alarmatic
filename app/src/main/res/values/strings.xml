@@ -181,6 +181,6 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
 
-    <string name="default_tone"> [default]</string>
+    <string name="default_tone"> ⚙️</string>
 
 </resources>

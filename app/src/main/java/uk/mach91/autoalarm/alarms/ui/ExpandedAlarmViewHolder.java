@@ -40,10 +40,15 @@ import androidx.annotation.IdRes;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
+
+import android.text.SpannableString;
+import android.text.style.RelativeSizeSpan;
+import android.text.style.SuperscriptSpan;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import uk.mach91.autoalarm.MainActivity;
@@ -322,10 +327,15 @@ public class ExpandedAlarmViewHolder extends BaseAlarmViewHolder {
         String title = Utils.getAlarmToneTitle((Activity)getContext(), getSelectedRingtoneUri());
 
         if (getAlarm().ringtone().isEmpty()){
-            title += getContext().getString(R.string.default_tone);
+            title += " " + getContext().getString(R.string.default_tone);
+            SpannableString ss;
+            ss = new SpannableString(title);
+            ss.setSpan(new RelativeSizeSpan(0.75f), title.length()-2, title.length(), 0); // set size
+            ss.setSpan(new SuperscriptSpan(), title.length()-2, title.length(), 0); // set size
+            mRingtone.setText(ss);
+        } else {
+            mRingtone.setText(title);
         }
-
-        mRingtone.setText(title);
     }
 
     private void bindVibrate(boolean vibrates) {

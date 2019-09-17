@@ -52,9 +52,9 @@ android {
     defaultConfig {
         applicationId 'uk.mach91.autoalarm'
         minSdkVersion 21
-        targetSdkVersion 28
-        versionCode 1106
-        versionName '1.1.06'
+        targetSdkVersion 29
+        versionCode 1108
+        versionName '1.1.08'
         buildConfigField "long", "TIMESTAMP", System.currentTimeMillis() + "L"
         // Disabled for now because we're not ready to
         // completely port over to vector drawables
@@ -96,16 +96,16 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     compileOnly 'com.google.auto.value:auto-value-annotations:1.6.2'
     annotationProcessor 'com.google.auto.value:auto-value:1.6.2'
-    implementation 'com.jakewharton:butterknife:10.0.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
+    implementation 'com.jakewharton:butterknife:10.1.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
     implementation('com.philliphsu:bottomsheetpickers:2.3.2') {
         exclude group: 'com.android.support', module: 'appcompat-v7'
         exclude group: 'com.android.support', module: 'design'
         exclude group: 'com.android.support', module: 'gridlayout-v7'
     }
-    implementation 'de.psdev.licensesdialog:licensesdialog:1.8.3'
+    implementation 'de.psdev.licensesdialog:licensesdialog:2.1.0'
     implementation 'com.rarepebble:colorpicker:2.4.2'
-    implementation 'com.google.firebase:firebase-core:16.0.7'
+    implementation 'com.google.firebase:firebase-core:17.2.0'
 }
 
 apply plugin: 'com.google.gms.google-services'
