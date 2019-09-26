@@ -25,9 +25,13 @@ package uk.mach91.autoalarm.ringtone.playback;
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.RingtoneManager;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 
 import java.io.IOException;
+
+import uk.mach91.autoalarm.R;
 
 /**
  * Created by Phillip Hsu on 9/5/2016.
@@ -38,7 +42,8 @@ public final class RingtoneLoop {
 
     private final Context mContext;
     private final AudioManager mAudioManager;
-    private final Uri mUri;
+    private Uri mUri;
+    private int retries = 0;
 
     private MediaPlayer mMediaPlayer;
 
@@ -64,21 +69,39 @@ public final class RingtoneLoop {
                 mMediaPlayer.start();
             }
         } catch (SecurityException | IOException e) {
-            destroyLocalPlayer();
+            destroyLocalPlayer(true);
         }
     }
 
     public void stop() {
         if (mMediaPlayer != null) {
-            destroyLocalPlayer();
+            destroyLocalPlayer(false);
         }
     }
 
-    private void destroyLocalPlayer() {
+    private void destroyLocalPlayer(boolean retry) {
         if (mMediaPlayer != null) {
             mMediaPlayer.reset();
             mMediaPlayer.release();
             mMediaPlayer = null;
+            if (retry && retries < 2) {
+                // If a custom alarm tone no longer exist then try to find one that does.
+                retries++;
+                if (retries == 1) {
+                    // Try the app default alarm tone
+                    String defUri = PreferenceManager.getDefaultSharedPreferences(mContext).getString(mContext.getString(R.string.key_default_alarm_tone_picker), "");
+                    if (defUri != "") {
+                        mUri = Uri.parse(defUri);
+                    } else {
+                        retries++;
+                    }
+                }
+                if (retries == 2) {
+                    // Try the system default alarm tone
+                    mUri = RingtoneManager.getActualDefaultRingtoneUri(mContext, RingtoneManager.TYPE_ALARM);
+                }
+                play();
+            }
         }
     }
 

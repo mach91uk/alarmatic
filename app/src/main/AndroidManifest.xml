@@ -28,6 +28,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
 
     <application
         android:allowBackup="true"
@@ -65,6 +66,10 @@
 
         <receiver
             android:name=".alarms.background.PendingAlarmScheduler"
+            android:enabled="true"
+            android:exported="false" />
+        <receiver
+            android:name=".alarms.background.OnAlarm"
             android:enabled="true"
             android:exported="false" />
         <receiver

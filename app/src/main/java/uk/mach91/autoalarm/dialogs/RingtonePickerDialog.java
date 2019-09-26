@@ -207,6 +207,10 @@ public class RingtonePickerDialog extends BaseAlertDialogFragment {
 
                         //String ringtone = getAlarm().ringtone();
 
+                        ContentResolver resolver = getContext().getContentResolver();
+
+                        resolver.takePersistableUriPermission(uri, FLAG_GRANT_READ_URI_PERMISSION);
+
                         String title = Utils.getAlarmToneTitle((Activity)getContext(), uri);
 
                         mRingtonesAdapter.remove(mCustomString);

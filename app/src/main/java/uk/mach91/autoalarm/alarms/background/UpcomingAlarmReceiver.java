@@ -97,8 +97,13 @@ public class UpcomingAlarmReceiver extends BroadcastReceiver {
                     dismissIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 
             String channelId = context.getString(R.string.channel_ID_alarm);
+            String channelName = context.getString(R.string.channel_name_alarm);;
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                String channelName = context.getString(R.string.channel_name_alarm);;
+                NotificationChannel alarmChannel = nm.getNotificationChannel (channelId);
+                if (alarmChannel != null) {
+                    //Rename the channel, as in earlier versions it was a different name.
+                    alarmChannel.setName(channelName);
+                }
                 int importance = NotificationManager.IMPORTANCE_LOW;
                 NotificationChannel mChannel = new NotificationChannel(channelId, channelName, importance);
                 mChannel.setSound(null, null);

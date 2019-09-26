@@ -25,6 +25,7 @@ package uk.mach91.autoalarm.ringtone.playback;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
@@ -35,13 +36,17 @@ import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Parcelable;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.util.Log;
+
+import androidx.core.app.NotificationCompat;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import uk.mach91.autoalarm.alarms.misc.AlarmController;
 import uk.mach91.autoalarm.alarms.misc.AlarmPreferences;
+import uk.mach91.autoalarm.ringtone.AlarmActivity;
 import uk.mach91.autoalarm.ringtone.RingtoneActivity;
 import uk.mach91.autoalarm.timepickers.Utils;
 import uk.mach91.autoalarm.util.DurationUtils;
@@ -50,6 +55,9 @@ import uk.mach91.autoalarm.util.ParcelableUtil;
 import uk.mach91.autoalarm.util.TimeFormatUtils;
 import uk.mach91.autoalarm.R;
 import uk.mach91.autoalarm.alarms.Alarm;
+
+import static android.app.PendingIntent.FLAG_CANCEL_CURRENT;
+import static android.app.PendingIntent.getActivity;
 
 public class AlarmRingtoneService extends RingtoneService<Alarm> {
     private static final String TAG = "AlarmRingtoneService";
@@ -118,7 +126,9 @@ public class AlarmRingtoneService extends RingtoneService<Alarm> {
             stopSelf(startId);
             finishActivity();
         }
-        return super.onStartCommand(intent, flags, startId);
+        int val =  super.onStartCommand(intent, flags, startId);
+        mAlarmController.removeUpcomingAlarmNotification(getRingingObject());
+        return val;
     }
     
     @Override
@@ -325,7 +335,35 @@ public class AlarmRingtoneService extends RingtoneService<Alarm> {
     @Override
     protected void onAutoSilenced() {
         // TODO do we really need to cancel the alarm and intent?
+        postMissedAlarmNote();
         mAlarmController.cancelAlarm(getRingingObject(), false, true);
+    }
+
+    private final void postMissedAlarmNote() {
+        String alarmTime = TimeFormatUtils.formatTime(this,
+                getRingingObject().hour(), getRingingObject().minutes());
+
+        NotificationManager mNotificationManager;
+        mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+        String channelId = getString(R.string.channel_ID_missed_alarm);
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            String channelName = getString(R.string.channel_name_missed_alarm);
+            int importance = NotificationManager.IMPORTANCE_LOW;
+            NotificationChannel mChannel = new NotificationChannel(channelId, channelName, importance);
+            mChannel.setSound(null,null);
+            mNotificationManager.createNotificationChannel(mChannel);
+        }
+        Notification.Builder builder = new Notification.Builder(this)
+                .setContentTitle(getString(R.string.missed_alarm))
+                .setContentText(alarmTime)
+                .setSmallIcon(R.drawable.ic_alarm_24dp);
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            builder.setChannelId(channelId);
+        }
+
+        mNotificationManager.notify(TAG, getRingingObject().getIntId(), builder.build());
     }
 
     @Override
@@ -333,7 +371,10 @@ public class AlarmRingtoneService extends RingtoneService<Alarm> {
         String ringtone = getRingingObject().ringtone();
         // can't be null...
         if (ringtone.isEmpty()) {
-            return Settings.System.DEFAULT_ALARM_ALERT_URI;
+            ringtone = PreferenceManager.getDefaultSharedPreferences(this).getString(this.getString(R.string.key_default_alarm_tone_picker), "");
+            if (ringtone.isEmpty()) {
+                return Settings.System.DEFAULT_ALARM_ALERT_URI;
+            }
         }
         return Uri.parse(ringtone);
     }
@@ -344,35 +385,71 @@ public class AlarmRingtoneService extends RingtoneService<Alarm> {
                 ? getString(R.string.alarm)
                 : getRingingObject().label();
 
-        String channelId = getString(R.string.channel_ID_alarm);
+        String channelId = getString(R.string.channel_ID_alarm_now);
+
+        NotificationManager notificationManager =
+                (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        // Android 10 bans GUI starting from background tasks, need to drive it via notification and servce.
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            String channelName = getString(R.string.channel_name_alarm);
-            int importance = NotificationManager.IMPORTANCE_LOW;
+            String channelName = getString(R.string.channel_name_alarm_now);
+            notificationManager.deleteNotificationChannel(channelId);
+            int importance = NotificationManager.IMPORTANCE_HIGH;
             NotificationChannel mChannel = new NotificationChannel(channelId, channelName, importance);
             mChannel.setSound(null, null);
 
-            final NotificationManager nm = (NotificationManager)
-                    this.getSystemService(Context.NOTIFICATION_SERVICE);
-
-            nm.createNotificationChannel(mChannel);
+            notificationManager.createNotificationChannel(mChannel);
         }
+
+        Intent intent = new Intent(this, AlarmActivity.class)
+                .putExtra(AlarmActivity.EXTRA_RINGING_OBJECT, ParcelableUtil.marshall(getRingingObject()));
+        int flag = FLAG_CANCEL_CURRENT;
+
+        final PendingIntent alarmIntent = getActivity(this, getRingingObject().getIntId(), intent, flag);
+
+        NotificationCompat.Builder notificationBuilder =
+                new NotificationCompat.Builder(this, channelId)
+                        .setSmallIcon(R.drawable.ic_alarm_24dp)
+                        .setContentTitle(title)
+                        .setContentText(TimeFormatUtils.formatTime(this, System.currentTimeMillis()))
+                        .addAction(R.drawable.ic_snooze_24dp,
+                                getString(R.string.snooze),
+                                getPendingIntent(ACTION_SNOOZE, getRingingObject().getIntId()))
+                        .addAction(R.drawable.ic_dismiss_alarm_24dp,
+                                getString(R.string.dismiss),
+                                getPendingIntent(ACTION_DISMISS, getRingingObject().getIntId()))
+                        .setPriority(NotificationCompat.PRIORITY_HIGH)
+                        .setCategory(NotificationCompat.CATEGORY_CALL)
+
+                        // Use a full-screen intent only for the highest-priority alerts where you
+                        // have an associated activity that you would like to launch after the user
+                        // interacts with the notification. Also, if your app targets Android 10
+                        // or higher, you need to request the USE_FULL_SCREEN_INTENT permission in
+                        // order for the platform to invoke this notification.
+                        .setFullScreenIntent(alarmIntent, true);
+
+        /* Pre android 10 implementation
         Notification.Builder builder = new Notification.Builder(this)
                     // Required contents
                     .setSmallIcon(R.drawable.ic_alarm_24dp)
                     .setContentTitle(title)
-                    .setContentText(TimeFormatUtils.formatTime(this, System.currentTimeMillis()))
+                    .setCategory(NotificationCompat.CATEGORY_ALARM)
+                    .setPriority(Notification.PRIORITY_HIGH)
+                .setContentText(TimeFormatUtils.formatTime(this, System.currentTimeMillis()))
                     .addAction(R.drawable.ic_snooze_24dp,
                             getString(R.string.snooze),
                             getPendingIntent(ACTION_SNOOZE, getRingingObject().getIntId()))
                     .addAction(R.drawable.ic_dismiss_alarm_24dp,
                             getString(R.string.dismiss),
-                            getPendingIntent(ACTION_DISMISS, getRingingObject().getIntId()));
+                            getPendingIntent(ACTION_DISMISS, getRingingObject().getIntId()))
+                    .setFullScreenIntent(alarmIntent, true);
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            builder.setChannelId(channelId);
+            notificationBuilder.setChannelId(channelId);
         }
+        */
 
-        return builder.build();
+        return notificationBuilder.build();
     }
 
     @Override

@@ -430,8 +430,6 @@ public class Utils {
         if (selIndex < 0 && title.lastIndexOf("audio:") >= 0) {
             ContentResolver resolver = c.getContentResolver();
 
-            resolver.takePersistableUriPermission(uri, FLAG_GRANT_READ_URI_PERMISSION);
-
             Cursor cursor = resolver.query(uri, null, null, null, null, null);
 
             try {

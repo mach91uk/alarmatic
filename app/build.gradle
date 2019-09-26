@@ -47,14 +47,14 @@ android {
             storePassword keystoreProperties['storePassword']
         }
     } */
-    compileSdkVersion 28
+    compileSdkVersion 29
     buildToolsVersion '28.0.3'
     defaultConfig {
         applicationId 'uk.mach91.autoalarm'
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 1108
-        versionName '1.1.08'
+        versionCode 1200
+        versionName '1.2.00'
         buildConfigField "long", "TIMESTAMP", System.currentTimeMillis() + "L"
         // Disabled for now because we're not ready to
         // completely port over to vector drawables

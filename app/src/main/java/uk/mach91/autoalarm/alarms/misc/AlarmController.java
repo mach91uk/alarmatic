@@ -30,6 +30,7 @@ import android.os.Build;
 import android.util.Log;
 import android.view.View;
 
+import uk.mach91.autoalarm.alarms.background.OnAlarm;
 import uk.mach91.autoalarm.alarms.data.AlarmsTableManager;
 import uk.mach91.autoalarm.MainActivity;
 import uk.mach91.autoalarm.R;
@@ -103,7 +104,16 @@ public final class AlarmController {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             PendingIntent showIntent = ContentIntentUtils.create(mAppContext, MainActivity.PAGE_ALARMS, alarm.getId());
             AlarmManager.AlarmClockInfo info = new AlarmManager.AlarmClockInfo(ringAt, showIntent);
-            am.setAlarmClock(info, alarmIntent);
+            //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                Intent intent = new Intent(mAppContext, OnAlarm.class)
+                        .putExtra(PendingAlarmScheduler.EXTRA_ALARM_ID, alarm.getId());
+                PendingIntent pi = PendingIntent.getBroadcast(mAppContext, alarm.getIntId(),
+                        intent, FLAG_CANCEL_CURRENT);
+
+                am.setAlarmClock(info, pi);
+            //} else {
+            //    am.setAlarmClock(info, alarmIntent);
+            //}
         } else {
             // WAKEUP alarm types wake the CPU up, but NOT the screen;
             // you would handle that yourself by using a wakelock, etc..

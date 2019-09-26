@@ -62,7 +62,7 @@ public class AlarmActivity extends RingtoneActivity<Alarm> {
         mAlarmController = new AlarmController(this, null);
         // TODO: If the upcoming alarm notification isn't present, verify other notifications aren't affected.
         // This could be the case if we're starting a new instance of this activity after leaving the first launch.
-        mAlarmController.removeUpcomingAlarmNotification(getRingingObject());
+        //mAlarmController.removeUpcomingAlarmNotification(getRingingObject());
         mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         dismissCount = 0;
         snoozeCount = 0;
@@ -114,7 +114,7 @@ public class AlarmActivity extends RingtoneActivity<Alarm> {
         // Even though the base implementation calls finish() on this instance and starts a new
         // instance, this instance will still be alive with all of its member state intact at
         // this point. So this notification will still refer to the Alarm that was just missed.
-        postMissedAlarmNote();
+        //postMissedAlarmNote();
     }
 
     @Override
@@ -279,10 +279,11 @@ public class AlarmActivity extends RingtoneActivity<Alarm> {
     @Override
     protected void showAutoSilenced() {
         super.showAutoSilenced();
-        postMissedAlarmNote();
+        //postMissedAlarmNote();
     }
 
     private void postMissedAlarmNote() {
+        /*  Due to android 10 this has moved into the service.
         String alarmTime = TimeFormatUtils.formatTime(this,
                 getRingingObject().hour(), getRingingObject().minutes());
 
@@ -304,5 +305,6 @@ public class AlarmActivity extends RingtoneActivity<Alarm> {
         }
 
         mNotificationManager.notify(TAG, getRingingObject().getIntId(), builder.build());
+        */
     }
 }

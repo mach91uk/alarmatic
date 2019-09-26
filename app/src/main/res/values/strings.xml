@@ -116,7 +116,7 @@
     <string name="negative_duration">\u2212<xliff:g example="1:14" id="time">%1$s</xliff:g></string>
 
     <string name="channel_ID_alarm">channel-01</string>
-    <string name="channel_name_alarm">Alarm</string>
+    <string name="channel_name_alarm">Upcoming Alarm</string>
 
     <string name="channel_ID_missed_alarm">channel-02</string>
     <string name="channel_name_missed_alarm">Missed Alarm</string>
@@ -124,6 +124,8 @@
     <string name="channel_ID_timezone">channel-04</string>
     <string name="channel_name_timezone">Time Zone Change</string>
 
+    <string name="channel_ID_alarm_now">channel-05</string>
+    <string name="channel_name_alarm_now">Alarm</string>
 
     <string name="time_zone_change_notification_message">Check your alarms are still appropriate for your new time zone.</string>
     <string name="time_zone_change_notification_title">Time Zone Change Alert</string>
