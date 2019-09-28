@@ -58,6 +58,7 @@ import uk.mach91.autoalarm.alarms.Alarm;
 
 import static android.app.PendingIntent.FLAG_CANCEL_CURRENT;
 import static android.app.PendingIntent.getActivity;
+import static uk.mach91.autoalarm.timepickers.Utils.getColorFromThemeAttr;
 
 public class AlarmRingtoneService extends RingtoneService<Alarm> {
     private static final String TAG = "AlarmRingtoneService";
@@ -405,13 +406,16 @@ public class AlarmRingtoneService extends RingtoneService<Alarm> {
                 .putExtra(AlarmActivity.EXTRA_RINGING_OBJECT, ParcelableUtil.marshall(getRingingObject()));
         int flag = FLAG_CANCEL_CURRENT;
 
-        final PendingIntent alarmIntent = getActivity(this, getRingingObject().getIntId(), intent, flag);
+        Utils.setThemeFromPreference(this);
 
+        final PendingIntent alarmIntent = getActivity(this, getRingingObject().getIntId(), intent, flag);
         NotificationCompat.Builder notificationBuilder =
                 new NotificationCompat.Builder(this, channelId)
                         .setSmallIcon(R.drawable.ic_alarm_24dp)
                         .setContentTitle(title)
                         .setContentText(TimeFormatUtils.formatTime(this, System.currentTimeMillis()))
+                        .setColor(getColorFromThemeAttr(this, R.attr.colorPrimary))
+                        .setColorized(true)
                         .addAction(R.drawable.ic_snooze_24dp,
                                 getString(R.string.snooze),
                                 getPendingIntent(ACTION_SNOOZE, getRingingObject().getIntId()))
@@ -419,7 +423,7 @@ public class AlarmRingtoneService extends RingtoneService<Alarm> {
                                 getString(R.string.dismiss),
                                 getPendingIntent(ACTION_DISMISS, getRingingObject().getIntId()))
                         .setPriority(NotificationCompat.PRIORITY_HIGH)
-                        .setCategory(NotificationCompat.CATEGORY_CALL)
+                        .setCategory(NotificationCompat.CATEGORY_ALARM)
 
                         // Use a full-screen intent only for the highest-priority alerts where you
                         // have an associated activity that you would like to launch after the user

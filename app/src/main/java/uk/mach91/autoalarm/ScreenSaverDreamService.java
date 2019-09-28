@@ -43,13 +43,14 @@ public class ScreenSaverDreamService extends DreamService {
     /**
      * Receiver to alarm clock changes.
      */
+    /* Now we use a notification to trigger the activity, we no longer need this workaround.
     private final BroadcastReceiver mAlarmChangedReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             wakeUp();
         }
     };
-
+    */
 
     @Override
     public void onCreate() {
@@ -83,21 +84,26 @@ public class ScreenSaverDreamService extends DreamService {
 
         setContentView(mScreenSaverUtils);
 
-        // Setup handlers for time reference changes and date updates.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            registerReceiver(mAlarmChangedReceiver,
-                    new IntentFilter(AlarmManager.ACTION_NEXT_ALARM_CLOCK_CHANGED));
-        }
+        /* Now we use a notification to trigger the activity, we no longer need this workaround.
+            // Setup handlers for time reference changes and date updates.
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                registerReceiver(mAlarmChangedReceiver,
+                        new IntentFilter(AlarmManager.ACTION_NEXT_ALARM_CLOCK_CHANGED));
+            }
+
+         */
 
     }
 
     @Override
     public void onDreamingStopped() {
         super.onDreamingStopped();
+        /* Now we use a notification to trigger the activity, we no longer need this workaround.
         // Tear down handlers for time reference changes and date updates.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             unregisterReceiver(mAlarmChangedReceiver);
         }
+        */
     }
 
     @Override
