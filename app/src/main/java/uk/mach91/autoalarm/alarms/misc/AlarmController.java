@@ -238,21 +238,25 @@ public final class AlarmController {
     }
 
     private PendingIntent alarmIntent(Alarm alarm, boolean retrievePrevious) {
-        // Pre android 10 implementation:
+        //Pre android 10 implementation:
         // * old, launch activity, start service, start notification
         // * new, launch background handler, that start service, start notification and that starts the activity
-        //Intent intent = new Intent(mAppContext, AlarmActivity.class)
-        //        .putExtra(AlarmActivity.EXTRA_RINGING_OBJECT, ParcelableUtil.marshall(alarm));
-        //int flag = retrievePrevious ? FLAG_NO_CREATE : FLAG_CANCEL_CURRENT;
-        // Even when we try to retrieve a previous instance that actually did exist,
-        // null can be returned for some reason. Thus, we don't checkNotNull().
-        //return getActivity(mAppContext, alarm.getIntId(), intent, flag);
-
-        Intent intent = new Intent(mAppContext, OnAlarm.class)
-                .putExtra(PendingAlarmScheduler.EXTRA_ALARM_ID, alarm.getId());
-        PendingIntent pi = PendingIntent.getBroadcast(mAppContext, alarm.getIntId(),
-                intent, retrievePrevious ? FLAG_NO_CREATE : FLAG_CANCEL_CURRENT);
-        return pi;
+        //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            Intent intent = new Intent(mAppContext, OnAlarm.class)
+                    .putExtra(PendingAlarmScheduler.EXTRA_ALARM_ID, alarm.getId());
+            PendingIntent pi = PendingIntent.getBroadcast(mAppContext, alarm.getIntId(),
+                    intent, retrievePrevious ? FLAG_NO_CREATE : FLAG_CANCEL_CURRENT);
+            return pi;
+        /*
+        } else {
+            Intent intent = new Intent(mAppContext, AlarmActivity.class)
+                    .putExtra(AlarmActivity.EXTRA_RINGING_OBJECT, ParcelableUtil.marshall(alarm));
+            int flag = retrievePrevious ? FLAG_NO_CREATE : FLAG_CANCEL_CURRENT;
+            // Even when we try to retrieve a previous instance that actually did exist,
+            // null can be returned for some reason. Thus, we don't checkNotNull().
+            return getActivity(mAppContext, alarm.getIntId(), intent, flag);
+        }
+         */
     }
 
     private PendingIntent notifyUpcomingAlarmIntent(Alarm alarm, boolean retrievePrevious) {

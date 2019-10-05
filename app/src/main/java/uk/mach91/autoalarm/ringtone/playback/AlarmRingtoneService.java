@@ -34,6 +34,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.media.AudioManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
@@ -382,6 +383,8 @@ public class AlarmRingtoneService extends RingtoneService<Alarm> {
 
     @Override
     protected Notification getForegroundNotification() {
+        Notification returnNote;
+
         String title = getRingingObject().label().isEmpty()
                 ? getString(R.string.alarm)
                 : getRingingObject().label();
@@ -406,9 +409,12 @@ public class AlarmRingtoneService extends RingtoneService<Alarm> {
                 .putExtra(AlarmActivity.EXTRA_RINGING_OBJECT, ParcelableUtil.marshall(getRingingObject()));
         int flag = FLAG_CANCEL_CURRENT;
 
+        final PendingIntent alarmIntent = getActivity(this, getRingingObject().getIntId(), intent, flag);
+
+        //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+
         Utils.setThemeFromPreference(this);
 
-        final PendingIntent alarmIntent = getActivity(this, getRingingObject().getIntId(), intent, flag);
         NotificationCompat.Builder notificationBuilder =
                 new NotificationCompat.Builder(this, channelId)
                         .setSmallIcon(R.drawable.ic_alarm_24dp)
@@ -431,29 +437,40 @@ public class AlarmRingtoneService extends RingtoneService<Alarm> {
                         // or higher, you need to request the USE_FULL_SCREEN_INTENT permission in
                         // order for the platform to invoke this notification.
                         .setFullScreenIntent(alarmIntent, true);
-
-        /* Pre android 10 implementation
-        Notification.Builder builder = new Notification.Builder(this)
-                    // Required contents
-                    .setSmallIcon(R.drawable.ic_alarm_24dp)
-                    .setContentTitle(title)
-                    .setCategory(NotificationCompat.CATEGORY_ALARM)
-                    .setPriority(Notification.PRIORITY_HIGH)
-                .setContentText(TimeFormatUtils.formatTime(this, System.currentTimeMillis()))
-                    .addAction(R.drawable.ic_snooze_24dp,
-                            getString(R.string.snooze),
-                            getPendingIntent(ACTION_SNOOZE, getRingingObject().getIntId()))
-                    .addAction(R.drawable.ic_dismiss_alarm_24dp,
-                            getString(R.string.dismiss),
-                            getPendingIntent(ACTION_DISMISS, getRingingObject().getIntId()))
-                    .setFullScreenIntent(alarmIntent, true);
-
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             notificationBuilder.setChannelId(channelId);
         }
+        returnNote = notificationBuilder.build();
+
+        /*
+        } else {
+
+            // Pre android 10 implementation
+            Notification.Builder builder = new Notification.Builder(this)
+                        // Required contents
+                        .setSmallIcon(R.drawable.ic_alarm_24dp)
+                        .setContentTitle(title)
+                        .setCategory(NotificationCompat.CATEGORY_ALARM)
+                        .setPriority(Notification.PRIORITY_HIGH)
+                    .setContentText(TimeFormatUtils.formatTime(this, System.currentTimeMillis()))
+                        .addAction(R.drawable.ic_snooze_24dp,
+                                getString(R.string.snooze),
+                                getPendingIntent(ACTION_SNOOZE, getRingingObject().getIntId()))
+                        .addAction(R.drawable.ic_dismiss_alarm_24dp,
+                                getString(R.string.dismiss),
+                                getPendingIntent(ACTION_DISMISS, getRingingObject().getIntId()))
+                        .setFullScreenIntent(alarmIntent, true);
+
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                builder.setChannelId(channelId);
+            }
+            returnNote = builder.build();
+
+        }
         */
 
-        return notificationBuilder.build();
+
+        return returnNote;
     }
 
     @Override
