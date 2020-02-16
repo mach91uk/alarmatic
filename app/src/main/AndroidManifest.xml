@@ -30,8 +30,12 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
 
+
     <application
         android:allowBackup="true"
+        android:fullBackupOnly="true"
+        android:backupAgent=".util.BackupAgentUtil"
+        android:backupInForeground="true"
         android:fullBackupContent="@xml/backup_descriptor"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -80,6 +84,13 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+        <!--
+        <receiver android:name=".alarms.background.AppUpgradeReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+        </receiver>
+        !-->
         <receiver
             android:name=".alarms.background.OnTimeZoneChange"
             android:enabled="true"

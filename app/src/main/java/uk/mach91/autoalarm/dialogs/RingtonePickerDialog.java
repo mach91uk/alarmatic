@@ -234,7 +234,13 @@ public class RingtonePickerDialog extends BaseAlertDialogFragment {
         mRingtoneManager.setType(RingtoneManager.TYPE_ALARM);
 
         Cursor cursor = mRingtoneManager.getCursor();
-        int checkedItem = mRingtoneManager.getRingtonePosition(mRingtoneUri);
+        int checkedItem = -1;
+        try {
+            checkedItem = mRingtoneManager.getRingtonePosition(mRingtoneUri);
+        }
+        catch (RuntimeException e) {
+
+        }
         String labelColumn = cursor.getColumnName(RingtoneManager.TITLE_COLUMN_INDEX);
 
         List<String> ringtoneList = new ArrayList<String>();

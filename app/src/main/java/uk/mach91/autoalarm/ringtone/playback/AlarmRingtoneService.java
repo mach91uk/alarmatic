@@ -39,6 +39,7 @@ import android.os.Handler;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
+import android.service.notification.StatusBarNotification;
 import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
@@ -102,6 +103,7 @@ public class AlarmRingtoneService extends RingtoneService<Alarm> {
         final byte[] bytes = intent.getByteArrayExtra(EXTRA_RINGING_OBJECT);
         if (bytes != null) {
             boolean skip_holiday = ParcelableUtil.unmarshall(bytes, getParcelableCreator()).skip_holiday();
+
             Utils.logFirebaseEvent(this, "ALARM_SETTING", "SKIP_HOLIDAY-" + skip_holiday);
             if (mCancelDueToHoliday) {
                 //if (lable.toLowerCase().equals(AlarmPreferences.cancelAlarmHolidayLabel(this).toLowerCase())) {
@@ -128,6 +130,7 @@ public class AlarmRingtoneService extends RingtoneService<Alarm> {
             stopSelf(startId);
             finishActivity();
         }
+
         int val =  super.onStartCommand(intent, flags, startId);
         mAlarmController.removeUpcomingAlarmNotification(getRingingObject());
         return val;
@@ -135,12 +138,12 @@ public class AlarmRingtoneService extends RingtoneService<Alarm> {
     
     @Override
     public void onCreate() {
+        //startForeground(R.id.ringtone_service_notification, getForegroundNotification());
+
         super.onCreate();
 
         mLastShakeUpdate = 0;
         mShakeCount = 0;
-
-
 
         mAlarmController = new AlarmController(this, null);
 
@@ -385,7 +388,7 @@ public class AlarmRingtoneService extends RingtoneService<Alarm> {
     protected Notification getForegroundNotification() {
         Notification returnNote;
 
-        String title = getRingingObject().label().isEmpty()
+        String title = (getRingingObject() == null || getRingingObject().label().isEmpty())
                 ? getString(R.string.alarm)
                 : getRingingObject().label();
 
@@ -405,11 +408,18 @@ public class AlarmRingtoneService extends RingtoneService<Alarm> {
             notificationManager.createNotificationChannel(mChannel);
         }
 
-        Intent intent = new Intent(this, AlarmActivity.class)
-                .putExtra(AlarmActivity.EXTRA_RINGING_OBJECT, ParcelableUtil.marshall(getRingingObject()));
+        Intent intent = new Intent(this, AlarmActivity.class);
+        if (getRingingObject() != null) {
+            intent.putExtra(AlarmActivity.EXTRA_RINGING_OBJECT, ParcelableUtil.marshall(getRingingObject()));
+        }
         int flag = FLAG_CANCEL_CURRENT;
 
-        final PendingIntent alarmIntent = getActivity(this, getRingingObject().getIntId(), intent, flag);
+        int alarm_id = -1;
+        if (getRingingObject() != null) {
+            alarm_id = getRingingObject().getIntId();
+        }
+
+        final PendingIntent alarmIntent = getActivity(this, alarm_id, intent, flag);
 
         //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
 
@@ -424,19 +434,22 @@ public class AlarmRingtoneService extends RingtoneService<Alarm> {
                         .setColorized(true)
                         .addAction(R.drawable.ic_snooze_24dp,
                                 getString(R.string.snooze),
-                                getPendingIntent(ACTION_SNOOZE, getRingingObject().getIntId()))
+                                getPendingIntent(ACTION_SNOOZE, alarm_id))
                         .addAction(R.drawable.ic_dismiss_alarm_24dp,
                                 getString(R.string.dismiss),
-                                getPendingIntent(ACTION_DISMISS, getRingingObject().getIntId()))
+                                getPendingIntent(ACTION_DISMISS, alarm_id))
                         .setPriority(NotificationCompat.PRIORITY_HIGH)
-                        .setCategory(NotificationCompat.CATEGORY_ALARM)
+                        .setCategory(NotificationCompat.CATEGORY_ALARM);
 
-                        // Use a full-screen intent only for the highest-priority alerts where you
-                        // have an associated activity that you would like to launch after the user
-                        // interacts with the notification. Also, if your app targets Android 10
-                        // or higher, you need to request the USE_FULL_SCREEN_INTENT permission in
-                        // order for the platform to invoke this notification.
-                        .setFullScreenIntent(alarmIntent, true);
+        if (getRingingObject() != null) {
+            // Use a full-screen intent only for the highest-priority alerts where you
+            // have an associated activity that you would like to launch after the user
+            // interacts with the notification. Also, if your app targets Android 10
+            // or higher, you need to request the USE_FULL_SCREEN_INTENT permission in
+            // order for the platform to invoke this notification.
+            notificationBuilder.setFullScreenIntent(alarmIntent, true);
+        }
+
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             notificationBuilder.setChannelId(channelId);
         }

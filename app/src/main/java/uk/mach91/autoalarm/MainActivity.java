@@ -31,6 +31,7 @@ import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
@@ -48,6 +49,7 @@ import androidx.loader.content.Loader;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.viewpager.widget.ViewPager;
 
+import android.provider.Settings;
 import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -243,6 +245,47 @@ public class MainActivity extends BaseActivity implements ActivityCompat.OnReque
                     .setTitle(getString (R.string.user_experience_title))
                     .setNegativeButton(getString (R.string.no), dialogClickListener).show();
             ((TextView)alertDialog.findViewById(android.R.id.message)).setMovementMethod(LinkMovementMethod.getInstance());
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+        {
+            boolean askedBatteryOptimised = prefSetts.getBoolean(getString(R.string.key_battery_optimisation), false);
+
+            if (!askedBatteryOptimised) {
+                String packageName = getPackageName();
+                PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+                if (!pm.isIgnoringBatteryOptimizations(packageName)) {
+                    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            switch (which) {
+                                case DialogInterface.BUTTON_POSITIVE:
+                                    SharedPreferences.Editor prefsEditor = prefSetts.edit();
+                                    prefsEditor.putBoolean(getString(R.string.key_battery_optimisation), true);
+                                    prefsEditor.commit();
+                                    Intent intent = new Intent();
+                                    intent.setAction(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS);
+                                    startActivity(intent);
+                                    break;
+
+                                case DialogInterface.BUTTON_NEGATIVE:
+                                    SharedPreferences.Editor prefsEditor2 = prefSetts.edit();
+                                    prefsEditor2.putBoolean(getString(R.string.key_battery_optimisation), true);
+                                    prefsEditor2.commit();
+                                    break;
+                            }
+                        }
+                    };
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    final AlertDialog alertDialog = builder.setMessage(Html.fromHtml(getString(R.string.ask_battery_optimisation)))
+                            .setPositiveButton(getString(R.string.yes), dialogClickListener)
+                            .setTitle(getString(R.string.ask_battery_optimisation_title))
+                            .setNegativeButton(getString(R.string.no), dialogClickListener).show();
+                    ((TextView) alertDialog.findViewById(android.R.id.message)).setMovementMethod(LinkMovementMethod.getInstance());
+
+                }
+            }
         }
     }
 

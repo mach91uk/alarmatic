@@ -173,7 +173,11 @@ public abstract class Alarm extends ObjectWithId implements Parcelable {
         if (!hasRecurrence()) {
             if (baseRingTime <= System.currentTimeMillis()) {
                 // The specified time has passed for today
-                baseRingTime += TimeUnit.DAYS.toMillis(1);
+                //baseRingTime += TimeUnit.DAYS.toMillis(1);
+                //In case this spans a daylight saving time span, use Calendar to do the calculation
+                calendar.add(Calendar.DAY_OF_MONTH, 1);
+                calendar.set(Calendar.HOUR_OF_DAY, hour());
+                baseRingTime = calendar.getTimeInMillis();
             }
         } else {
             // Compute the ring time just for the next closest recurring day.

@@ -25,6 +25,7 @@ package uk.mach91.autoalarm.settings;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -38,11 +39,13 @@ import android.os.Vibrator;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
+import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
 import android.preference.RingtonePreference;
 import android.preference.SwitchPreference;
 import android.provider.CalendarContract;
+import android.provider.Settings;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 
@@ -141,7 +144,6 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
             }
         });
 
-
         PreferenceScreen screen = getPreferenceScreen();
         Preference removeCategory;
 
@@ -163,6 +165,25 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
             screen.removePreference(removeCategory);
             removeCategory = findPreference(getString(R.string.key_category_general));
             screen.removePreference(removeCategory);
+        }
+
+        if (mode == setAct.MODE_STANDARD) {
+            Preference prefBatt = (Preference) findPreference(getString(R.string.key_battery_optimisation));
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                prefBatt.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                    @Override
+                    public boolean onPreferenceClick(Preference preference) {
+                        Intent intent = new Intent();
+                        intent.setAction(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS);
+                        startActivity(intent);
+                        return true;
+                    }
+                });
+            } else {
+                PreferenceCategory mCategory = (PreferenceCategory) findPreference(getString(R.string.key_category_general));
+                mCategory.removePreference(prefBatt);
+            }
         }
     }
 

@@ -245,6 +245,10 @@
     <string name="title_user_experience_program">User experience improvement program</string>
     <string name="sum_user_experience_program">Anonymous usage data will be gathered and shared with the developers so they can improve Alarmatic, please see our privacy policy for details</string>
 
+    <string name="key_battery_optimisation">key_battery_optimisation</string>
+    <string name="title_battery_optimisation">Adaptive Battery Optimisation</string>
+    <string name="sum_battery_optimisation">Show Battery Optimisation settings. Adaptive battery settings on this device may cause your alarms not to fire consistently. To avoid this please select "Don\'t optimise".</string>
+
     <string name="key_screensaver_nextalarm">key_screensaver_nextalarm</string>
     <string name="title_screensaver_nextalarm">Show the next alarm</string>
     <string name="sum_screensaver_nextalarm">Display how much time there is until the next alarm</string>

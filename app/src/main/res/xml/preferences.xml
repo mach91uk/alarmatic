@@ -221,6 +221,10 @@
             android:title="@string/title_user_experience_program"
             android:summary="@string/sum_user_experience_program"
             android:defaultValue="false"/>
+        <Preference
+            android:key="@string/key_battery_optimisation"
+            android:summary="@string/sum_battery_optimisation"
+            android:title="@string/title_battery_optimisation"/>
     </PreferenceCategory>
 
     <!--<PreferenceCategory android:title="@string/title_category_timers">

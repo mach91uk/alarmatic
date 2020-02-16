@@ -418,10 +418,17 @@ public class Utils {
     public static String getAlarmToneTitle(Context c, Uri uri) {
         RingtoneManager rm = new RingtoneManager(c);
         rm.setType(RingtoneManager.TYPE_ALARM);
-        int selIndex = rm.getRingtonePosition(uri);
 
         String title = RingtoneManager.getRingtone(c,
                 uri).getTitle(c);
+
+        int selIndex = -1;
+        try {
+            selIndex = rm.getRingtonePosition(uri);
+        }
+        catch (RuntimeException e) {
+
+        }
 
         if (title.lastIndexOf("/") >= 0) {
             title = title.substring(title.lastIndexOf("/") + 1);
