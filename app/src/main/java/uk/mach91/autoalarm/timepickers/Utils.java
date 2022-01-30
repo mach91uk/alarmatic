@@ -52,7 +52,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.analytics.FirebaseAnalytics;
+//import com.google.firebase.analytics.FirebaseAnalytics;
 
 import uk.mach91.autoalarm.BaseActivity;
 import uk.mach91.autoalarm.R;
@@ -394,25 +394,25 @@ public class Utils {
         }
     }
 
-    public static void firebaseOnOff(Context context, FirebaseAnalytics fb, boolean turnOn) {
-        String testLabSetting = Settings.System.getString(context.getContentResolver(), "firebase.test.lab");
-        if ("true" .equals(testLabSetting)) {
-           turnOn = false;
-        }
-        fb.setAnalyticsCollectionEnabled(turnOn);
-    }
+//    public static void firebaseOnOff(Context context, FirebaseAnalytics fb, boolean turnOn) {
+//        String testLabSetting = Settings.System.getString(context.getContentResolver(), "firebase.test.lab");
+//        if ("true" .equals(testLabSetting)) {
+//           turnOn = false;
+//        }
+//        fb.setAnalyticsCollectionEnabled(turnOn);
+//    }
 
     public static void logFirebaseEvent(Context context , String type, String item) {
-        FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(context);
+//        FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(context);
 
-        firebaseOnOff(context, firebaseAnalytics, AlarmPreferences.isUserExperianceEnabled(context));
+//        firebaseOnOff(context, firebaseAnalytics, AlarmPreferences.isUserExperianceEnabled(context));
 
-        Bundle bundle = new Bundle();
+//        Bundle bundle = new Bundle();
 
-        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, item);
-        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, item);
-        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, type);
-        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+//        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, item);
+//        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, item);
+//        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, type);
+//        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
     }
 
     public static String getAlarmToneTitle(Context c, Uri uri) {

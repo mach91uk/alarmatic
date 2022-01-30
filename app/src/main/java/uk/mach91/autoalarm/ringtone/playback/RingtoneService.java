@@ -206,7 +206,7 @@ public abstract class RingtoneService<T extends Parcelable> extends Service {
         // to restrict the broadcast to only the subclass that's alive.
         // TODO: If we cared, we could write an abstract method called getFinishAction()
         // that subclasses implement, and call that here instead. The subclass of
-        // RingtoneActivity would define their own ACTION_FINISH constants, and
+        // RingtoneActivity would define their own getRingtoneServiceClass constants, and
         // the RingtoneService subclass retrieves that constant and returns it to us.
         LocalBroadcastHelper.sendBroadcast(this, RingtoneActivity.ACTION_FINISH);
     }

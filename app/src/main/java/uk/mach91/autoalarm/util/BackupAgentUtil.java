@@ -37,7 +37,6 @@ public class BackupAgentUtil extends BackupAgent {
         while (someUpdates) {
             someUpdates = false;
             AlarmController controller = new AlarmController(this, null);
-            // IntentService works in a background thread, so this won't hold us up.
             AlarmCursor cursor = new AlarmsTableManager(this).queryEnabledAlarms();
             while (cursor.moveToNext()) {
                 Alarm alarm = cursor.getItem();

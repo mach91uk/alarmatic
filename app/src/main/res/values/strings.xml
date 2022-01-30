@@ -177,13 +177,15 @@
     <string name="about_github">Fork us on GitHub</string>
     <string name="about_website">Privacy Policy</string>
 
+    <!--
     <string name="key_asked_user_experience_program">key_asked_user_experience_program</string>
     <string name="asked_user_experience_program"><![CDATA[You can help improve Alarmatic by opting in. If you allow us we will gather anonymous usage statistics and share them with the developers to help improve the application for you.<BR>Please refer to our <a href=\"https://htmlpreview.github.io/?https://github.com/mach91uk/alarmatic/blob/master/privacypolicy.html\">privacy policy</a> for more details.<BR>You can control this anytime in the settings.<BR><BR>Do you want to sign up?]]></string>
     <string name="user_experience_title">User Experience Improvement Program</string>
+    -->
     <string name="yes">Yes</string>
     <string name="no">No</string>
 
-    <string name="key_asked_user_battery_optimisation">key_asked_user_experience_program</string>
+    <string name="key_asked_user_battery_optimisation">key_asked_user_battery_optimisation</string>
     <string name="ask_battery_optimisation"><![CDATA[Adaptive battery settings on this device may cause your alarms not to fire consistently.<BR><BR>To avoid this please select &quot;Don\'t optimise&quot; in the devices settings.<BR><BR>Do you want to launch the system setting so you can do this now?]]></string>
     <string name="ask_battery_optimisation_title">The system may stop your alarms!</string>
 

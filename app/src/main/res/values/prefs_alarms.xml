@@ -241,9 +241,11 @@
     <string name="title_screensaver_date">Show date</string>
     <string name="sum_screensaver_date">Display the day and date</string>
 
+    <!--
     <string name="key_user_experience_program">key_user_experience_program</string>
     <string name="title_user_experience_program">User experience improvement program</string>
     <string name="sum_user_experience_program">Anonymous usage data will be gathered and shared with the developers so they can improve Alarmatic, please see our privacy policy for details</string>
+    -->
 
     <string name="key_battery_optimisation">key_battery_optimisation</string>
     <string name="title_battery_optimisation">Adaptive Battery Optimisation</string>

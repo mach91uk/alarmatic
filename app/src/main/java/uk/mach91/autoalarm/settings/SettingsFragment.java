@@ -47,7 +47,7 @@ import android.preference.SwitchPreference;
 import android.provider.CalendarContract;
 import android.provider.Settings;
 
-import com.google.firebase.analytics.FirebaseAnalytics;
+//import com.google.firebase.analytics.FirebaseAnalytics;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -322,9 +322,9 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
                     Vibrator vibrator = (Vibrator) pref.getContext().getSystemService(Context.VIBRATOR_SERVICE);
                     vibrator.vibrate(300);
                 }
-            } else if (key.equals(getString(R.string.key_user_experience_program))) {
-                Utils.firebaseOnOff(this.getActivity(), FirebaseAnalytics.getInstance(this.getActivity()), sharedPreferences.getBoolean(key, false));
-            }
+            }// else if (key.equals(getString(R.string.key_user_experience_program))) {
+                //Utils.firebaseOnOff(this.getActivity(), FirebaseAnalytics.getInstance(this.getActivity()), sharedPreferences.getBoolean(key, false));
+            //}
 
         } else if (pref instanceof EditTextPreference) {
             if (key.equals(getString(R.string.key_cancel_alarm_title))){

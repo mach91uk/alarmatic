@@ -37,7 +37,7 @@ import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
-import com.google.firebase.analytics.FirebaseAnalytics;
+//import com.google.firebase.analytics.FirebaseAnalytics;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
@@ -212,6 +212,7 @@ public class MainActivity extends BaseActivity implements ActivityCompat.OnReque
 
         SharedPreferences prefSetts = PreferenceManager.getDefaultSharedPreferences(this);
 
+        /*
         boolean askedUserExp = prefSetts.getBoolean(getString(R.string.key_asked_user_experience_program), false);
 
         if (!askedUserExp) {
@@ -225,7 +226,7 @@ public class MainActivity extends BaseActivity implements ActivityCompat.OnReque
                             prefsEditor.putBoolean(getString(R.string.key_user_experience_program), true);
                             prefsEditor.putBoolean(getString(R.string.key_asked_user_experience_program), true);
                             prefsEditor.commit();
-                            Utils.firebaseOnOff(getBaseContext(), mFirebaseAnalytics, true);
+                            //Utils.firebaseOnOff(getBaseContext(), mFirebaseAnalytics, true);
                             break;
 
                         case DialogInterface.BUTTON_NEGATIVE:
@@ -233,11 +234,12 @@ public class MainActivity extends BaseActivity implements ActivityCompat.OnReque
                             prefsEditor2.putBoolean(getString(R.string.key_user_experience_program), false);
                             prefsEditor2.putBoolean(getString(R.string.key_asked_user_experience_program), true);
                             prefsEditor2.commit();
-                            Utils.firebaseOnOff(getBaseContext(), mFirebaseAnalytics, false);
+                            //Utils.firebaseOnOff(getBaseContext(), mFirebaseAnalytics, false);
                             break;
                     }
                 }
             };
+
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             final AlertDialog alertDialog = builder.setMessage(Html.fromHtml(getString(R.string.asked_user_experience_program)))
@@ -245,7 +247,10 @@ public class MainActivity extends BaseActivity implements ActivityCompat.OnReque
                     .setTitle(getString (R.string.user_experience_title))
                     .setNegativeButton(getString (R.string.no), dialogClickListener).show();
             ((TextView)alertDialog.findViewById(android.R.id.message)).setMovementMethod(LinkMovementMethod.getInstance());
+
+
         }
+        */
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
         {

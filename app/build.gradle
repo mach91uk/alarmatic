@@ -47,14 +47,14 @@ android {
             storePassword keystoreProperties['storePassword']
         }
     } */
-    compileSdkVersion 29
-    buildToolsVersion '28.0.3'
+    compileSdkVersion 30
+    buildToolsVersion '30.0.3'
     defaultConfig {
         applicationId 'uk.mach91.autoalarm'
         minSdkVersion 21
-        targetSdkVersion 29
-        versionCode 1306
-        versionName '1.3.06'
+        targetSdkVersion 30
+        versionCode 1311
+        versionName '1.3.11'
         buildConfigField "long", "TIMESTAMP", System.currentTimeMillis() + "L"
         // Disabled for now because we're not ready to
         // completely port over to vector drawables
@@ -62,7 +62,7 @@ android {
         javaCompileOptions {
             annotationProcessorOptions {
 //                arguments = ['KEY': 'VALUE']
-                includeCompileClasspath true
+                //includeCompileClasspath true
             }
         }
     }
@@ -100,8 +100,8 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     compileOnly 'com.google.auto.value:auto-value-annotations:1.6.2'
     annotationProcessor 'com.google.auto.value:auto-value:1.6.2'
-    implementation 'com.jakewharton:butterknife:10.1.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
+    implementation 'com.jakewharton:butterknife:10.2.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
     implementation('com.philliphsu:bottomsheetpickers:2.3.2') {
         exclude group: 'com.android.support', module: 'appcompat-v7'
         exclude group: 'com.android.support', module: 'design'
@@ -109,7 +109,11 @@ dependencies {
     }
     implementation 'de.psdev.licensesdialog:licensesdialog:2.1.0'
     implementation 'com.rarepebble:colorpicker:2.4.2'
-    implementation 'com.google.firebase:firebase-core:17.2.0'
+    //implementation 'com.google.firebase:firebase-core:17.4.3'
+    //implementation 'com.google.firebase:firebase-crashlytics:17.0.1'
+
 }
 
 apply plugin: 'com.google.gms.google-services'
+
+//apply plugin: 'com.google.firebase.crashlytics'

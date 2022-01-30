@@ -44,7 +44,7 @@ import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 
-import com.google.firebase.analytics.FirebaseAnalytics;
+//import com.google.firebase.analytics.FirebaseAnalytics;
 
 import uk.mach91.autoalarm.alarms.misc.AlarmController;
 import uk.mach91.autoalarm.alarms.misc.AlarmPreferences;
@@ -112,7 +112,7 @@ public class AlarmRingtoneService extends RingtoneService<Alarm> {
                     mCalendarRunnable = new CalendarRunnable();
                     Handler mCalendarHandler = new Handler();
                     audio.setStreamVolume(AudioManager.STREAM_ALARM, 0, 0);
-                    mCalendarHandler.postDelayed(mCalendarRunnable, 900);
+                    mCalendarHandler.postDelayed(mCalendarRunnable, 3000);
                     Utils.logFirebaseEvent(this, "ALARM_ACTION", "SKIP_HOLIDAY");
                 }
             }

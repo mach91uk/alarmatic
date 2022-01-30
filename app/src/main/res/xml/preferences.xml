@@ -216,11 +216,11 @@
             <!-- https://developer.android.com/reference/android/provider/Settings.html -->
             <intent android:action="android.settings.DATE_SETTINGS"/>
         </Preference>
-        <SwitchPreference
+        <!--<SwitchPreference
             android:key="@string/key_user_experience_program"
             android:title="@string/title_user_experience_program"
             android:summary="@string/sum_user_experience_program"
-            android:defaultValue="false"/>
+            android:defaultValue="false"/>-->
         <Preference
             android:key="@string/key_battery_optimisation"
             android:summary="@string/sum_battery_optimisation"

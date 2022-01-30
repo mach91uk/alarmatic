@@ -33,7 +33,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 
-import com.google.firebase.analytics.FirebaseAnalytics;
+//import com.google.firebase.analytics.FirebaseAnalytics;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -57,7 +57,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @LayoutRes protected abstract int layoutResId();
     @MenuRes   protected abstract int menuResId();
 
-    public FirebaseAnalytics mFirebaseAnalytics;
+//    public FirebaseAnalytics mFirebaseAnalytics;
 
     @CallSuper
     @Override
@@ -65,7 +65,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         // Obtain the FirebaseAnalytics instance.
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+//        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         // Initialize the associated SharedPreferences file with default values
         // for each preference when the user first opens your application.
@@ -78,7 +78,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         Utils.setThemeFromPreference(this);
 
-        Utils.firebaseOnOff(this, mFirebaseAnalytics, AlarmPreferences.isUserExperianceEnabled(this));
+//        Utils.firebaseOnOff(this, mFirebaseAnalytics, AlarmPreferences.isUserExperianceEnabled(this));
 
         // ========================================================================================
         setContentView(layoutResId());
