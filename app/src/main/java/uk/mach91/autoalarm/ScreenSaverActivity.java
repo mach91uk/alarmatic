@@ -20,6 +20,7 @@
 
 package uk.mach91.autoalarm;
 
+import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,14 +40,27 @@ import uk.mach91.autoalarm.util.ScreenSaverUtils;
 public class ScreenSaverActivity extends AppCompatActivity {
 
     ScreenSaverUtils mScreenSaverUtils;
+    boolean InAppLaunch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        InAppLaunch = false;
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            InAppLaunch = extras.getBoolean("InAppLaunch", false);
+        }
+        Activity realActivity = ((Activity) this).getParent();
+
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_ALLOW_LOCK_WHILE_SCREEN_ON);
+
+        //setShowWhenLocked(true);
 
         View decorView = getWindow().getDecorView();
         int uiOptions = View.SYSTEM_UI_FLAG_LOW_PROFILE
@@ -89,5 +103,13 @@ public class ScreenSaverActivity extends AppCompatActivity {
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (!InAppLaunch) {
+            //System.exit(1);
+        }
     }
 }

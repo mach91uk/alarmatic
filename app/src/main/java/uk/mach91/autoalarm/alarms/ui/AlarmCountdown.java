@@ -139,9 +139,9 @@ public class AlarmCountdown extends TextView {
     }
 
     /**
-     * Set the label for the current alarm.
+     * Set the skipAlarm flag.
      *
-     * @param label current alarms label.
+     * @param skip_holiday true to skip alarms.
      */
     public void setAlarmSkipHoliday(boolean skip_holiday) {
         mAlarmSkipHoliday = skip_holiday;

@@ -137,7 +137,7 @@
     <string name="about_description">Alarmatic: Alarm clock automation at its best, a flexible, customisable alarm, which can even automatically skip specific alarms when you are on holiday.</string>
     <string name="about_build_date">Build date: %s</string>
     <string name="about_build_time">Build time: %s</string>
-    <string name="about_copyright">Copyright © 2019 MACH91</string>
+    <string name="about_copyright">Copyright © 2018-2022 MACH91</string>
     <string name="about_connect">Connect with us</string>
     <string name="about_email">support@mach91.uk</string>
     <string name="about_url">https://github.com/mach91uk/alarmatic</string>
@@ -150,7 +150,7 @@
     <string name="time_zone_change_old">Old time zone:</string>
     <string name="time_zone_change_new">New time zone:</string>
 
-    <string name="title_activity_screen_saver">ScreenSaverActivity</string>
+    <string name="title_activity_screen_saver">Alarmatic Screen Saver</string>
 
     <string name="alarm_skip_if_ok_holiday">Skip if on holiday</string>
     <string name="alarm_skipping_on_holiday">(skipping, on holiday)</string>

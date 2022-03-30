@@ -108,10 +108,11 @@ public class AlarmRingtoneService extends RingtoneService<Alarm> {
             if (mCancelDueToHoliday) {
                 //if (lable.toLowerCase().equals(AlarmPreferences.cancelAlarmHolidayLabel(this).toLowerCase())) {
                 if (skip_holiday) {
-                    AudioManager audio = (AudioManager) getSystemService(AUDIO_SERVICE);
+                    //AudioManager audio = (AudioManager) getSystemService(AUDIO_SERVICE);
                     mCalendarRunnable = new CalendarRunnable();
                     Handler mCalendarHandler = new Handler();
-                    audio.setStreamVolume(AudioManager.STREAM_ALARM, 0, 0);
+                    //audio.setStreamVolume(AudioManager.STREAM_ALARM, 0, 0);
+                    blockRingtone();
                     mCalendarHandler.postDelayed(mCalendarRunnable, 3000);
                     Utils.logFirebaseEvent(this, "ALARM_ACTION", "SKIP_HOLIDAY");
                 }
@@ -419,7 +420,7 @@ public class AlarmRingtoneService extends RingtoneService<Alarm> {
             alarm_id = getRingingObject().getIntId();
         }
 
-        final PendingIntent alarmIntent = getActivity(this, alarm_id, intent, flag);
+        final PendingIntent alarmIntent = getActivity(this, alarm_id, intent, flag | PendingIntent.FLAG_IMMUTABLE);
 
         //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
 

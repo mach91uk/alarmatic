@@ -190,7 +190,7 @@ public final class AlarmController {
                 Intent intent = new Intent(mAppContext, PendingAlarmScheduler.class)
                         .putExtra(PendingAlarmScheduler.EXTRA_ALARM_ID, alarm.getId());
                 pi = PendingIntent.getBroadcast(mAppContext, alarm.getIntId(),
-                        intent, FLAG_CANCEL_CURRENT);
+                        intent, FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE);
                 am.set(AlarmManager.RTC_WAKEUP, alarm.ringsAt(), pi);
             } else {
                 scheduleAlarm(alarm, false);
@@ -245,7 +245,7 @@ public final class AlarmController {
             Intent intent = new Intent(mAppContext, OnAlarm.class)
                     .putExtra(PendingAlarmScheduler.EXTRA_ALARM_ID, alarm.getId());
             PendingIntent pi = PendingIntent.getBroadcast(mAppContext, alarm.getIntId(),
-                    intent, retrievePrevious ? FLAG_NO_CREATE : FLAG_CANCEL_CURRENT);
+                    intent, retrievePrevious ? PendingIntent.FLAG_IMMUTABLE | FLAG_NO_CREATE : PendingIntent.FLAG_IMMUTABLE | FLAG_CANCEL_CURRENT);
             return pi;
         /*
         } else {
@@ -268,6 +268,6 @@ public final class AlarmController {
         int flag = retrievePrevious ? FLAG_NO_CREATE : FLAG_CANCEL_CURRENT;
         // Even when we try to retrieve a previous instance that actually did exist,
         // null can be returned for some reason. Thus, we don't checkNotNull().
-        return PendingIntent.getBroadcast(mAppContext, alarm.getIntId(), intent, flag);
+        return PendingIntent.getBroadcast(mAppContext, alarm.getIntId(), intent, flag | PendingIntent.FLAG_IMMUTABLE);
     }
 }

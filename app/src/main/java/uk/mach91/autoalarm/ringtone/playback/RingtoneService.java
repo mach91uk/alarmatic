@@ -67,6 +67,7 @@ public abstract class RingtoneService<T extends Parcelable> extends Service {
     private RingtoneLoop mRingtone;
     private Vibrator mVibrator;
     private T mRingingObject;
+    private Boolean mBlockPlay;
 
     // TODO: Using Handler for this is ill-suited? Alarm ringing could outlast the
     // application's life. Use AlarmManager API instead.
@@ -145,7 +146,9 @@ public abstract class RingtoneService<T extends Parcelable> extends Service {
                     AudioManager.AUDIOFOCUS_GAIN);
             if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
                 mRingtone = new RingtoneLoop(this, getRingtoneUri());
-                mRingtone.play();
+                if (!mBlockPlay) {
+                    mRingtone.play();
+                }
                 if (doesVibrate()) {
                     mVibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
                     mVibrator.vibrate(new long[] { // apply pattern
@@ -170,6 +173,7 @@ public abstract class RingtoneService<T extends Parcelable> extends Service {
         // Pretty sure this won't ever get called anymore... b/c EditAlarmActivity, the only component
         // that sends such a broadcast, is deprecated.
 
+        mBlockPlay = false;
         LocalBroadcastHelper.registerReceiver(this, mNotifyMissedReceiver, ACTION_NOTIFY_MISSED);
     }
 
@@ -221,7 +225,7 @@ public abstract class RingtoneService<T extends Parcelable> extends Service {
                 this,
                 requestCode,
                 intent,
-                PendingIntent.FLAG_ONE_SHOT);
+                PendingIntent.FLAG_ONE_SHOT | PendingIntent.FLAG_IMMUTABLE);
     }
 
     protected final T getRingingObject() {
@@ -235,5 +239,8 @@ public abstract class RingtoneService<T extends Parcelable> extends Service {
     protected final T shakeNow()  {
         LocalBroadcastHelper.sendBroadcast(RingtoneService.this, RingtoneActivity.ACTION_SHAKE);
         return null;
+    }
+    protected final void blockRingtone()  {
+        mBlockPlay = true;
     }
 }

@@ -31,6 +31,7 @@ import uk.mach91.autoalarm.alarms.Alarm;
 
 import uk.mach91.autoalarm.ringtone.AlarmActivity;
 import uk.mach91.autoalarm.ringtone.playback.AlarmRingtoneService;
+import uk.mach91.autoalarm.util.DurationUtils;
 import uk.mach91.autoalarm.util.ParcelableUtil;
 
 import static uk.mach91.autoalarm.util.Preconditions.checkNotNull;
@@ -69,6 +70,10 @@ public class OnAlarm extends BroadcastReceiver {
                 if (!alarm.isEnabled()) {
                     throw new IllegalStateException("Alarm must be enabled!");
                 }
+
+                /*if (DurationUtils.isOnHoliday(context, System.currentTimeMillis())) {
+                    throw new IllegalStateException("You are on holiday!");
+                }*/
 
                 Intent intent2 = new Intent(context, AlarmRingtoneService.class)
                         .putExtra(AlarmActivity.EXTRA_RINGING_OBJECT, ParcelableUtil.marshall(alarm));

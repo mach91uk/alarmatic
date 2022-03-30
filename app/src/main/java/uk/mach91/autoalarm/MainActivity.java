@@ -22,6 +22,7 @@
 
 package uk.mach91.autoalarm;
 
+import android.app.AlarmManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -63,6 +64,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import java.util.List;
 import java.util.TimeZone;
 
 import uk.mach91.autoalarm.alarms.misc.AlarmPreferences;
@@ -251,6 +253,15 @@ public class MainActivity extends BaseActivity implements ActivityCompat.OnReque
 
         }
         */
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            AlarmManager am = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+            if (!am.canScheduleExactAlarms()) {
+                Intent intent = new Intent();
+                intent.setAction(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
+                startActivity(intent);
+            }
+        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
         {
@@ -477,7 +488,10 @@ public class MainActivity extends BaseActivity implements ActivityCompat.OnReque
             startActivity( new Intent(this, AboutActivity.class));
             return true;
         } else if (id == R.id.action_screensaver) {
-            startActivity( new Intent(this, ScreenSaverActivity.class));
+            Intent i = new Intent(this, ScreenSaverActivity.class);
+            i.putExtra("InAppLaunch",true);
+            startActivity(i);
+            //startActivity( new Intent(this, ScreenSaverActivity.class));
             return true;
         }
 

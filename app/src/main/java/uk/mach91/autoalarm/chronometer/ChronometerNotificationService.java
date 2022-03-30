@@ -378,7 +378,7 @@ public abstract class ChronometerNotificationService extends Service {
                 .setAction(action)
                 .putExtra(EXTRA_ACTION_ID, id);
         PendingIntent pi = PendingIntent.getService(
-                this, (int) id, intent, 0/*no flags*/);
+                this, (int) id, intent, PendingIntent.FLAG_IMMUTABLE /*no flags*/);
         mNoteBuilders.get(id).addAction(icon, actionTitle, pi);
     }
 

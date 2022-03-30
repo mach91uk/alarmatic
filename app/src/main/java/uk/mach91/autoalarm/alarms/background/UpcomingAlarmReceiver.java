@@ -94,7 +94,7 @@ public class UpcomingAlarmReceiver extends BroadcastReceiver {
                     .setAction(ACTION_DISMISS_NOW)
                     .putExtra(EXTRA_ALARM, ParcelableUtil.marshall(alarm));
             PendingIntent piDismiss = PendingIntent.getBroadcast(context, (int) id,
-                    dismissIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+                    dismissIntent, PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
             String channelId = context.getString(R.string.channel_ID_alarm);
             String channelName = context.getString(R.string.channel_name_alarm);;

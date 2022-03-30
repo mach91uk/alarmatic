@@ -23,6 +23,7 @@
 package uk.mach91.autoalarm.util;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -178,9 +179,9 @@ public class DurationUtils {
             Cursor cur = context.getContentResolver().query(uri, projection, selection, selectionArgs, null);
 
             while (cur.moveToNext() && !cancelDueToHoliday) {
-                String title = cur.getString(cur.getColumnIndex(CalendarContract.Events.TITLE));
-                String calName = cur.getString(cur.getColumnIndex(CalendarContract.Events.CALENDAR_DISPLAY_NAME));
-                String accName = cur.getString(cur.getColumnIndex(CalendarContract.Events.ACCOUNT_NAME));
+                @SuppressLint("Range") String title = cur.getString(cur.getColumnIndex(CalendarContract.Events.TITLE));
+                @SuppressLint("Range") String calName = cur.getString(cur.getColumnIndex(CalendarContract.Events.CALENDAR_DISPLAY_NAME));
+                @SuppressLint("Range") String accName = cur.getString(cur.getColumnIndex(CalendarContract.Events.ACCOUNT_NAME));
 
                 String combinedName = calName.toLowerCase() + " ("  + accName.toLowerCase() + ")";
                 if ((combinedName.equals(AlarmPreferences.cancelAlarmHolidayCalendar(context).toLowerCase()) &&
@@ -220,9 +221,9 @@ public class DurationUtils {
             Cursor cur = context.getContentResolver().query(uri, projection, selection, selectionArgs, null);
 
             while (cur.moveToNext()) {
-                String title = cur.getString(cur.getColumnIndex(CalendarContract.Events.TITLE));
-                String alarmStartTimeStr = cur.getString(cur.getColumnIndex(CalendarContract.Events.DTSTART));
-                String alarmEndTimeStr = cur.getString(cur.getColumnIndex(CalendarContract.Events.DTEND));
+                @SuppressLint("Range") String title = cur.getString(cur.getColumnIndex(CalendarContract.Events.TITLE));
+                @SuppressLint("Range") String alarmStartTimeStr = cur.getString(cur.getColumnIndex(CalendarContract.Events.DTSTART));
+                @SuppressLint("Range") String alarmEndTimeStr = cur.getString(cur.getColumnIndex(CalendarContract.Events.DTEND));
                 long alarmStartTime = -1;
                 long alarmEndTime = -1;
                 try {

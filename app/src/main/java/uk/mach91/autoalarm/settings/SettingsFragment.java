@@ -176,9 +176,11 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
                     public boolean onPreferenceClick(Preference preference) {
                         Intent intent = new Intent();
                         intent.setAction(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS);
+                        //intent.setAction(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
                         startActivity(intent);
                         return true;
                     }
+
                 });
             } else {
                 PreferenceCategory mCategory = (PreferenceCategory) findPreference(getString(R.string.key_category_general));

@@ -22,6 +22,7 @@
 
 package uk.mach91.autoalarm.dialogs;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatEditText;
@@ -58,6 +59,7 @@ public class AddLabelDialog extends BaseAlertDialogFragment {
         return dialog;
     }
 
+    @SuppressLint("RestrictedApi")
     @Override
     protected AlertDialog createFrom(AlertDialog.Builder builder) {
         mEditText = new AppCompatEditText(getActivity());

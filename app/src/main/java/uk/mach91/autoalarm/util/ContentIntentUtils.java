@@ -46,7 +46,7 @@ public final class ContentIntentUtils {
                 .setAction(RecyclerViewFragment.ACTION_SCROLL_TO_STABLE_ID)
                 .putExtra(MainActivity.EXTRA_SHOW_PAGE, targetPage)
                 .putExtra(RecyclerViewFragment.EXTRA_SCROLL_TO_STABLE_ID, stableId);
-        return PendingIntent.getActivity(context, (int) stableId, intent, FLAG_CANCEL_CURRENT);
+        return PendingIntent.getActivity(context, (int) stableId, intent, FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE);
     }
 
     private ContentIntentUtils() {}

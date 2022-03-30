@@ -173,7 +173,7 @@ public abstract class RingtoneActivity<T extends Parcelable> extends BaseActivit
         }
 
         // Close dialogs and window shade, so this is fully visible
-        sendBroadcast(new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS));
+        //sendBroadcast(new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS));
 
         mHeaderTitle.setText(getHeaderTitle()); // TOneverDO: call before assigning mRingingObject
         getHeaderContent((LinearLayout) findViewById(R.id.header));

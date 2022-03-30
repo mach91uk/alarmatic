@@ -22,6 +22,7 @@ package uk.mach91.autoalarm.util;
 
 import android.app.AlarmManager;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -43,6 +44,7 @@ import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.Date;
@@ -102,6 +104,7 @@ public class ScreenSaverUtils extends FrameLayout implements SensorEventListener
     public void addTimeView (Context context, View.OnTouchListener onTouchListener) {
         if (mTextView == null) {
             setLayoutParams(new ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT));
+            setBackgroundColor(Color.BLACK);
 
             if (onTouchListener != null) {
                 setOnTouchListener(onTouchListener);

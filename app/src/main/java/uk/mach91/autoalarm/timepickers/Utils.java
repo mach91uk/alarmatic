@@ -441,7 +441,7 @@ public class Utils {
 
             try {
                 if (cursor != null && cursor.moveToFirst()) {
-                    String displayName = cursor.getString(
+                    @SuppressLint("Range") String displayName = cursor.getString(
                             cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
                     title = displayName;
                 }
