@@ -29,12 +29,12 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.0.0'
+        classpath 'com.android.tools.build:gradle:7.1.2'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
 
         classpath 'com.jakewharton:butterknife-gradle-plugin:10.0.0'
 
-        classpath 'com.google.gms:google-services:4.3.3'
+        classpath 'com.google.gms:google-services:4.3.10'
 
         //classpath 'com.google.firebase:firebase-crashlytics-gradle:2.1.1'
 
@@ -46,6 +46,7 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        mavenCentral()
         google()
     }
 }

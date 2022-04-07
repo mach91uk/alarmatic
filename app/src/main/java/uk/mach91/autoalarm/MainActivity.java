@@ -255,7 +255,7 @@ public class MainActivity extends BaseActivity implements ActivityCompat.OnReque
         */
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            AlarmManager am = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+            AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
             if (!am.canScheduleExactAlarms()) {
                 Intent intent = new Intent();
                 intent.setAction(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
