@@ -38,6 +38,7 @@ import androidx.core.content.ContextCompat;
 import uk.mach91.autoalarm.R;
 import uk.mach91.autoalarm.alarms.misc.AlarmPreferences;
 
+import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 import java.util.Date;
@@ -143,7 +144,7 @@ public class DurationUtils {
     }
 
     /**
-     * Works out if for the provided time there is a holiday marked in teh calendar.
+     * Works out if for the provided time there is a holiday marked in the calendar.
      * @param context the current context
      * @param alarmAt   the time the alarm is going to rint
      * @return true is there is a holiday at the time specified, otherwise false.
@@ -178,17 +179,32 @@ public class DurationUtils {
 
             Cursor cur = context.getContentResolver().query(uri, projection, selection, selectionArgs, null);
 
+            String[] cancelAlarmHolidayTitles = AlarmPreferences.cancelAlarmHolidayTitle(context).toLowerCase().split(";");
+
             while (cur.moveToNext() && !cancelDueToHoliday) {
                 @SuppressLint("Range") String title = cur.getString(cur.getColumnIndex(CalendarContract.Events.TITLE));
                 @SuppressLint("Range") String calName = cur.getString(cur.getColumnIndex(CalendarContract.Events.CALENDAR_DISPLAY_NAME));
                 @SuppressLint("Range") String accName = cur.getString(cur.getColumnIndex(CalendarContract.Events.ACCOUNT_NAME));
 
                 String combinedName = calName.toLowerCase() + " ("  + accName.toLowerCase() + ")";
-                if ((combinedName.equals(AlarmPreferences.cancelAlarmHolidayCalendar(context).toLowerCase()) &&
-                        title.toLowerCase().contains(AlarmPreferences.cancelAlarmHolidayTitle(context).toLowerCase())) ||
-                        combinedName.toLowerCase().equals(AlarmPreferences.cancelAlarmBankHolidayCalendar(context).toLowerCase())) {
+
+                if (combinedName.toLowerCase().equals(AlarmPreferences.cancelAlarmBankHolidayCalendar(context).toLowerCase())) {
                     cancelDueToHoliday = true;
+                } else if (combinedName.equals(AlarmPreferences.cancelAlarmHolidayCalendar(context).toLowerCase())) {
+
+                    for(int i=0; i < cancelAlarmHolidayTitles.length && !cancelDueToHoliday; i++) {
+                        if (title.toLowerCase().contains(cancelAlarmHolidayTitles[i])) {
+                            cancelDueToHoliday = true;
+                        }
+                    }
                 }
+
+                //if ((combinedName.equals(AlarmPreferences.cancelAlarmHolidayCalendar(context).toLowerCase()) &&
+                //        title.toLowerCase().contains(AlarmPreferences.cancelAlarmHolidayTitle(context).toLowerCase())) ||
+                //        combinedName.toLowerCase().equals(AlarmPreferences.cancelAlarmBankHolidayCalendar(context).toLowerCase())) {
+                //
+                //    cancelDueToHoliday = true;
+                //}
             }
             cur.close();
         }
