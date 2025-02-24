@@ -137,7 +137,7 @@
     <string name="about_description">Alarmatic: Alarm clock automation at its best, a flexible, customisable alarm, which can even automatically skip specific alarms when you are on holiday.</string>
     <string name="about_build_date">Build date: %s</string>
     <string name="about_build_time">Build time: %s</string>
-    <string name="about_copyright">Copyright © 2018-2022 MACH91</string>
+    <string name="about_copyright">Copyright © 2018-2023 MACH91</string>
     <string name="about_connect">Connect with us</string>
     <string name="about_email">support@mach91.uk</string>
     <string name="about_url">https://github.com/mach91uk/alarmatic</string>
@@ -184,11 +184,14 @@
     -->
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="skip">Skip</string>
 
     <string name="key_asked_user_battery_optimisation">key_asked_user_battery_optimisation</string>
     <string name="ask_battery_optimisation"><![CDATA[Adaptive battery settings on this device may cause your alarms not to fire consistently.<BR><BR>To avoid this please select &quot;Don\'t optimise&quot; in the devices settings.<BR><BR>Do you want to launch the system setting so you can do this now?]]></string>
     <string name="ask_battery_optimisation_title">The system may stop your alarms!</string>
 
+    <string name="ask_notification_permission"><![CDATA[Alarmatic uses notifications, to give you advance notice that an alarm is coming up as well as to give you control when an alarm is triggered.<BR><BR>Please grant Alarmatic permission to send you notifiations]]></string>
+    <string name="ask_notification_permission_title">The system may stop your alarms!</string>
     <string name="default_tone"> ⚙️</string>
 
 </resources>

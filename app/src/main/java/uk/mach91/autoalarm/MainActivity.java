@@ -22,7 +22,10 @@
 
 package uk.mach91.autoalarm;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.AlarmManager;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -80,6 +83,7 @@ public class MainActivity extends BaseActivity implements ActivityCompat.OnReque
     private static final String TAG = "MainActivity";
 
     private static final int  MY_PERMISSIONS_REQUEST_READ_CALENDAR = 11;
+    private static final int  MY_PERMISSIONS_REQUEST_NOTIFICATION = 12;
 
     public static final int    PAGE_ALARMS          = 0;
     public static final int    REQUEST_THEME_CHANGE = 5;
@@ -101,6 +105,7 @@ public class MainActivity extends BaseActivity implements ActivityCompat.OnReque
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         final View rootView = ((ViewGroup) findViewById(android.R.id.content)).getChildAt(0);
         // http://stackoverflow.com/a/24035591/5055032
@@ -134,8 +139,8 @@ public class MainActivity extends BaseActivity implements ActivityCompat.OnReque
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             /**
-             * @param position Either the current page position if the offset is increasing,
-             *                 or the previous page position if it is decreasing.
+             * @param position       Either the current page position if the offset is increasing,
+             *                       or the previous page position if it is decreasing.
              * @param positionOffset If increasing from [0, 1), scrolling right and position = currentPagePosition
              *                       If decreasing from (1, 0], scrolling left and position = (currentPagePosition - 1)
              */
@@ -263,8 +268,7 @@ public class MainActivity extends BaseActivity implements ActivityCompat.OnReque
             }
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-        {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             boolean askedBatteryOptimised = prefSetts.getBoolean(getString(R.string.key_battery_optimisation), false);
 
             if (!askedBatteryOptimised) {
@@ -303,6 +307,19 @@ public class MainActivity extends BaseActivity implements ActivityCompat.OnReque
                 }
             }
         }
+        /*if (Build.VERSION.SDK_INT >= 33) {
+            NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            if (!nm.areNotificationsEnabled()) {
+
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_NOTIFICATION_POLICY)) {
+                    requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS}, MY_PERMISSIONS_REQUEST_NOTIFICATION);
+                } else {
+                    requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS}, MY_PERMISSIONS_REQUEST_NOTIFICATION);
+                }
+                //}
+            }
+        }
+        */
     }
 
     private void setTabIcon(int index, @DrawableRes int iconRes, String title, @NonNull final ColorStateList color) {
@@ -455,6 +472,21 @@ public class MainActivity extends BaseActivity implements ActivityCompat.OnReque
                     prefsEditor.commit();
                 }
                 mSkipHoliday = null;
+                return;
+            }
+
+            case MY_PERMISSIONS_REQUEST_NOTIFICATION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+                    //SharedPreferences prefs = this.getSharedPreferences(this.getPackageName(), Context.MODE_PRIVATE)
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+
+                }
                 return;
             }
         }
