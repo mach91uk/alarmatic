@@ -1,15 +1,15 @@
 
-[<img src="https://github.com/mach91uk/alarmatic/blob/master/hi-res.jpg"
+[<img src="https://github.com/mach91uk/alarmatic/blob/master/hi-res.png"
       alt="Alarmatic"
-      height="80">](https://play.google.com/store/apps/details?id=uk.mach91.autoalarm)
+      height="80">](https://github.com/mach91uk/alarmatic)
 	  
 # Alarmatic
 Alarmatic is a flexible, customisable alarm, which can automatically skip selected alarms when you are on holiday.
 
 	  
-[<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png"
-      alt="Get it on Google Play"
-      height="80">](https://play.google.com/store/apps/details?id=uk.mach91.autoalarm)
+[<img src="https://github.com/machiav3lli/oandbackupx/raw/034b226cea5c1b30eb4f6a6f313e4dadcbb0ece4/badge_github.png"
+      alt="Get it on GitHub"
+      height="80">](https://github.com/mach91uk/alarmatic)
 
 
 Highlights:
